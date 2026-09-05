@@ -12,7 +12,7 @@ authors:
 version: 1.0.0
 date-released: 2026-09-05
 license: MIT
-repository-code: "https://github.com/<your-org-or-user>/njp120031-photon-curtain-verification"
+repository-code: "https://github.com/tdeligiannis/njp120031-photon-curtain-verification"
 keywords:
   - weak measurement
   - Bohmian mechanics
