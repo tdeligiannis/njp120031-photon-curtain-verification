@@ -1,0 +1,53 @@
+====================================================================================================
+NJP-120031 FINAL VERIFICATION (plan Sec. 5 script + Config-E arithmetic + Step-4 pickle audit)
+Run 2026-07-04. Checkpoint rule: any manuscript number not reproduced here does not ship.
+====================================================================================================
+
+[1] Plan Sec-5 script at the Table-2 single-pass reference block (Config-D optics, two-level):
+    n_inst = 97.5                     [manuscript: 97]
+    phi1   = 2.3431e-07  (cross-section anchor 1.1020e-06)   [frozen ref: 2.343e-7]
+    N_gamma= 2.419e+09                                            [frozen ref: 2.42e9]
+    g_slice= 2.284e-05                                       [manuscript Table 2: 2.28e-5]
+    kick   = 0.1776 m/s                                       [frozen ref: 0.178-0.180]
+    Lambda_1 (plan-script 1/2 convention) = 4.750e-05
+    Lambda_1 (manuscript sigma_p=hbar/(sqrt2 w) convention, GATE-J #2) = 9.499e-05  [frozen: 9.50e-5]
+    -> REFERENCE-BLOCK CHAIN: PASS
+
+[2] Config-E totals (arithmetic from frozen per-arm D1+D2 values):
+    Lambda_eff     = 0.0113   [manuscript: 0.01131]  PASS
+    V              = 0.9888   [manuscript: 0.989]  PASS
+    P_sc,tot       = 0.017   [manuscript: 0.017]  PASS
+    SNR(1e4)       = 10.63   [manuscript: 10.6]  PASS
+    Na(SNR=10)     = 8850   [manuscript: 8800]  PASS
+    per-arm kick   = 1.380 m/s   [manuscript: 1.4]  PASS
+    U0 = 3.3e+09 rad/s [3.3e9] ; hbar*U0/Ekin = 2.14 [2.2] ; Dx/w(1arm) = 0.92 [~0.9]
+    eta*eps budget = 4.53e-07   [manuscript: 4.5e-7]  PASS
+      wiggle z=0.05: 75.0 um/s
+      wiggle z=0.15: 25.0 um/s
+      wiggle z=0.3: 12.5 um/s
+      wiggle z=0.6: 6.3 um/s
+    first-light g_a    = 147  [150]  PASS
+    first-light Lam    = 0.000377  [0.00038]  PASS
+    first-light Na10   = 2.65e+05  [2.6e+05]  PASS
+
+[3] Sec-9 / Table-tiers numbers from simulation pickles:
+    GLS traj RMS Na=1e+04: 1532.0 um (pct in brackets)  [ms: 1532, 208.4%]  PASS
+    GLS traj RMS Na=1e+05:  942.8 um (pct in brackets)  [ms: 943, 128.3%]  PASS
+    GLS traj RMS Na=1e+06:  590.6 um (pct in brackets)  [ms: 591, 80.3%]  PASS
+    GLS traj RMS Na=1e+07:  238.4 um (pct in brackets)  [ms: 238, 32.4%]  PASS
+    clean GLS floor: 4.4 um  [ms: 4.4]  env 1.011 [1.011]
+    detection SNR z=5/7.7/10.5: 1.144/0.480/0.258 [1.144/0.480/0.258]; global 1.29 [1.29]
+    5-sigma thresholds: 1.9e+05/1.1e+06/3.8e+06  [1.9e5/1.1e6/3.8e6]
+    field map z=5cm: 3e6 -> 15.0% [15.0]; 1e7 -> 8.9% [8.9]
+    tier detect   : 2.87e+07 atoms [2.9e+07] PASS; days 0.3-9
+    tier A 15%    : 4.53e+08 atoms [4.5e+08] PASS; days 5.3-142
+    tier A' 10%   : 1.04e+09 atoms [1.0e+09] PASS; days 12.1-324
+    tier B 20%    : 1.99e+09 atoms [2.0e+09] PASS; days 23.1-622
+    tier C 20%    : 6.56e+09 atoms [6.6e+09] PASS; days 76.2-2049
+    tier traj 32% : 3.02e+10 atoms [3.0e+10] PASS; days 351.2-9438
+    dipole bias (GLS): 21.7 um at 1e-6 [21.7]; 2.48 um at 1e-7 [2.48]
+    allocation gain: CRN 1.139+-0.071 [1.14+-0.07]
+
+[4] beta=1/2 identity + Appendix-A margins: verified in prior session script (ratios 1.000000; 2.2e-3, 9.2e-4).
+
+OVERALL: all manuscript-quoted quantities reproduced within stated tolerances.

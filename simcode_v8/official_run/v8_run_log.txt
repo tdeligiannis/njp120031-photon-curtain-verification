@@ -1,0 +1,268 @@
+== NJP-120031 v8 chain start 2026-07-04T15:17:27Z ==
+Python 3.12.11
+numpy 2.4.0 scipy 1.18.0
+
+---- [0s] v8_config self-checks ----
+v8_config self-checks PASS
+  T = 0.228830 s   FRINGE = 420.3 um   v_z(L) = 3.7441 m/s
+  SIG(z): 6.146 (z_ref) -> 8.776 (last)
+  V(z):   0.9914 -> 0.9958    Psc(z): 0.0144 -> 0.0071
+  pairing eff_window z=5cm: 3.20e+06 - 2.87e+07 /day   (unconstrained window 3.2e+06 - 8.6e+07)
+  eff_window z=30cm: 3.20e+06 - 5.30e+07 /day
+
+---- [0s] stage 1 gates (sim_core) ----
+GATE 1a -- Sec.-5.4 grid, constant-v (24 points, x_c = 0 excluded honestly):
+  mean rel err 1.04%   max 2.52%   over 24 points
+  x_c = 0 absolute check: max |v| = 4.21e-20 m/s (0.000% of median field scale)
+
+GATE 1b -- Configuration-E gravity map, Eq.(13) vs direct v_true:
+  z =   5.0 cm : rel errs 1.64%  1.12%  1.12%  1.64%
+  z =  30.0 cm : rel errs 0.16%  0.12%  0.12%  0.16%
+  z =  57.0 cm : rel errs 0.83%  0.52%  0.52%  0.83%
+  gravity-gate: mean 0.73%   max 1.64%
+
+STAGE-1 GATES: 1a PASS   1b PASS
+
+---- [1s] stage2_maps (20 planes) ----
+plane 0 (z=5.0 cm) dxc=1.58 um done 0.7s
+plane 1 (z=7.7 cm) dxc=2.30 um done 0.7s
+plane 2 (z=10.5 cm) dxc=2.97 um done 0.7s
+plane 3 (z=13.2 cm) dxc=3.60 um done 0.8s
+plane 4 (z=15.9 cm) dxc=4.20 um done 0.8s
+plane 5 (z=18.7 cm) dxc=4.76 um done 0.8s
+plane 6 (z=21.4 cm) dxc=5.31 um done 0.8s
+plane 7 (z=24.2 cm) dxc=5.83 um done 0.8s
+plane 8 (z=26.9 cm) dxc=6.33 um done 0.8s
+plane 9 (z=29.6 cm) dxc=6.81 um done 0.7s
+plane 10 (z=32.4 cm) dxc=7.28 um done 0.7s
+plane 11 (z=35.1 cm) dxc=7.73 um done 0.7s
+plane 12 (z=37.8 cm) dxc=8.17 um done 0.7s
+plane 13 (z=40.6 cm) dxc=8.60 um done 0.7s
+plane 14 (z=43.3 cm) dxc=9.01 um done 0.8s
+plane 15 (z=46.1 cm) dxc=9.42 um done 0.8s
+plane 16 (z=48.8 cm) dxc=9.82 um done 0.8s
+plane 17 (z=51.5 cm) dxc=10.21 um done 0.9s
+plane 18 (z=54.3 cm) dxc=10.59 um done 0.8s
+plane 19 (z=57.0 cm) dxc=10.96 um done 0.8s
+FULL MAP SET SAVED
+
+---- [17s] stage2_reference gate ----
+GATE 1 (v8): cumulative-vs-direct v, max rel dev on valid & |v_f|>2 um/s
+  z=  5.0 cm :   0.03%   (93 pts)
+  z=  7.7 cm :   0.08%   (95 pts)
+  z= 29.6 cm :   0.11%   (96 pts)
+  z= 57.0 cm :   0.08%   (96 pts)
+GATE 1 worst plane: 0.16%   median plane: 0.12%
+PASS - saved sim/stage2ref_gate.pkl
+
+---- [18s] stage2_run (30 realizations) ----
+clean-pipeline: final RMS 1.9 um, env ratio 0.999
+  realization 5/30 (0.6s/run) checkpointed
+  realization 10/30 (0.6s/run) checkpointed
+  realization 15/30 (0.7s/run) checkpointed
+  realization 20/30 (0.7s/run) checkpointed
+  realization 25/30 (0.6s/run) checkpointed
+  realization 30/30 (0.6s/run) checkpointed
+
+=== STAGE 2 REFERENCE CELL (Na=1e4, 30 realizations) ===
+final trajectory RMS : 13817.7 +- 11710.4 um  (3287.9% of fringe)
+clean-pipeline limit :    1.9 um  (0.5%)
+envelope-width ratio : 132.134 +- 112.846  (clean 0.999, true=1)
+per-point sigma_v (z=32 cm, |x|<400um): 21906.24 mm/s
+
+---- [38s] stage3_maps mask 0 ----
+[eta0] plane 0 (z=5.0cm) 2.8s  max p_out=0.000%
+[eta0] plane 1 (z=7.7cm) 2.7s  max p_out=0.000%
+[eta0] plane 2 (z=10.5cm) 2.7s  max p_out=0.000%
+[eta0] plane 3 (z=13.2cm) 2.7s  max p_out=0.000%
+[eta0] plane 4 (z=15.9cm) 2.7s  max p_out=0.000%
+[eta0] plane 5 (z=18.7cm) 2.8s  max p_out=0.000%
+[eta0] plane 6 (z=21.4cm) 2.7s  max p_out=0.000%
+[eta0] plane 7 (z=24.2cm) 2.7s  max p_out=0.000%
+[eta0] plane 8 (z=26.9cm) 2.6s  max p_out=0.000%
+[eta0] plane 9 (z=29.6cm) 2.6s  max p_out=0.000%
+[eta0] plane 10 (z=32.4cm) 2.6s  max p_out=0.000%
+[eta0] plane 11 (z=35.1cm) 2.7s  max p_out=0.000%
+[eta0] plane 12 (z=37.8cm) 2.7s  max p_out=0.000%
+[eta0] plane 13 (z=40.6cm) 2.6s  max p_out=0.000%
+[eta0] plane 14 (z=43.3cm) 2.6s  max p_out=0.000%
+[eta0] plane 15 (z=46.1cm) 2.6s  max p_out=0.000%
+[eta0] plane 16 (z=48.8cm) 2.6s  max p_out=0.000%
+[eta0] plane 17 (z=51.5cm) 2.6s  max p_out=0.000%
+[eta0] plane 18 (z=54.3cm) 2.7s  max p_out=0.000%
+[eta0] plane 19 (z=57.0cm) 2.7s  max p_out=0.000%
+[eta0] COMPLETE
+
+---- [92s] stage3_maps mask 1 ----
+[eta1em3] plane 0 (z=5.0cm) 2.7s  max p_out=0.000%
+[eta1em3] plane 1 (z=7.7cm) 2.7s  max p_out=0.000%
+[eta1em3] plane 2 (z=10.5cm) 2.7s  max p_out=0.000%
+[eta1em3] plane 3 (z=13.2cm) 2.7s  max p_out=0.000%
+[eta1em3] plane 4 (z=15.9cm) 2.7s  max p_out=0.000%
+[eta1em3] plane 5 (z=18.7cm) 2.7s  max p_out=0.000%
+[eta1em3] plane 6 (z=21.4cm) 2.8s  max p_out=0.000%
+[eta1em3] plane 7 (z=24.2cm) 2.8s  max p_out=0.000%
+[eta1em3] plane 8 (z=26.9cm) 2.7s  max p_out=0.000%
+[eta1em3] plane 9 (z=29.6cm) 2.7s  max p_out=0.000%
+[eta1em3] plane 10 (z=32.4cm) 2.6s  max p_out=0.000%
+[eta1em3] plane 11 (z=35.1cm) 2.7s  max p_out=0.000%
+[eta1em3] plane 12 (z=37.8cm) 2.7s  max p_out=0.000%
+[eta1em3] plane 13 (z=40.6cm) 2.6s  max p_out=0.000%
+[eta1em3] plane 14 (z=43.3cm) 2.5s  max p_out=0.000%
+[eta1em3] plane 15 (z=46.1cm) 2.6s  max p_out=0.000%
+[eta1em3] plane 16 (z=48.8cm) 2.7s  max p_out=0.000%
+[eta1em3] plane 17 (z=51.5cm) 2.5s  max p_out=0.000%
+[eta1em3] plane 18 (z=54.3cm) 2.6s  max p_out=0.000%
+[eta1em3] plane 19 (z=57.0cm) 2.8s  max p_out=0.000%
+[eta1em3] COMPLETE
+
+---- [146s] stage3_maps mask 2 ----
+[eta1em2] plane 0 (z=5.0cm) 2.9s  max p_out=14.508%
+[eta1em2] plane 1 (z=7.7cm) 2.8s  max p_out=8.623%
+[eta1em2] plane 2 (z=10.5cm) 2.8s  max p_out=6.464%
+[eta1em2] plane 3 (z=13.2cm) 2.8s  max p_out=4.324%
+[eta1em2] plane 4 (z=15.9cm) 2.7s  max p_out=3.567%
+[eta1em2] plane 5 (z=18.7cm) 2.7s  max p_out=2.623%
+[eta1em2] plane 6 (z=21.4cm) 2.7s  max p_out=1.184%
+[eta1em2] plane 7 (z=24.2cm) 2.7s  max p_out=0.302%
+[eta1em2] plane 8 (z=26.9cm) 2.7s  max p_out=0.042%
+[eta1em2] plane 9 (z=29.6cm) 2.7s  max p_out=0.008%
+[eta1em2] plane 10 (z=32.4cm) 2.7s  max p_out=0.002%
+[eta1em2] plane 11 (z=35.1cm) 2.7s  max p_out=0.000%
+[eta1em2] plane 12 (z=37.8cm) 2.7s  max p_out=0.000%
+[eta1em2] plane 13 (z=40.6cm) 2.7s  max p_out=0.000%
+[eta1em2] plane 14 (z=43.3cm) 2.7s  max p_out=0.000%
+[eta1em2] plane 15 (z=46.1cm) 2.6s  max p_out=0.000%
+[eta1em2] plane 16 (z=48.8cm) 2.7s  max p_out=0.000%
+[eta1em2] plane 17 (z=51.5cm) 2.7s  max p_out=0.000%
+[eta1em2] plane 18 (z=54.3cm) 2.7s  max p_out=0.000%
+[eta1em2] plane 19 (z=57.0cm) 2.8s  max p_out=0.000%
+[eta1em2] COMPLETE
+
+---- [201s] stage3_maps mask 3 ----
+[eta1em3off] plane 0 (z=5.0cm) 2.7s  max p_out=0.000%
+[eta1em3off] plane 1 (z=7.7cm) 2.7s  max p_out=0.000%
+[eta1em3off] plane 2 (z=10.5cm) 2.7s  max p_out=0.000%
+[eta1em3off] plane 3 (z=13.2cm) 2.7s  max p_out=0.000%
+[eta1em3off] plane 4 (z=15.9cm) 2.7s  max p_out=0.000%
+[eta1em3off] plane 5 (z=18.7cm) 2.8s  max p_out=0.000%
+[eta1em3off] plane 6 (z=21.4cm) 2.7s  max p_out=0.000%
+[eta1em3off] plane 7 (z=24.2cm) 2.8s  max p_out=0.000%
+[eta1em3off] plane 8 (z=26.9cm) 2.8s  max p_out=0.000%
+[eta1em3off] plane 9 (z=29.6cm) 2.8s  max p_out=0.000%
+[eta1em3off] plane 10 (z=32.4cm) 2.8s  max p_out=0.000%
+[eta1em3off] plane 11 (z=35.1cm) 2.8s  max p_out=0.000%
+[eta1em3off] plane 12 (z=37.8cm) 2.8s  max p_out=0.000%
+[eta1em3off] plane 13 (z=40.6cm) 2.7s  max p_out=0.000%
+[eta1em3off] plane 14 (z=43.3cm) 2.7s  max p_out=0.000%
+[eta1em3off] plane 15 (z=46.1cm) 2.7s  max p_out=0.000%
+[eta1em3off] plane 16 (z=48.8cm) 2.6s  max p_out=0.000%
+[eta1em3off] plane 17 (z=51.5cm) 2.7s  max p_out=0.000%
+[eta1em3off] plane 18 (z=54.3cm) 2.7s  max p_out=0.000%
+[eta1em3off] plane 19 (z=57.0cm) 2.8s  max p_out=0.000%
+[eta1em3off] COMPLETE
+
+---- [257s] stage3_maps mask 4 ----
+[eta1em2off] plane 0 (z=5.0cm) 2.9s  max p_out=14.499%
+[eta1em2off] plane 1 (z=7.7cm) 2.8s  max p_out=8.622%
+[eta1em2off] plane 2 (z=10.5cm) 2.8s  max p_out=6.457%
+[eta1em2off] plane 3 (z=13.2cm) 2.8s  max p_out=4.319%
+[eta1em2off] plane 4 (z=15.9cm) 2.8s  max p_out=3.568%
+[eta1em2off] plane 5 (z=18.7cm) 2.8s  max p_out=2.614%
+[eta1em2off] plane 6 (z=21.4cm) 2.7s  max p_out=1.175%
+[eta1em2off] plane 7 (z=24.2cm) 2.7s  max p_out=0.299%
+[eta1em2off] plane 8 (z=26.9cm) 2.7s  max p_out=0.041%
+[eta1em2off] plane 9 (z=29.6cm) 2.7s  max p_out=0.008%
+[eta1em2off] plane 10 (z=32.4cm) 2.6s  max p_out=0.002%
+[eta1em2off] plane 11 (z=35.1cm) 2.7s  max p_out=0.000%
+[eta1em2off] plane 12 (z=37.8cm) 2.7s  max p_out=0.000%
+[eta1em2off] plane 13 (z=40.6cm) 2.7s  max p_out=0.000%
+[eta1em2off] plane 14 (z=43.3cm) 2.5s  max p_out=0.000%
+[eta1em2off] plane 15 (z=46.1cm) 2.7s  max p_out=0.000%
+[eta1em2off] plane 16 (z=48.8cm) 2.6s  max p_out=0.000%
+[eta1em2off] plane 17 (z=51.5cm) 2.7s  max p_out=0.000%
+[eta1em2off] plane 18 (z=54.3cm) 2.6s  max p_out=0.000%
+[eta1em2off] plane 19 (z=57.0cm) 2.8s  max p_out=0.000%
+[eta1em2off] COMPLETE
+
+---- [312s] stage3_analysis ----
+=== raw wiggle W_eta = v_nl[eta]-v_nl[0]  and residual D_eta = v_nl[eta]-v_nl[0.999 eta] ===
+(rho_w-weighted RMS over valid, um/s)
+ z(cm)  wig 1e-3  wig 1e-2   D 1e-3   D 1e-2  wigscale  sig_v(1e4)
+   5.0 804638.20 4365682.39  804.511 6966.411     82.44       80883
+  15.9 2027049.94 7682212.66 2027.051 16324.553     29.93      646358
+  29.6 2493496.73 24669031.89 2493.491 21906.303     18.31     2328041
+  43.3 2790071.89 27900718.95 2790.077 27900.701     13.79     3383893
+  57.0 2999585.32 29995853.17 2999.588 29995.913     11.33     2796950
+
+=== product-only test: D_{1e-3} vs 0.1*D_{1e-2} (both eta*eps=1e-6) ===
+  z=  5.0 cm : RMS(diff)/RMS(D_1e-3) =  13.41%
+  z= 29.6 cm : RMS(diff)/RMS(D_1e-3) =  12.25%
+  z= 57.0 cm : RMS(diff)/RMS(D_1e-3) =   0.00%
+
+=== cell residual summary (worst plane, rho-weighted RMS) ===
+  eta=1e-2, eps=1e-3 (prod 1e-05): worst D/wigscale = 264842.05% at z=57cm ; D/sigma_v(1e4) worst = 8.613%
+  eta=1e-2, eps=1e-4 (prod 1e-06): worst D/wigscale = 26484.20% at z=57cm ; D/sigma_v(1e4) worst = 0.861%
+  eta=1e-3, eps=1e-3 (prod 1e-06): worst D/wigscale = 26484.18% at z=57cm ; D/sigma_v(1e4) worst = 0.995%
+  eta=1e-3, eps=1e-4 (prod 1e-07): worst D/wigscale = 2648.42% at z=57cm ; D/sigma_v(1e4) worst = 0.099%
+
+saved sim/stage3_bias_results.pkl
+
+---- [313s] stage4_gls (design + gate) ----
+GLS GATE (noiseless): basis-truncation bias of v_GLS vs pipeline v_nl, core region
+  z=  5.0 cm : median|v_GLS - v_nl|/scale =   0.39%  (dof=13)
+  z= 18.7 cm : median|v_GLS - v_nl|/scale =   0.12%  (dof=13)
+  z= 29.6 cm : median|v_GLS - v_nl|/scale =   0.10%  (dof=13)
+  z= 43.3 cm : median|v_GLS - v_nl|/scale =   0.11%  (dof=13)
+  z= 57.0 cm : median|v_GLS - v_nl|/scale =   1.04%  (dof=13)
+
+---- [314s] stage4_run ----
+=== matched-filter field-detection SNR per plane (Na=1e4; scale by sqrt(Na/1e4)) ===
+z5:0.42  z13:0.06  z21:0.02  z30:0.01  z38:0.01  z46:0.01  z54:0.01
+  global (all planes pooled): 0.47
+
+=== GLS field + trajectories vs Na (5 realizations) ===
+Na=1e+04: traj RMS   1337.5+- 230.4 um ( 318.3% fringe) | field rel-err: z=5cm 813.7%  z=30cm 27057.9%  z=57cm 14689.8%  [2s]
+Na=1e+05: traj RMS    770.0+- 237.9 um ( 183.2% fringe) | field rel-err: z=5cm 303.9%  z=30cm 10086.3%  z=57cm 7867.8%  [3s]
+Na=1e+06: traj RMS    382.2+- 101.8 um (  90.9% fringe) | field rel-err: z=5cm  71.1%  z=30cm 2963.6%  z=57cm 2534.1%  [3s]
+Na=1e+07: traj RMS    303.7+-  70.5 um (  72.3% fringe) | field rel-err: z=5cm  21.9%  z=30cm 1252.7%  z=57cm  879.2%  [3s]
+
+=== dipole residual bias through GLS pipeline ===
+  eta=1e-2, eps=1e-3 (prod 1e-05): GLS-pipeline traj bias    37.57 um (8.939% fringe)
+  eta=1e-3, eps=1e-3 (prod 1e-06): GLS-pipeline traj bias     8.18 um (1.945% fringe)
+  eta=1e-2, eps=1e-4 (prod 1e-06): GLS-pipeline traj bias     4.89 um (1.164% fringe)
+  eta=1e-3, eps=1e-4 (prod 1e-07): GLS-pipeline traj bias     0.90 um (0.214% fringe)
+
+saved sim/stage4_results.pkl
+
+---- [327s] stage5_alloc Na=1e6 ----
+zeroth-order gain (uniform w, A_k ~ 1/SNR_k^2): G = 1.21
+  plane  0 (z=  5.0cm): RMS_k =     21.3 um   [1s]
+  plane  1 (z=  7.7cm): RMS_k =     58.5 um   [2s]
+  plane  2 (z= 10.5cm): RMS_k =     52.6 um   [3s]
+  plane  3 (z= 13.2cm): RMS_k =     93.4 um   [4s]
+  plane  4 (z= 15.9cm): RMS_k =     63.0 um   [5s]
+  plane  5 (z= 18.7cm): RMS_k =    110.9 um   [6s]
+  plane  6 (z= 21.4cm): RMS_k =     98.2 um   [7s]
+  plane  7 (z= 24.2cm): RMS_k =    188.5 um   [8s]
+  plane  8 (z= 26.9cm): RMS_k =    158.6 um   [9s]
+  plane  9 (z= 29.6cm): RMS_k =    133.2 um   [10s]
+  plane 10 (z= 32.4cm): RMS_k =    196.1 um   [11s]
+  plane 11 (z= 35.1cm): RMS_k =    157.5 um   [11s]
+  plane 12 (z= 37.8cm): RMS_k =    181.9 um   [12s]
+  plane 13 (z= 40.6cm): RMS_k =    153.5 um   [13s]
+  plane 14 (z= 43.3cm): RMS_k =    191.0 um   [14s]
+  plane 15 (z= 46.1cm): RMS_k =    144.6 um   [15s]
+  plane 16 (z= 48.8cm): RMS_k =    132.6 um   [16s]
+  plane 17 (z= 51.5cm): RMS_k =     93.9 um   [17s]
+  plane 18 (z= 54.3cm): RMS_k =    131.2 um   [18s]
+  plane 19 (z= 57.0cm): RMS_k =    102.7 um   [19s]
+
+additivity check: sqrt(sum A_k/Na) = 592.6 um  (compare full-noise GLS RMS at this Na)
+optimal-allocation gain (this Na, additive model): G = 1.076
+optimal shares N_k/N_tot: 0.009 0.024 0.021 0.038 0.026 0.045 0.040 0.077 0.064 0.054 0.080 0.064 0.074 0.062 0.078 0.059 0.054 0.038 0.053 0.042
+Traceback (most recent call last):
+  File "/home/bmch/Documents/photon_curtain/NJP120031_v8_simchain/simcode_v8/sim/stage5_alloc.py", line 77, in <module>
+    r_uni=run_alloc(shares_uni,20*Na,NPAIR,s0)
+          ^^^^^^^^^
+NameError: name 'run_alloc' is not defined

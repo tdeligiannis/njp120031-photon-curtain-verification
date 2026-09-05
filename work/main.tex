@@ -1,0 +1,884 @@
+% =============================================================================
+% Paper I — Matter-wave Kocsis–Steinberg proposal
+% Preprint version (no journal-specific formatting)
+%
+% Compile: pdflatex paper1_preprint.tex; pdflatex paper1_preprint.tex
+% =============================================================================
+
+\documentclass[11pt,a4paper]{article}
+\pdfminorversion=7
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{caption}
+\usepackage{authblk}
+\usepackage[protrusion=true,expansion=false]{microtype}
+\usepackage{orcidlink}
+
+\geometry{margin=1in}
+\hypersetup{colorlinks=true, linkcolor=blue!50!black, citecolor=blue!50!black, urlcolor=blue!50!black}
+\setlength{\emergencystretch}{2em}
+\captionsetup{font=small, labelfont=bf, format=plain, labelsep=period}
+
+\newcommand{\bra}[1]{\langle #1 |}
+\newcommand{\ket}[1]{| #1 \rangle}
+\newcommand{\braket}[2]{\langle #1 | #2 \rangle}
+\newcommand{\expval}[1]{\langle #1 \rangle}
+\newcommand{\weakval}[1]{\langle #1 \rangle_w}
+\newcommand{\weakvalps}[2]{\langle #1 \rangle_{w,\,#2}}
+
+\title{\bfseries Weak-Measurement Reconstruction of the Conditional Momentum Field for Atomic Matter Waves:\\
+\large A Dispersive Photon-Curtain Protocol Extending Kocsis--Steinberg}
+
+\author[1]{Jessica Fabianiak\,\orcidlink{0009-0004-3872-0422}}
+\author[2]{Theodore Deligiannis\,\orcidlink{0009-0009-9964-6664}}
+\affil[1]{Department of Chemistry, University of Nebraska at Omaha, Omaha, NE 68182, USA}
+\affil[2]{Department of Biomechanics, University of Nebraska at Omaha, Omaha, NE 68182, USA}
+
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\noindent
+Weak measurement has traced average trajectories for photons in a double slit. Extending this to massive matter waves faces a complementarity obstruction: a probe that acquires which-path information reduces the interference it should trace, and a resonantly scattered photon carries near-complete which-path information. We propose a route around it: thin sheets of far-detuned light (photon curtains) crossing a falling ${}^{87}$Rb double-slit beam at successive depths. The interaction is dispersive and elastic: the transmitted light is deflected by an amount that weakly encodes where the atom crossed the beam. We identify the atomic operator the deflection reads, fix the per-photon coupling by momentum conservation, and derive a formula converting the deflection profile, averaged over atoms post-selected by screen position, into the conditional momentum field: the tagged sub-ensemble's mean screen displacement divided by the remaining fall time. By Wiseman's theorem this field is the de Broglie--Bohm guidance velocity, equally the probability current over the density; we make no claim about particle trajectories. The formula is verified numerically against the exact Bohmian field; an explicit partial trace over the light shows essentially full fringe contrast per atom. Detuning buys a deterministic, calibratable back-action, not information efficiency, so two force-balanced multipass curtain arms cancel the dipole forces while their which-path records add; the residual is calibrated in situ with one slit closed. A forward model of the complete estimator locates the velocity information in a noise-hostile moment contraction: five-sigma detection of the field --- at present flux its far-field ballistic ramp, validating weak-value velocimetry of a massive particle end to end --- requires $2.2\times 10^8$ atoms, days to weeks at demonstrated fluxes, and is the central claim. Its distinctively quantum content, the channelling near the nodes, lies one to two orders of magnitude further in atom number: a future target, not claimed here.
+\end{abstract}
+
+\noindent\textbf{Keywords:} weak measurement; Bohmian mechanics; matter-wave interferometry; cold atoms; quantum foundations
+
+\bigskip
+\hrule
+\bigskip
+
+% =============================================================================
+\section{Introduction}
+\label{sec:intro}
+
+The reconstruction of average particle trajectories in a double-slit interferometer using weak measurement, demonstrated experimentally by Kocsis et al.~\cite{Kocsis2011}, transformed a long-standing theoretical curiosity into an empirical reality. Building on Aharonov--Albert--Vaidman weak measurement theory~\cite{AAV1988} and Wiseman's formal theorem identifying the weakly-measured velocity with the de Broglie--Bohm guidance velocity~\cite{Wiseman2007}, the experiment showed that quantum trajectories admit operational definition and direct measurement. Subsequent work extended these results to entangled photon pairs~\cite{Mahler2016, Xiao2017}.
+
+All position-resolved Bohmian trajectory reconstructions to date have employed photons. Weak-value measurements in matter-wave systems have been demonstrated via neutron interferometry~\cite{Sponar2015, Denkmayr2017, Lemmel2022} and, for ultracold atoms, via Larmor-clock weak measurements timing tunnelling $^{87}$Rb~\cite{Ramos2020, Spierings2021}, establishing experimental access to weak values in massive systems; but these works extract weak values of spin and path-presence operators --- in a Mach--Zehnder geometry for the neutron experiments, in a tunnelling geometry for the atomic ones --- rather than performing a position-resolved trajectory reconstruction along an interference pattern in the Kocsis--Steinberg sense. Extension of position-resolved trajectory reconstruction to \emph{massive} matter waves --- the de Broglie waves of particles with rest mass, here neutral atoms, the original setting of non-relativistic Bohmian mechanics~\cite{Bohm1952a, deBroglie1927, Holland1993} --- faces what we call, by analogy with Heisenberg's microscope, the \emph{Heisenberg-microscope obstruction}. Its content is complementarity rather than wavelength: any probe that acquires which-path information about the atom reduces the visibility of the very interference it is meant to trace, whether that information is carried away by a momentum recoil or by entanglement with the probe alone, without momentum transfer~\cite{Durr1998, Wiseman1998}; quantitatively, a probe event of which-path distinguishability $D$ leaves a fringe visibility $V \leq \sqrt{1 - D^2}$~\cite{Englert1996}. For a photon scattered resonantly by the atom the trade-off is fatal on both counts. To resolve the slit separation $d$ the photon must carry a momentum $\hbar k \gtrsim h/d$, of the order of the transverse momentum $h/d$ that separates adjacent fringes --- for ${}^{87}$Rb at the slit separation $d = 2.5\,\mu$m adopted below, the resonant recoil ($\lambda = 780$ nm) is $\hbar k = (d/\lambda)\,h/d \approx 3.2\,h/d$ --- and a resonantly scattered photon carries which-path information of order unity: a single scattering event both displaces the atom across the pattern and erases its slit coherence. This is the precise content of the shorthand ``short-wavelength probes destroy interference''; a probe too weakly coupled to become entangled with the path, conversely, carries no path information. A weak measurement in the Aharonov--Albert--Vaidman sense escapes the obstruction only if each probe event has a per-event overlap exponent $\mathcal{D}_1 \ll 1$ (a per-event distinguishability $\approx\sqrt{2\mathcal{D}_1}$) while the information is recovered statistically over many events (\S\ref{sec:decoherence}), a regime that resonant scattering cannot reach. For free electrons the obstruction is essentially irreducible: lacking an internal resonance, the electron offers no $1/\Delta$ dispersive knob with a parametrically suppressed absorptive channel, and the existing coherent electron--light couplings --- the Kapitza--Dirac and ponderomotive interactions~\cite{Freimund2001} --- act through the intensity envelope rather than reading out transverse position weakly. We propose a protocol that overcomes the obstruction for atomic matter waves by exploiting a tunable interaction unavailable in electron systems: the dispersive coupling between far-off-resonant light and atomic polarizability. The protocol uses a transverse photon curtain in the dispersive regime as a physical implementation of weak measurement on a propagating atom, with the photon's transverse momentum kick serving as the AAV pointer for the atom's local conditional momentum field. The geometry is shown in Figure~\ref{fig:setup}.
+
+\begin{figure}[p]
+\centering
+\includegraphics[width=0.92\textwidth]{photon_curtain_fig1_setup.png}
+\caption{\textbf{Photon-curtain weak-measurement experiment} (schematic; not to scale).
+A ${}^{87}$Rb cloud released from a magneto-optical trap falls 11.5 cm to a double slit ($d = 2.5\,\mu$m; $v_0 = 1.50$ m/s at the slit plane) and continues in free fall over $L = 60$ cm to the detection screen ($v_z$: $1.50 \to 3.74$ m/s; total slit-to-screen time $T = 0.229$ s). Transverse photon curtains --- far-detuned dual-color force-balanced multipass arms at 776.2 and 803.5 nm ($F = 100$ passes, propagating along $y$; §\ref{sec:numerics}) --- cross the fall axis at planes $z_1 = 5$ cm through $z_{20} = 57$ cm; only three of the $N_z = 20$ planes are drawn, and \emph{one curtain plane, at one transverse position $x_c$ of the 151 scanned per plane, is active per experimental shot} (§\ref{sec:setup}). The interaction is dispersive and elastic: far from resonance the curtain photons are transmitted and \emph{deflected} by the gradient of the phase shift the atom imprints on the beam, not absorbed and re-emitted (the residual absorptive channel is the scattering budget $P_\text{sc}$ of \S\ref{sec:decoherence}). The small position-dependent transverse momentum kick $\delta p_\gamma$ (inset; the two outgoing arrows indicate the sign of the deflection for an atom on either side of the beam axis, not two scattered rays) is recorded as a shot-noise-limited beam deflection on position-sensitive detectors (split or lateral-effect photodiodes). Statistical accumulation of these deflection records, conditioned on atom detection inside the $\pm 1.25$-mm screen window, reconstructs the atom's transverse conditional momentum field; the screen distribution serves as the post-selection ensemble. The multi-fringe strip drawn at the screen is schematic: at the adopted slit geometry the pattern is a single central lobe carrying $94\%$ of the atoms, with side maxima at $4\%$ of the peak (\S\ref{sec:setup}). Operating-configuration parameters in Table~\ref{tab:parameters}.}
+\label{fig:setup}
+\end{figure}
+
+The principal contributions are: (i) an identification, at the level of operators, of what the photon meter actually reads --- the gradient of the atom's position-dependent dispersive phase shift, so that the measured atomic operator is a function of the atom's transverse position (\S\ref{sec:coupling}) --- together with a clean separation of the three phases that enter: the phase $g_a$ accumulated by the atom over one curtain transit, the phase $g_\text{slice}$ imprinted during one photon transit time, and the phase $\varphi_1$ exchanged between one atom and one photon, which alone governs the weak-measurement condition and the decoherence and is fixed by momentum conservation (each photon's deflection is equal and opposite to its share of the atom's dipole impulse), independently of laser power; (ii) a formula, Eq.~\eqref{eq:vbohm_reconstructed}, that converts the deflection profile averaged over atoms post-selected by their screen position into the conditional momentum field --- physically, the mean screen displacement of the sub-ensemble tagged by the curtain, divided by the remaining fall time --- derived from the free-flight Heisenberg-picture relation $\hat{x}(t) = \hat{x} + \hat{p}t/M$ and verified numerically against the exact (closed-form) Bohmian field at $1.0\%$ mean error ($2.5\%$ maximum, 24-point grid) and against the full free-fall apparatus geometry at the $1.6\%$ level; (iii) a complete decoherence analysis saturating the Englert visibility-distinguishability bound; (iv) the detuning-independence identity $\varphi_1^2/p_{\text{sc},1}$ (Eq.~\eqref{eq:freespace_ceiling}), showing that detuning purchases the \emph{character} of the back-action --- deterministic and calibratable rather than stochastic --- not information per scattering event, explaining the historical cavity requirement for free-space dispersive detection and motivating the dual-color multipass operating configuration; (v) a quantitative analysis of the dipole-force back-action with the dual-color force balance as the baseline architecture and a two-stage calibration budget $\eta_\text{bal}\,\varepsilon_\text{res} \leq 1.4\times 10^{-6}$, confirmed by forward simulation, achievable via an in-situ atomic single-slit scheme analogous to demonstrated trap-potential mapping; and (vi) a forward-modelled noise analysis of the complete estimator identifying the moment contraction, not weak-value detectability, as the statistical bottleneck, introducing a generalized-least-squares field estimator, and establishing five-sigma detection of the conditional momentum field of a massive particle at $2.2\times 10^8$ atoms --- days to weeks at demonstrated fluxes --- as the feasible experimental deliverable (at present flux a detection of the field's far-field ballistic ramp, validating the weak-value velocimetry end to end, \S\ref{sec:resolution_limits}), with quantitative mapping of the field's distinctively quantum content identified as the objective for future flux and coupling improvements. A companion paper~\cite{PaperII} extends the proposal with internal-state entanglement and a QND probe to test the Mahler--Tastevin-Lalo\"e surrealism phase diagram across the full microscopic-to-macroscopic pointer range.
+
+% =============================================================================
+\section{Physical Setup and Dispersive Interaction}
+\label{sec:setup}
+
+We consider an atom of mass $M$ prepared in a coherent superposition by a double-slit apparatus and falling freely along the vertical $z$-axis, oriented downward. At intermediate planes $z = z_j$ below the slits, a transverse laser beam --- the photon curtain --- propagates along the horizontal $y$-axis, interacting dispersively with the atom. Photon deflections in the $x$--$z$ plane are measured at downstream detector arrays. The $z$-axis is the vertical, the atom's mean propagation direction; $x$ is the horizontal transverse axis along which the slits are separated; $y$ is the curtain photon propagation axis. The atomic wavefunction at $z = 0$ (the slit plane) is the standard double-slit superposition of localized Gaussians of width $\sigma_0$ at $x = \pm d/2$, propagated freely to plane $z_j$.
+
+\paragraph{Notation.} Throughout, a subscript $\gamma$ labels a property of a curtain photon and a subscript $a$ a property of the atom. The several transverse coordinates along $x$ are distinguished by their role: $x_a$ (or an unsubscripted $x$ inside integrals) is the atom's transverse position at the active curtain plane $z_j$; $x_\gamma$ is a curtain photon's transverse coordinate; $x_c$ is the centre of the curtain beam, the control parameter scanned across the interference pattern; and $x_f$ is the atom's detected position on the screen at $z = L$, the post-selection variable. The remaining fall time from the active plane to the screen is written $t \equiv T - t(z_j)$, with $t(z)$ the flight time from the slits to depth $z$ (Eq.~\eqref{eq:kinematics_map} below). A complete symbol table is given in Appendix~\ref{app:notation}.
+
+\paragraph{Vertical free-fall kinematics.} The machine is a vertical free-fall interferometer in the geometry of the metastable-neon double-slit experiment of Shimizu, Shimizu and Takuma~\cite{Shimizu1992}: atoms released from optical molasses fall a height $h_\text{drop} = v_0^2/2g \approx 11.5$ cm before crossing the slit plane at the design velocity $v_0 = 1.500$ m/s. The slit-plane velocity is the primary kinematic specification; the drop height is the derived quantity. Below the slits ($z > 0$, measured downward) the longitudinal motion is uniformly accelerated,
+\begin{equation}
+v_z(z) = \sqrt{v_0^2 + 2gz},
+\qquad
+t(z) = \frac{v_z(z) - v_0}{g},
+\label{eq:kinematics_map}
+\end{equation}
+with $t(z)$ the flight time from the slit plane to depth $z$: the atom reaches the screen at $v_z(L) = 3.744$ m/s after a total flight time $T \equiv t(L) = 0.2288$ s. The far-field fringe spacing is set by the flight \emph{time}, not the flight distance,
+\begin{equation}
+\lambda_\text{fringe} = \frac{h\,T}{M d} = 420~\mu\text{m},
+\label{eq:fringe_accel}
+\end{equation}
+reducing to the familiar $\lambda_\text{dB}L/d$ only in the constant-velocity limit. With $d/\sigma_0 = 4.2$ the far-field envelope width is one third of the fringe spacing at every plane, $\sigma(z)/\lambda_\text{fringe}(z) = d/(4\pi\sigma_0) = 0.33$, so the pattern is essentially single-lobed: the central lobe carries $94\%$ of the probability, the first nodes lie at $\pm 210\,\mu$m at the screen ($\pm 28\,\mu$m at the first curtain plane), and the first side maxima reach $4\%$ of the peak. The fringe spacing remains the natural length scale of the coherent structure, and the reader should keep this single-lobe geometry in mind when fringe-relative figures of merit are quoted below. Gravity acts along $z$, orthogonal to the measured transverse coordinate, so the transverse dynamics remain \emph{exactly free}: the Hamiltonian separates, and the entire reconstruction chain of \S\ref{sec:bohmian} --- the Heisenberg identities Eqs.~\eqref{eq:Heisenberg_0}--\eqref{eq:Heisenberg_x}, the reconstruction formula Eq.~\eqref{eq:vbohm_reconstructed}, and the operational estimator Eq.~\eqref{eq:cumulative_estimator} --- survives verbatim once expressed in the transverse propagation \emph{time}. Throughout the paper the propagation interval from curtain plane $z_j$ to the screen is therefore $t = T - t(z_j)$. The sole consequences of the vertical geometry are this kinematic map and the plane dependence it induces in the atom--curtain couplings through the transit time $\tau_a(z) = w/v_z(z)$: Table~\ref{tab:kinematics} lists both at five of the $N_z = 20$ curtain planes (uniformly spaced over $z_j = 5$--$57$ cm), and the couplings of Table~\ref{tab:parameters} are anchored at the reference plane $z_\text{ref} = 5$ cm.
+
+\begin{table}[t]
+\centering
+\small
+\caption{Per-plane kinematics of the vertical free-fall geometry (Eq.~\eqref{eq:kinematics_map}) at five of the $N_z = 20$ curtain planes; $v_0 = 1.500$ m/s. The signal scale $d/t(z_j)$ is the characteristic fringe-wiggle amplitude of the conditional momentum field at plane $z_j$ (\S\ref{sec:dipole_lensing}).}
+\label{tab:kinematics}
+\begin{tabular}{ccccc}
+\toprule
+$z_j$ (cm) & $v_z$ (m/s) & $\tau_a$ ($\mu$s) & $t(z_j)$ (s) & $d/t(z_j)$ ($\mu$m/s) \\
+\midrule
+5.00 & 1.797 & 1.113 & 0.0303 & 82.4 \\
+7.74 & 1.941 & 1.030 & 0.0450 & 55.6 \\
+10.47 & 2.075 & 0.964 & 0.0586 & 42.7 \\
+29.63 & 2.839 & 0.704 & 0.1366 & 18.3 \\
+57.00 & 3.665 & 0.546 & 0.2207 & 11.3 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Longitudinal velocity spread.} A spread $\sigma_{v_0}$ in the release velocity maps into a flight-time spread through $dT/dv_0 = [v_0/v_z(L) - 1]/g = -61.1$ ms per m/s, a fractional fringe smear of $|dT/dv_0|\,\sigma_{v_0}/T = 0.27\%$ per cm/s of $\sigma_{v_0}$. We specify $\sigma_{v_0} \leq 1$ cm/s --- routine for Raman velocity selection (\S\ref{sec:numerics}) --- holding the fringe smear below $0.3\%$, negligible against the per-atom decoherence budget of \S\ref{sec:decoherence}. The Earth's rotation adds a deterministic Coriolis deflection of the falling atoms; its magnitude, the orientation strategy that removes it from the measurement plane, and its budget line are treated in \S\ref{sec:systematics}.
+
+For curtain photons of frequency $\omega_L$ detuned by $\Delta = \omega_L - \omega_0$ from an atomic transition $\omega_0$, the rotating-wave-approximation interaction is the position-dependent light shift $\hat{H}_\text{int} = \hbar\,U(\hat{\mathbf{r}}_a, \mathbf{r}_\gamma)$ with $U(\mathbf{r}) = |\Omega(\mathbf{r})|^2/(4\Delta)$ and $\Omega$ the Rabi frequency~\cite{Grimm2000}. Two complementary processes coexist: the real polarizability produces a phase shift / momentum deflection scaling as $1/\Delta$ (information channel), while the imaginary part produces spontaneous emission at rate $\Gamma_\text{sc} \propto \Gamma/\Delta^2$ (decoherence channel). The information channel operates as follows: the dispersive phase a curtain photon acquires depends on where, within the curtain's Gaussian intensity profile, the atom crosses the beam, and the photon is deflected by the transverse gradient of that phase; the deflection of the transmitted light --- the quantity the detector records --- is therefore a weak function of the atom's transverse position $x_a$ relative to the curtain centre $x_c$. This is the sense in which the far-detuned coupling encodes the atomic transverse position in the light, made quantitative in \S\ref{sec:coupling}. The ratio of the two channels,
+\begin{equation}
+\frac{|U|}{\Gamma_\text{sc}} = \frac{\Delta}{\Gamma},
+\label{eq:figure_of_merit}
+\end{equation}
+can be made arbitrarily large by increasing detuning (Figure~\ref{fig:dispersive}). Equation~\eqref{eq:figure_of_merit} must be read carefully: it governs the \emph{character} of the meter back-action --- coherent, deterministic dipole phase versus stochastic recoil --- not the information available per scattering event, which is detuning-independent (§\ref{sec:numerics}, Eq.~\eqref{eq:freespace_ceiling}): each scattered photon costs the same which-path information budget at any $\Delta$. The loophole unavailable to electron--photon systems is the existence of this coherent channel at all. Detuning converts the back-action into a deterministic, calibratable perturbation (Figure~\ref{fig:dispersive}b, §\ref{sec:dipole_lensing}), and the atom economy that free space alone cannot supply is recovered by the multipass architecture of §\ref{sec:numerics}.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.85\textwidth]{photon_curtain_fig2_dispersive.pdf}
+\caption{\textbf{What detuning does and does not purchase} (two-level far-detuned scaling at fixed geometry; single-pass free-space reference optics, 780 nm, $462\,\mu$W). \textbf{(a)} The per-photon phase $\varphi_1 \propto 1/\Delta$ (Eq.~\eqref{eq:phi1}) and the per-photon scattering probability $p_{\text{sc},1} = \varphi_1\Gamma/\Delta \propto 1/\Delta^2$ both fall with detuning, but their ratio $\varphi_1^2/p_{\text{sc},1} = 7.7\times 10^{-3}$ is detuning-independent (solid line; dashed: ideal-mode-matched bound $\sigma_\text{res}/2w^2 = 0.036$; cf.\ Eq.~\eqref{eq:freespace_ceiling}). \textbf{(b)} At fixed scattering budget $P_\text{sc} = 0.017$ (laser power rescaled $P \propto \Delta^2$), the deterministic dipole kick $\sqrt{2/e}\,(\hbar/Mw_\text{eff})\,P_\text{sc}\Delta/\Gamma$ (Eq.~\eqref{eq:dipole_kick_max}) grows linearly with detuning while the rms transverse stochastic recoil $\sqrt{P_\text{sc}/3}\,\hbar k/M$ is constant (absorption recoil lies along $y$): detuning converts the back-action from stochastic to coherent-deterministic, with crossover near $\Delta/2\pi \approx 0.35$ GHz, inside the hyperfine band. Dotted line: the 200-GHz single-pass reference; shaded band: excited-state hyperfine structure invalidates the two-level scaling.}
+\label{fig:dispersive}
+\end{figure}
+
+\paragraph{Protocol temporal structure.} Each experimental cycle inserts a \emph{single} curtain, at one plane $z_j$ and one transverse position $x_c$; the $N_{x_c}\times N_z$ reconstruction grid is assembled across cycles, not stacked along one atom's flight. Every atom therefore experiences exactly one curtain transit, and the per-atom budgets of Table~\ref{tab:parameters} --- the phase $g_a$, the decoherence exponent $\Lambda_\text{eff}$, and the scattering probability $P_\text{sc}$ --- are per-shot totals, not per-plane increments to be multiplied by $N_z$. Post-selection at the screen conditions each single-plane weak-value record on the final position $x_f$, exactly as in the photonic implementation~\cite{Kocsis2011}. Section~\ref{sec:coupling} makes the interaction quantitative --- it separates the three dispersive phases in play (per atom transit, per photon transit time, and per atom--photon pair) and anchors the last of them to momentum conservation --- and \S\ref{sec:weakval} then casts the photon deflection as a weak measurement of a definite atomic operator.
+
+% =============================================================================
+\section{Weak Measurement Coupling}
+\label{sec:coupling}
+
+We model the curtain as a continuous transverse Gaussian beam centered at $x_c$. Laser parameters follow the standard $1/e^2$ convention throughout: $w$ denotes the $1/e^2$ intensity radius ($w = 2\,\mu$m; peak intensity $I_0 = 2P/\pi w^2$, Table~\ref{tab:parameters}), so the intensity profile is $|\Omega(x)|^2 = \Omega_0^2 \exp[-2(x-x_c)^2/w^2] = \Omega_0^2 \exp[-(x-x_c)^2/w_\text{eff}^2]$, with $w_\text{eff} \equiv w/\sqrt{2} = 1.41\,\mu$m the $1/e$ intensity radius. Transverse-shape factors below carry $w_\text{eff}$; the transit time $\tau_a(z) = w/v_z(z)$ and the per-photon phase, Eq.~\eqref{eq:phi1}, carry the spot size $w$. Two distinct timescales enter the analysis:
+\begin{itemize}
+\item The \emph{atom transit time} $\tau_a(z) = w/v_z(z)$, the duration over which the atom traverses the curtain region along $z$ and accumulates dispersive phase; it is plane-dependent through the free-fall map, Eq.~\eqref{eq:kinematics_map}. The relevant longitudinal extent is the curtain's transverse spot size $w$, not the Rayleigh length $z_R$ along $y$.
+\item The \emph{photon transit time} $\tau_\gamma \sim z_R/c$, with $z_R = \pi w^2/\lambda_L$, the duration of a single photon-atom scattering event as the photon traverses the focal region along $y$.
+\end{itemize}
+At the geometry adopted throughout ($w = 2\,\mu$m, $\lambda_L \approx 780$ nm), $\tau_\gamma \approx 54$ fs, while the atom transit time is plane-dependent through $v_z(z)$, running from $\tau_a = 1.11\,\mu$s at the $z_\text{ref} = 5$ cm reference plane to $0.55\,\mu$s at the last curtain plane (Table~\ref{tab:kinematics}). Three distinct dimensionless quantities must be kept apart, and the distinction is the conceptual core of the feasibility analysis. The quantity
+\begin{equation}
+g_\text{slice} \equiv \frac{\Omega_0^2\,\tau_\gamma}{4\Delta},
+\label{eq:g_slice}
+\end{equation}
+built from the full classical intensity, is the dispersive phase accumulated per photon-transit \emph{time slice}: it is the joint action of all $\bar{n}_\text{inst} = P\tau_\gamma/(\hbar\omega_L)$ photons simultaneously present in the interaction volume, and is \emph{not} a per-photon quantity. The cumulative per-atom-transit phase is $g_a \equiv \Omega_0^2\tau_a/(4\Delta) = (\tau_a/\tau_\gamma)\,g_\text{slice}$, and the photon number per atom transit is $N_\gamma^{(1)} = P\tau_a/(\hbar\omega_L)$, set by the laser power $P$. The true \emph{per-photon} phase follows from pairwise reciprocity: each atom--photon pair exchanges equal dispersive phase during its overlap, and the atom's total phase $g_a$ is the sum of $N_\gamma^{(1)}$ pairwise contributions, so
+\begin{equation}
+\varphi_1 = \frac{g_a}{N_\gamma^{(1)}} = \frac{\hbar\omega_L\,\Gamma^2}{4\pi w^2 I_\text{sat}\,\Delta},
+\label{eq:phi1}
+\end{equation}
+which is manifestly independent of laser power --- $\varphi_1$ is a pairwise geometric quantity, and no choice of intensity alters it. The three are related by $g_\text{slice} = \bar{n}_\text{inst}\,\varphi_1$; conflating $g_\text{slice}$ with $\varphi_1$ overstates per-photon quantities by the instantaneous occupancy $\bar{n}_\text{inst}$ ($\approx 10^2$ at typical parameters here). As an independent consistency check, the standard single-atom dispersive phase imprinted on a beam of area $\sim w^2$ gives $\varphi_1 \approx (\sigma_\text{res}/w^2)(\Gamma/2\Delta)$ with $\sigma_\text{res} = 3\lambda_L^2/2\pi$ the resonant cross-section --- the same scaling, larger than Eq.~\eqref{eq:phi1} by a factor $\approx 4.7$ that represents the ideal-mode-matched ceiling (the slack is mode matching, polarization, and the $I_\text{sat}$ convention). We build all feasibility estimates on the reciprocity value. The weak-measurement condition is smallness of the \emph{per-photon} phase, $\varphi_1 \ll 1$ --- satisfied here by six orders of magnitude --- ensuring that no single photon extracts appreciable which-path information; the cumulative atomic phase $g_a$ may be large without violating it, and its consequence, a deterministic dipole back-action, is treated in §\ref{sec:dipole_lensing}. In the recommended dual-arm apparatus (the operating configuration, §\ref{sec:numerics}), each of two force-balanced curtain arms makes $F$ re-imaged passes through the interaction region; throughout, $\varphi_1$ denotes the per-photon phase accumulated over a full atom transit through all $F$ passes of one arm, so every single-curtain expression below applies per arm with that arm's $\varphi_1$ and $N_\gamma^{(1)}$.
+
+\paragraph{Deflection of a curtain photon by the atom: the pointer signal.}
+An atom crossing the curtain is deflected transversely by the dipole force of the light, and momentum conservation requires that the light be deflected in return; the transverse deflection of the transmitted curtain photons is the pointer signal of the weak measurement (we keep the shorthand ``kick'', $\delta p_\gamma$, for the transverse momentum a photon acquires). The position-resolved form of this statement follows from the optical phase. A curtain photon at transverse coordinate $x_\gamma$ acquires from an atom at $x_a$ the dispersive phase shift $\varphi_\gamma(x_\gamma; x_a) = \varphi_1 \exp[-(x_a - x_\gamma)^2/w_\text{eff}^2]$: the per-photon phase $\varphi_1$ of Eq.~\eqref{eq:phi1} weighted by the curtain's intensity profile at the atom--photon separation. Here $x_\gamma$ labels the transverse position of the photon's mode (the beam axis): a curtain photon is delocalized over the beam profile, the atom couples to the light intensity at its own position, and the phase exchanged by the pair therefore falls off with the atom--beam separation on the scale of the beam profile (Appendix~\ref{app:derivation}). The transverse gradient of this phase with respect to the photon coordinate is the momentum transferred to the photon --- equal and opposite, by Newton's third law, to the dipole impulse on the atom --- so evaluating it at the curtain centre gives the per-photon kick
+\begin{equation}
+\delta p_\gamma^{(1)}(x_a) = -\hbar\,\partial_{x_\gamma}\varphi_\gamma\big|_{x_\gamma = x_c}
+= -\frac{2\hbar \varphi_1 (x_a - x_c)}{w_\text{eff}^2}\,\exp\!\left[-\frac{(x_a - x_c)^2}{w_\text{eff}^2}\right].
+\label{eq:photon_kick}
+\end{equation}
+This is the per-photon AAV pointer signal. Summed over the $N_\gamma^{(1)}$ photons of one atom transit it must reproduce, with opposite sign, the dipole impulse on the atom; using Eq.~\eqref{eq:phi1} this is the exact identity
+\begin{equation}
+N_\gamma^{(1)}\,\delta p_\gamma^{(1)}(x_a) = -\frac{2\hbar g_a (x_a - x_c)}{w_\text{eff}^2}\,\exp\!\left[-\frac{(x_a - x_c)^2}{w_\text{eff}^2}\right]
+\;\;\Longleftrightarrow\;\; N_\gamma^{(1)}\varphi_1 = g_a.
+\label{eq:momentum_identity}
+\end{equation}
+Equation~\eqref{eq:momentum_identity} is the absolute anchor of the coupling bookkeeping: because the deflection signal and the dispersive decoherence share the same $\varphi_1^2$, internal consistency checks such as the Englert saturation $V^2 + D^2 = 1$ (§\ref{sec:decoherence}) close for \emph{any} assumed per-photon coupling, and only momentum conservation (or the single-atom cross-section) exposes a misidentification. The two descriptions are one physics: Eq.~\eqref{eq:momentum_identity} is momentum conservation summed over the transit, Eq.~\eqref{eq:photon_kick} the same statement resolved photon by photon and position by position. The optical phase $\varphi_\gamma$ is nevertheless the natural starting point, because the detector reads a \emph{profile} --- the mean deflection as a function of the curtain position $x_c$ --- and it is the Gaussian shape of $\varphi_\gamma$ that fixes which atomic operator that profile samples: momentum conservation fixes the normalization of the coupling, the optical profile fixes its shape. Equation~\eqref{eq:photon_kick} identifies, up to the overall meter sign made explicit in Eq.~\eqref{eq:kick_weakval}, the atomic operator the photon meter reads,
+\begin{equation}
+\hat{A}(x_c) = \frac{2\hbar U_0\,(\hat{x}_a - x_c)}{w_\text{eff}^2}\,\exp\!\left[-\frac{(\hat{x}_a - x_c)^2}{w_\text{eff}^2}\right],
+\label{eq:coupling_operator}
+\end{equation}
+a function of the atomic transverse \emph{position} operator $\hat{x}_a$, with $U_0 \equiv g_a/\tau_a$. The dimensions of $\hat{A}$ are force (energy/length), as required for consistency with the AAV Hamiltonian below. This is not the atomic transverse momentum operator $\hat{p}_x$; the connection to the conditional momentum field is established in §\ref{sec:bohmian} via reconstruction from the position-resolved weak-value profile.
+
+% =============================================================================
+\section{Joint State and Weak-Value Extraction}
+\label{sec:weakval}
+
+The operator $\hat{A}(x_c)$ of Eq.~\eqref{eq:coupling_operator} is the atomic side of a bilinear atom--photon coupling. Microscopically the atom couples to the light intensity at its own position, and the curtain Gaussian is the transverse state of the photon, not an interaction kernel; to first order in the per-photon coupling this microscopic interaction produces exactly the meter response of the bilinear AAV form (Appendix~\ref{app:derivation}, B.1--B.2),
+\begin{equation}
+\hat{H}_\text{AAV} = \hat{A}(\hat{x}_a)\otimes\delta\hat{x}_\gamma,
+\label{eq:AAV_form}
+\end{equation}
+where $\delta\hat{x}_\gamma \equiv \hat{x}_\gamma - x_c$. The meter degree of freedom is the photon transverse position; the conjugate momentum $\hat{p}_\gamma$ is the readout variable, in accord with the standard von Neumann pointer relation. We pre-select on the prepared atomic state $\ket{\psi_i}$ propagated to plane $z_j$, and post-select on atomic detection at screen position $x_f$ at the detection plane $z = L$. The conditional weak value of $\hat{A}$ is
+\begin{equation}
+\weakvalps{\hat{A}(x_c)}{x_f, z_j} = \frac{\bra{x_f}\hat{U}(L, z_j)\,\hat{A}(x_c)\,\hat{U}(z_j, 0)\ket{\psi_0}}{\bra{x_f}\hat{U}(L, 0)\ket{\psi_0}},
+\end{equation}
+with $\hat{U}(z', z)$ the free-propagation evolution operator. To leading order in $\varphi_1$ (Appendix~\ref{app:derivation}, Eq.~\eqref{eq:B_pointer}), the conditional mean photon momentum kick is
+\begin{equation}
+\langle \delta p_\gamma\rangle_{x_f, z_j} = -\tau_1\,\mathrm{Re}\,\weakvalps{\hat{A}(x_c)}{x_f, z_j},
+\qquad \tau_1 \equiv \frac{\varphi_1}{U_0} = \frac{\tau_a}{N_\gamma^{(1)}},
+\label{eq:kick_weakval}
+\end{equation}
+where $\tau_1$ is the effective per-photon interaction time --- the atom transit time shared among the $N_\gamma^{(1)}$ photons --- and units are consistent: $\hat{A}$ has units of force (energy/length, from the explicit $\hbar U_0$ prefactor in Eq.~\eqref{eq:coupling_operator}), so $\tau_1\,\hat{A}$ has units of momentum. The cumulative signal accumulated over $N_\gamma^{(1)}$ photons during a single atom transit is $N_\gamma^{(1)}$ times this value, i.e.\ $-\tau_a\,\mathrm{Re}\,\langle\hat{A}\rangle_w$ --- equal and opposite to the transit-integrated atomic dipole impulse, as Eq.~\eqref{eq:momentum_identity} requires --- with shot-noise fluctuations $\sigma_p\sqrt{N_\gamma^{(1)}}$ ($\sigma_p = \hbar/w$ is the photon transverse momentum spread, \S\ref{sec:decoherence}). The per-bin ensemble SNR after $N_a$ atoms scales as $\mathrm{SNR}_\text{ens} \sim \sqrt{N_a\,\Lambda_\text{eff}}\,\langle\hat{A}\rangle_\text{dimless}$, where $\langle\hat{A}\rangle_\text{dimless} \equiv \langle\hat{A}\rangle/(\hbar U_0/w_\text{eff})$ is the dimensionless weak value (typically order unity in the bulk of the interference pattern) and $\Lambda_\text{eff} = \sum_\text{arms} N_\gamma^{(1)}\mathcal{D}_1$ is the per-atom decoherence exponent, built from the per-photon which-way distinguishability $\mathcal{D}_1$ and summed over the curtain arms; both are defined in §\ref{sec:decoherence} (Eq.~\eqref{eq:D1_formula}), and only their product with $N_a$ enters here.
+
+\paragraph{Readout.} At the recommended operating point the photon flux through the interaction region is $\sim 5\times 10^{15}$~s$^{-1}$ ($N_\gamma^{(1)} \approx 5\times 10^9$ per 1.11-$\mu$s transit at $z_\text{ref}$, summed over both arms); no photon-counting array operates at such flux, and none is required. The readout is shot-noise-limited beam \emph{deflectometry}: the transverse displacement of each transmitted arm is monitored on a position-sensitive (split or lateral-effect) photodiode, whose shot-noise limit realizes exactly the per-photon pointer statistics assumed above. For coherent-state illumination this identification is exact (§\ref{sec:decoherence}).
+
+% =============================================================================
+\section{Connection to the Conditional Momentum Field}
+\label{sec:bohmian}
+
+The atomic operator $\hat{A}(x_c)$ measured by the photon-curtain protocol is a function of the transverse position operator $\hat{x}_a$, not the transverse momentum operator $\hat{p}_x$. The connection to the conditional momentum field $v_x(x_c, z_j)$ is therefore not direct: it requires (i) handling of the position-dependent (rather than momentum-conjugate) curtain coupling, and (ii) handling of the free-propagation gap between the curtain plane $z_j$ and the post-selection plane $L$. We treat both at once via the Heisenberg-picture identity for free propagation. The logic of the section is as follows: \S\ref{sec:G_function} introduces the amplitude $G$ of the wave component tagged by the curtain; two exact identities of free flight then evaluate the post-selection averages of that amplitude in closed form, giving the reconstruction formula of \S\ref{sec:reconstruction_formula}, Eq.~\eqref{eq:vbohm_reconstructed}, whose content is the mean screen displacement of the tagged sub-ensemble divided by the remaining fall time; the formula is checked numerically against the exact field in \S\ref{sec:num_verif} and the estimator refined for use with data in \S\ref{sec:plug_in}. The algebra behind each step is collected in Appendix~\ref{app:derivation}, together with the explicit form and bound of the residual term $\mathcal{A}$ of Eq.~\eqref{eq:numerator}.
+
+\subsection{The auxiliary function \texorpdfstring{$G$}{G}}
+\label{sec:G_function}
+
+The curtain operator is the gradient of the curtain Gaussian profile,
+\begin{equation}
+\hat{A}(x_c) = \hbar U_0\,\partial_{x_c}\,\tilde{f}(\hat{x}_a; x_c),
+\qquad
+\tilde{f}(x; x_c) \equiv \exp\!\left[-\frac{(x-x_c)^2}{w_\text{eff}^2}\right],
+\label{eq:A_is_dxc_f}
+\end{equation}
+recovering Eq.~\eqref{eq:coupling_operator}. The constant $\hbar U_0$ is an overall factor of $\hat{A}$ that drops out of the velocity ratio derived in \S\ref{sec:reconstruction_formula}; we absorb it into the symbol $\hat{A}$ throughout this section without further notice. We introduce an auxiliary quantity, defined as the unnormalized matrix-element integrand,
+\begin{equation}
+G(x_c, x_f, z_j) \;\equiv\; \int dx\,K(x_f - x;\,L - z_j)\,\tilde{f}(x; x_c)\,\psi(x, z_j),
+\label{eq:G_def}
+\end{equation}
+where $K(x_f - x; L - z_j)$ is the free-propagation kernel from $z_j$ to $L$. The conditional weak value of the ungated curtain Gaussian is $\weakvalps{\tilde{f}(\hat{x}_a; x_c)}{x_f, z_j} = G(x_c, x_f, z_j)/\psi(x_f, L)$; we work with the unnormalized form because it makes the post-selection-averaged integrals algebraically transparent. Differentiating with respect to $x_c$ relates $G$ to the directly measured weak value of $\hat{A}$.
+
+In words, $G(x_c, x_f, z_j)$ is the probability amplitude for the part of the atomic wave that the curtain at $(x_c, z_j)$ ``tags'' --- the wave at the curtain plane weighted by the curtain profile $\tilde{f}$ --- to arrive at the screen position $x_f$. The tagging is at amplitude level, not a projection: because the coupling is weak, the tagged component continues to interfere with the rest of the wave, and the weak value is the ratio of the tagged amplitude to the full arrival amplitude $\psi(x_f, L)$. Nothing in the construction is arbitrary; it is forced by what the meter reads (a known Gaussian profile of the atomic position, Eq.~\eqref{eq:coupling_operator}) and by where the post-selection is made (the screen). The auxiliary function is introduced only because it lets the two post-selection averages that enter the velocity --- over the arrival distribution, with and without the lever arm $(x_f - x_c)$ --- be evaluated in closed form in \S\ref{sec:reconstruction_formula}.
+
+\subsection{The Heisenberg-picture identity for free propagation}
+
+For free transverse propagation, the Heisenberg-picture position operator evolves as $\hat{U}^\dagger(L-z_j)\,\hat{x}\,\hat{U}(L-z_j) = \hat{x} + \hat{p}_x t/M$ with $t \equiv T - t(z_j)$ the transverse propagation time from the curtain plane to the screen, Eq.~\eqref{eq:kinematics_map}. Taking matrix elements (Appendix~\ref{app:derivation}, B.3) yields a zeroth-moment identity (unitarity)
+\begin{equation}
+\int dx_f\,\psi^*(x_f, L)\,K(x_f - x; L - z_j) = \psi^*(x, z_j),
+\label{eq:Heisenberg_0}
+\end{equation}
+and a first-moment identity
+\begin{equation}
+\int dx_f\,x_f\,\psi^*(x_f, L)\,K(x_f - x; L - z_j) = x\,\psi^*(x, z_j) + \frac{i\hbar t}{M}\,\partial_x\psi^*(x, z_j).
+\label{eq:Heisenberg_x}
+\end{equation}
+
+\subsection{The reconstruction formula}
+\label{sec:reconstruction_formula}
+
+Apply the two identities to the post-selection-ensemble integrals. The denominator integral, using Eq.~\eqref{eq:Heisenberg_0}, becomes the curtain-Gaussian-blurred probability density
+\begin{equation}
+\int dx_f\,\psi^*(x_f, L)\,G(x_c, x_f, z_j) = \int dx\,\tilde{f}(x; x_c)\,|\psi(x, z_j)|^2 \equiv \rho_w(x_c, z_j).
+\label{eq:denominator}
+\end{equation}
+The numerator integral, using Eq.~\eqref{eq:Heisenberg_x} and the Madelung decomposition, becomes
+\begin{equation}
+\mathrm{Re}\!\int dx_f\,(x_f - x_c)\,\psi^*(x_f, L)\,G = t\,J_w(x_c, z_j) + \mathcal{A}(x_c, z_j),
+\label{eq:numerator}
+\end{equation}
+where $J_w(x_c, z_j) \equiv \int dx\,\tilde{f}(x; x_c)\,J(x, z_j)$ is the curtain-Gaussian-blurred probability current and $\mathcal{A}(x_c, z_j) = \tfrac{1}{2}\sqrt{\pi}\,w_\text{eff}^3\,\partial_x|\psi(x_c, z_j)|^2 + O(w_\text{eff}^5)$ is the antisymmetric Gaussian moment of the density (written with a script $\mathcal{A}$ so that $\Delta$ remains reserved for the detuning). Combining,
+\begin{equation}
+\boxed{\;
+v_x(x_c, z_j) = \frac{1}{t}\,\frac{\mathrm{Re}\displaystyle\int dx_f\,(x_f - x_c)\,\psi^*(x_f, L)\,G(x_c, x_f, z_j)}{\displaystyle\int dx_f\,\psi^*(x_f, L)\,G(x_c, x_f, z_j)}
+\;}
+\label{eq:vbohm_reconstructed}
+\end{equation}
+which equals the curtain-blurred current divided by the curtain-blurred density up to a relative correction of order $w_\text{eff}^2/\sigma^2$, with $\sigma$ the local width of the density envelope, $v_x = (J_w/\rho_w)\,[1 + O(w_\text{eff}^2/\sigma^2)]$; the overall constant $\hbar U_0$ of Eq.~\eqref{eq:A_is_dxc_f} cancels between numerator and denominator here, as anticipated in \S\ref{sec:G_function}. In the strict narrow-curtain limit $w \to 0$, Eq.~\eqref{eq:vbohm_reconstructed} reduces exactly to the Madelung--Bohm guidance velocity $v(x, z) = (\hbar/M)\,\mathrm{Im}[\partial_x\psi/\psi] = J(x, z)/|\psi(x, z)|^2$. In hydrodynamic terms: writing $\psi = \sqrt{\rho}\,e^{iS/\hbar}$, the field is $v_x = \partial_x S/M = J/\rho$, the velocity of the probability fluid, which obeys the continuity equation $\partial_t\rho + \partial_x(\rho\,v_x) = 0$ as a consequence of the Schr\"odinger equation; de Broglie--Bohm theory reads this same field as the guidance velocity of a particle. Read physically, Eq.~\eqref{eq:vbohm_reconstructed} is a time-of-flight velocity: its numerator is the screen displacement $(x_f - x_c)$ averaged over the arrival distribution with the real part of the weak value of the curtain tag as weight, its denominator is the same average without the lever arm, and the ratio, divided by the fall time $t$ from the curtain plane to the screen, is the mean transverse velocity of the atoms tagged at $x_c$. The free-flight identities are what make this ensemble mean equal, with no approximation beyond the curtain blur, to the local probability current divided by the local density.
+
+This is the matter-wave analog of the reconstruction implicitly performed by Kocsis et al.~\cite{Kocsis2011}: weak measurement at intermediate planes combined with post-selection at a distant screen, ensemble-averaged over the screen-distribution probability $|\psi(x_f, L)|^2$. By Wiseman's theorem~\cite{Wiseman2007}, the field reconstructed by Eq.~\eqref{eq:vbohm_reconstructed} is identically the de Broglie--Bohm guidance velocity, the Madelung hydrodynamic velocity, and the probability-current density divided by $|\psi|^2$. Different physicists prefer different labels for this object, and the choice is interpretive: the operational framework calls it the weak velocity~\cite{Wiseman2007}, the hydrodynamic framework calls it the Madelung velocity~\cite{Madelung1927}, and pilot-wave theory calls it the guidance velocity~\cite{deBroglie1927, Bohm1952a}. We refer to it as the \emph{conditional momentum field} in technical contexts and remain neutral on whether atoms ontologically follow trajectories defined by integrating it. As Sokolovski~\cite{Sokolovski2016} and Fankhauser \& D\"urr~\cite{FankhauserDurr2021} have argued, even an exact reconstruction of $v(x, z)$ does not establish that particles follow such trajectories; the experiment measures one specific velocity field that several distinct interpretations identify as physically meaningful.
+
+It is worth stating what the field adds to the raw records of Eq.~\eqref{eq:kick_weakval}. A single deflection record is a noisy tag of the atom's presence near $x_c$ (the per-shot signal-to-noise ratio is far below unity, \S\ref{sec:reconstruction}); accumulated without conditioning on the arrival position $x_f$, the records measure only the curtain-blurred density $\rho_w(x_c, z_j)$ --- the denominator of Eq.~\eqref{eq:vbohm_reconstructed}, i.e.\ $|\psi|^2$ at the plane, which a fluorescence image of the plane would give directly. The velocity information lives in the correlation between where an atom was tagged and where it subsequently landed: the post-selected first moment in the numerator measures the probability current $J(x_c, z_j)$, which no unconditioned record contains. What the protocol reconstructs is therefore the current-to-density ratio, an interpretation-neutral property of the quantum state; Wiseman's theorem is what allows it to be read as a guidance velocity.
+
+Two phrases used in this paper are complementary, not in tension. The analysis is \emph{operator-level} in that the atomic operator read by the meter, Eq.~\eqref{eq:coupling_operator}, is identified and propagated in the Heisenberg picture without interpretive input; the \emph{operational position} concerns only what the measured object is --- a velocity field defined by the quantum state --- and not whether particles follow it.
+
+\subsection{Numerical verification}
+\label{sec:num_verif}
+
+Equation~\eqref{eq:vbohm_reconstructed} is verified numerically against the Bohmian velocity computed from the analytical phase gradient of the freely-propagated double-Gaussian wavefunction, $v_x = (\hbar/M)\,\mathrm{Im}[\partial_x\psi/\psi]$. On a $4 \times 7 = 28$-point grid ($z_j \in \{0.05, 0.10, 0.15, 0.20\}$ m, $x_c \in \{-3, \ldots, +3\}\,\mu$m, with $d = 5\,\mu$m, $\sigma_0 = 0.6\,\mu$m, kernel width $2\,\mu$m, $v_z = 1$ m/s, $L = 0.30$ m), the reconstruction matches the direct calculation with mean relative error $1.04\%$ and maximum $2.52\%$ over the 24 points at $x_c \neq 0$; at the four $x_c = 0$ points the field is identically zero by symmetry, where a relative error is undefined and the reconstruction reproduces the zero to $|v_x| < 10^{-19}$ m/s. The verification is a property of the reconstruction formula itself, independent of apparatus parameters; a second, independent check runs the identical estimator on the actual free-fall gravity-map geometry of the apparatus ($t$-parameterized kinematics of \S\ref{sec:setup}), where it matches the direct Bohmian field to a maximum relative error of $1.6\%$ across probe points at $z = 5$, $30$ and $57$ cm. The error is largest at small $z_j$ where the wavefunction has spread least relative to the curtain waist, decaying as $O(w_\text{eff}^2/\sigma^2(z_j))$ at larger $z_j$ as expected from Eq.~\eqref{eq:vbohm_reconstructed}. Six representative entries are shown in Table~\ref{tab:formula_verification}.
+
+\begin{table}[ht]
+\centering
+\small
+\caption{Verification of Eq.~\eqref{eq:vbohm_reconstructed} against the analytical Bohmian velocity. All velocities in mm/s. Six representative entries from the verification grid; the remaining $x_c \neq 0$ entries follow the same monotonic decay of error with increasing $z_j$.}
+\label{tab:formula_verification}
+\begin{tabular}{rrrrr}
+\toprule
+$z_j$ (m) & $x_c$ ($\mu$m) & $v_x^\text{direct}$ & $v_x^\text{recon}$ & rel.\ error \\
+\midrule
+0.05 & $-3.0$  & $-0.0596$ & $-0.0581$ & $2.52\%$ \\
+0.05 & $-1.0$  & $-0.0199$ & $-0.0194$ & $2.49\%$ \\
+0.10 & $+2.0$  & $+0.0200$ & $+0.0198$ & $0.78\%$ \\
+0.15 & $-2.0$  & $-0.0133$ & $-0.0133$ & $0.46\%$ \\
+0.20 & $+2.0$  & $+0.0100$ & $+0.0100$ & $0.39\%$ \\
+\midrule
+\multicolumn{4}{r}{\textbf{Across the 24 points at $x_c \neq 0$:}} & \textbf{2.52\% max / 1.04\% mean} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Plug-in-density refinement}
+\label{sec:plug_in}
+
+The denominator of Eq.~\eqref{eq:vbohm_reconstructed} is the curtain-blurred density $\rho_w(x_c, z_j)$, which depends only on the unperturbed wavefunction model and the known curtain profile. In the experimental implementation (hats denote estimates formed from the data; unhatted symbols are model quantities), the noisy estimate $\widehat\rho_w$ has shot-noise fluctuations particularly damaging in interference-node regions where $\rho_w$ is small: the ratio $\widehat{N}/\widehat\rho_w$ then has a \emph{heavy-tailed} distribution --- one whose extreme values occur far more often than a Gaussian of the same variance would allow, so that a few large excursions dominate the mean and the variance; here they arise from division by a near-zero density estimate at the interference nodes --- and its mean is biased away from the true value at large $N_a$ (§\ref{sec:resolution_limits}). The recommended implementation replaces the noisy denominator by the analytical $\rho_w$ from the wavefunction model, $v_x = \widehat{N}/(t\rho_w)$. This refinement is justified because the wavefunction structure is part of the apparatus design, not data to be reconstructed. Under the one-curtain-per-shot protocol (§\ref{sec:setup}), $\rho_w$ at plane $z_j$ is the \emph{pre-curtain} density of the unperturbed wavefunction --- the curtain's phase imprint leaves $|\psi(x, z_j)|^2$ unchanged at the plane itself --- so there is no tension with the perturbed-wave discussion of §\ref{sec:dipole_lensing}; substituting the model density eliminates the heavy-tailed division-by-near-zero pathology at no algorithmic cost; the forward simulation of §\ref{sec:reconstruction} adopts it throughout.
+
+% =============================================================================
+\section{Operating Point and Numerical Estimates}
+\label{sec:numerics}
+
+By the \emph{operating point} we mean the beam parameters of both curtain arms (power $P$, waist $w$, detuning $\Delta$, pass number $F$) together with the atom number $N_a$ per grid point; every quantity entering the feasibility analysis --- the phases $g_a$ and $\varphi_1$, the photon number $N_\gamma^{(1)}$, the scattering probability $P_\text{sc}$, the decoherence exponent $\Lambda_\text{eff}$ with its visibility $V$, and the deflectometry record noise --- is computed jointly from these by the formulas of \S\S\ref{sec:coupling}--\ref{sec:weakval} and \S\ref{sec:decoherence}, plane by plane (Tables~\ref{tab:parameters}--\ref{tab:couplings_planes}); no quantity is set independently of the others. The protocol is governed by five dimensionless quantities: the per-photon phase $\varphi_1$ (Eq.~\eqref{eq:phi1}; the weak-measurement condition is $\varphi_1 \ll 1$), the pass number $F$ of the multipass curtain (the only parameter that raises which-path information per spontaneous-emission event; see below), the spatial resolution $\eta = w/d$, the per-atom decoherence exponent $\Lambda_\text{eff} = \sum_\text{arms} N_\gamma^{(1)}\mathcal{D}_1$, with $\mathcal{D}_1$ the per-photon which-way distinguishability (Eq.~\eqref{eq:D1_formula}; the protocol is viable when $\Lambda_\text{eff} < 1$, §\ref{sec:decoherence}), and the total spontaneous-emission probability $P_\text{sc}$ ($\ll 1$). The ensemble SNR requires $N_a\Lambda_\text{eff} \gg 1$. The cumulative atomic phase $g_a$ of each arm may be large; its consequence is the deterministic dipole back-action treated in §\ref{sec:dipole_lensing}, cancelled between the two arms by design.
+
+\paragraph{Why a multipass, dual-color curtain.} For a single free-space pass, the per-photon phase scales as $\varphi_1 \propto \Gamma/\Delta$ while the per-photon scattering probability scales as $p_{\text{sc},1} \propto (\Gamma/\Delta)^2$, so their ratio is \emph{independent of detuning}: at fixed total scattering budget $P_\text{sc} = N_\gamma^{(1)} p_{\text{sc},1}$, the single-pass decoherence exponent is fully determined,
+\begin{equation}
+\Lambda_1^{(1\,\text{pass})} = \left(\frac{d}{w_\text{eff}}\right)^2 e^{-d^2/2w_\text{eff}^2}\,\frac{\varphi_1^2}{p_{\text{sc},1}}\,P_\text{sc},
+\qquad \frac{\varphi_1^2}{p_{\text{sc},1}} \;\le\; \frac{\sigma_\text{res}}{2w^2} \approx 0.036,
+\label{eq:freespace_ceiling}
+\end{equation}
+with the bound attained only at ideal mode matching; the self-consistent value at our $I_\text{sat}$ convention is $\varphi_1^2/p_{\text{sc},1} = 7.7\times 10^{-3}$ --- a factor 4.7 below the bound, the same mode-matching slack as the $\times 4.7$ phase ceiling of \S\ref{sec:coupling} --- giving $\Lambda_1 \approx 8.6\times 10^{-5}$ at $P_\text{sc} = 0.017$ (Table~\ref{tab:parameters}, reference block; ideal-mode-matched ceiling $4.0\times 10^{-4}$), for which SNR $= 10$ per grid point demands $N_a \approx 1.2\times 10^6$. No choice of detuning or power alters this: Eq.~\eqref{eq:freespace_ceiling} is the quantitative form of the historical observation that free-space dispersive detection of single atoms required cavity enhancement (the strong-focusing route reaches only degree-level single-pass phase shifts in free space~\cite{Aljunid2009}). What detuning \emph{does} purchase is the character of the back-action --- a coherent, deterministic, calibratable dipole phase in place of stochastic recoil --- and the recommended \emph{operating configuration} (design-study point E) exploits that coherence twice over. First, each curtain arm makes $F = 100$ re-imaged passes through the interaction region: the multipass geometry descends from the Herriott cell~\cite{Herriott1964}, and multipass enhancement of dispersive atom--light coupling is established practice in optical magnetometry~\cite{Sheng2013}; at fixed $P_\text{sc}$ (detunings rescaled $\propto \sqrt{F}$) this raises $\Lambda_\text{eff} \propto F$. Second, two force-balanced arms --- one blue of the D2 line at 776.2~nm, one red of the D1 line at 803.5~nm --- have dipole potentials that cancel pointwise (matched waists, powers in the balance ratio) while their deflection records carry independent which-path information: $\Lambda$ adds while $g_a$ cancels. Placing the second arm \emph{below D1}, rather than symmetrically red of D2, lets both fine-structure components add coherently to its phase and avoids the phase--scattering penalty a near-detuned red arm pays from the opposing D1 term. The balance condition is computed with the full D1+D2 scalar polarizability --- the complete multilevel treatment for the $J = 1/2$ ground state in linear polarization --- and requires optical pumping to a single ground hyperfine level, without which the 6.8-GHz splitting shifts the balance point at the $2\times 10^{-3}$ level. Two apparatus specifications follow: pass-to-pass overlap well within $w$ at the common focus, and small-angle folding so that counter-propagating passes do not write a standing wave along $y$. Table~\ref{tab:parameters} lists the operating point. We adopt Steck's far-detuned effective saturation intensity $I_\text{sat}^\text{eff} = 25.0$ W/m$^2$ for linearly-polarized light averaged over excited-state hyperfine sublevels~\cite{Steck}, which carries $\sim 30\%$ uncertainty depending on ground-state population and probe polarization (propagating to $\sim 30\%$ in $g_a$, $\varphi_1$, $P_\text{sc}$, $\Lambda_\text{eff}$); an experimental implementation would calibrate $I_\text{sat}$ in situ.
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{2.5pt}
+\caption{System parameters for the proposed photon-curtain experiment with ${}^{87}$Rb at the recommended operating point: two force-balanced multipass curtain arms with $F = 100$ re-imaged passes each. Arm-specific coupling and decoherence quantities use the full D1+D2 scalar polarizability; the single-pass reference block evaluates the two-level closed form of Eq.~\eqref{eq:phi1} for the single-pass free-space reference (780 nm, $462\,\mu$W). Tabulated arm powers are nominal (rounded); the force-balance servo of \S\ref{sec:dipole_lensing} sets the actual balance to $\eta_\text{bal} \leq 10^{-3}$, so the four-figure $g_a$ values are not themselves balanced to that level. Per-pass phases are $\varphi_1/F$. Plane-dependent couplings are anchored at the reference curtain plane $z_\text{ref} = 5$ cm and scale with the transit time $\tau_a(z) = w/v_z(z)$ of Table~\ref{tab:kinematics}: $g_a, N_\gamma^{(1)}, \Lambda, P_\text{sc}, \Delta v_x^\text{max} \propto \tau_a(z)$, while $\varphi_1$ and $U_0 = g_a/\tau_a$ are plane-independent (Table~\ref{tab:couplings_planes}). Transverse-shape factors carry the $1/e$ intensity radius $w_\text{eff} = w/\sqrt{2}$ (\S\ref{sec:coupling}); the reference-block $\Lambda_1$ is evaluated at fixed $P_\text{sc} = 0.017$ via Eq.~\eqref{eq:freespace_ceiling}.}
+\label{tab:parameters}
+\begin{tabular}{llll}
+\toprule
+\textbf{Parameter} & \textbf{Symbol} & \textbf{Measuring arm} & \textbf{Compensator arm} \\
+\midrule
+\multicolumn{4}{l}{\emph{Atomic system and geometry (common)}}\\
+Atomic mass & $M$ & \multicolumn{2}{c}{$1.44 \times 10^{-25}$ kg} \\
+Atomic linewidth & $\Gamma/2\pi$ & \multicolumn{2}{c}{6.07 MHz} \\
+Saturation intensity (eff.) & $I_\text{sat}$ & \multicolumn{2}{c}{25.0 W/m$^2$} \\
+Slit separation; initial Gaussian width & $d$; $\sigma_0$ & \multicolumn{2}{c}{2.5; 0.6 $\mu$m} \\
+Slit-plane velocity; propagation distance & $v_0$; $L$ & \multicolumn{2}{c}{1.500 m/s; 60 cm} \\
+Screen velocity; total flight time & $v_z(L)$; $T$ & \multicolumn{2}{c}{3.744 m/s; 0.2288 s} \\
+de Broglie wavelength (slit); fringe spacing & $\lambda_\text{dB}(0)$; $hT/(Md)$ & \multicolumn{2}{c}{3.06 nm; 420 $\mu$m} \\
+Transit time ($z_\text{ref}{=}5$ cm); beam waist (matched) & $\tau_a(z_\text{ref})$; $w$ & \multicolumn{2}{c}{1.11 $\mu$s; 2 $\mu$m} \\
+$1/e$ intensity radius (shape factors) & $w_\text{eff} = w/\sqrt{2}$ & \multicolumn{2}{c}{1.41 $\mu$m} \\
+\midrule
+\multicolumn{4}{l}{\emph{Curtain optics --- operating configuration ($F = 100$ re-imaged passes per arm)}}\\
+Wavelength & $\lambda_L$ & 776.2 nm & 803.5 nm \\
+Detuning from D2; from D1 & $\Delta_2/2\pi$; $\Delta_1/2\pi$ & $+2.00$; $+9.12$ THz & $-11.12$; $-4.00$ THz \\
+Power per arm & $P$ & 323 $\mu$W & 835 $\mu$W \\
+Peak intensity (W/m$^2$); Rabi freq.\ (GHz) & $I_0$; $\Omega_0/2\pi$ & $5.2\times 10^7$; 6.15 & $1.3\times 10^8$; 9.89 \\
+Rayleigh length; photon transit time & $z_R$; $\tau_\gamma$ & 16.2 $\mu$m; 54 fs & 15.6 $\mu$m; 52 fs \\
+\midrule
+\multicolumn{4}{l}{\emph{Per-photon and per-transit couplings (multilevel; per transit through all $F$ passes)}}\\
+Cumulative atomic phase & $g_a$ & $+3673$ rad & $-3679$ rad \\
+Photons per atom transit & $N_\gamma^{(1)}$ & $1.40\times 10^9$ & $3.76\times 10^9$ \\
+Per-photon phase per transit & $\varphi_1$ & $2.62\times 10^{-6}$ & $-9.8\times 10^{-7}$ \\
+\midrule
+\multicolumn{4}{l}{\emph{Dimensionless figures}}\\
+Per-photon distinguishability & $\mathcal{D}_1$ & $4.5\times 10^{-12}$ & $6.3\times 10^{-13}$ \\
+Per-arm decoherence & $\Lambda_\text{arm}$ & $6.3\times 10^{-3}$ & $2.4\times 10^{-3}$ \\
+Total decoherence; visibility & $\Lambda_\text{eff}$; $V$ & \multicolumn{2}{c}{$8.65\times 10^{-3}$; 0.991} \\
+Distinguishability; Englert relation & $D$; $V^2 + D^2$ & \multicolumn{2}{c}{0.131; 1.000} \\
+Spontaneous-emission probability (arm) & $P_\text{sc}$ & 0.0103 & 0.0041 \\
+Total scattering; spatial resolution & $P_\text{sc,tot}$; $\eta = w/d$ & \multicolumn{2}{c}{0.0144; 0.80} \\
+Per-arm dipole kick (cancels by design) & $|\Delta v_x^\text{max}|$ & \multicolumn{2}{c}{1.63 m/s (opposite signs)} \\
+\midrule
+\multicolumn{4}{l}{\emph{Statistics}}\\
+Atoms/point; planes; $x_c$ positions & $N_a$; $N_z$; $N_{x_c}$ & \multicolumn{2}{c}{$10^4$; 20; 151} \\
+Per-point tag significance (info.\ heuristic) & $\sqrt{N_a\Lambda_\text{eff}}$ & \multicolumn{2}{c}{$\approx 9.3$; field SNR far smaller (§\ref{sec:reconstruction})} \\
+Field detection, $5\sigma$ (matched filter, $z_\text{ref}$) & $N_a$/position; total & \multicolumn{2}{c}{$1.43\times 10^6$; $2.2\times 10^8$ (§\ref{sec:resolution_limits})} \\
+Trajectory RMS at screen (forward sim.) & $\sigma_\text{traj}(L)$ & \multicolumn{2}{c}{0.18 mm (44\% of fringe) at $N_a{=}10^7$; §\ref{sec:reconstruction}} \\
+\midrule
+\multicolumn{4}{l}{\emph{Single-pass free-space reference (780 nm, 462 $\mu$W at $+200$ GHz, $F = 1$; $\Lambda_1$ at $P_\text{sc} = 0.017$)}}\\
+Time-slice phase, Eq.~\eqref{eq:g_slice} & $g_\text{slice}$ & \multicolumn{2}{c}{$2.28\times 10^{-5}$} \\
+Instantaneous photon occupancy & $\bar{n}_\text{inst}$ & \multicolumn{2}{c}{97} \\
+Per-photon phase; decoherence & $\varphi_1$; $\Lambda_1$ & \multicolumn{2}{c}{$2.34\times 10^{-7}$; $8.6\times 10^{-5}$} \\
+SNR at $N_a = 10^4$; $N_a(\text{SNR}{=}10)$ & & \multicolumn{2}{c}{0.93; $1.2\times 10^6$} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[t]
+\centering
+\small
+\caption{Per-plane couplings under the free-fall scaling $g_a, N_\gamma^{(1)}, \Lambda_\text{eff}, P_\text{sc}, \Delta v_x^\text{max} \propto \tau_a(z_j)$ (anchor values at $z_\text{ref} = 5$ cm from Table~\ref{tab:parameters}). SNR is the heuristic lower bound $\sqrt{N_a\Lambda_\text{eff}}$ at $N_a = 10^4$; the last column is the per-plane back-action budget $0.1\,[d/t(z_j)]/\Delta v_x^\text{max}(z_j)$ of \S\ref{sec:dipole_lensing}, tightest at the last plane.}
+\label{tab:couplings_planes}
+\begin{tabular}{ccccccc}
+\toprule
+$z_j$ (cm) & $\tau_a$ ($\mu$s) & $\Lambda_\text{eff}$ & $P_\text{sc}$ & SNR ($10^4$) & $\Delta v_x^\text{max}$ (m/s) & $\eta_\text{bal}\varepsilon_\text{res}$ budget \\
+\midrule
+5.00 & 1.113 & $8.65\times 10^{-3}$ & 0.0144 & 9.3 & 1.63 & $5.1\times 10^{-6}$ \\
+7.74 & 1.030 & $8.01\times 10^{-3}$ & 0.0133 & 9.0 & 1.51 & $3.7\times 10^{-6}$ \\
+10.47 & 0.964 & $7.50\times 10^{-3}$ & 0.0125 & 8.7 & 1.41 & $3.0\times 10^{-6}$ \\
+29.63 & 0.704 & $5.48\times 10^{-3}$ & 0.0091 & 7.4 & 1.03 & $1.8\times 10^{-6}$ \\
+57.00 & 0.546 & $4.24\times 10^{-3}$ & 0.0071 & 6.5 & 0.80 & $1.4\times 10^{-6}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+These parameters give per-photon phases deep in the weak regime ($|\varphi_1| \sim 10^{-6}$ per transit), per-atom decoherence $\Lambda_\text{eff} \approx 8.65\times 10^{-3}$ at the reference plane, falling to $4.2\times 10^{-3}$ at the last curtain plane ($V = 0.991$--$0.996$ --- essentially full fringe contrast preserved per atom), and total spontaneous-emission probability $P_\text{sc} \approx 0.014$ at $z_\text{ref}$ (Table~\ref{tab:couplings_planes}). With $N_a = 10^4$ atoms per grid point the per-bin ensemble SNR is $\sqrt{N_a\Lambda_\text{eff}} \approx 9.3$ at $z_\text{ref}$ ($6.5$ at the last plane), and the SNR $= 10$ threshold sits at $N_a = 1.16\times 10^4$ at the reference plane. Figure~\ref{fig:regime} maps the design space in the $(F, N_a)$ plane at fixed $P_\text{sc} = 0.017$, using the scaling $\Lambda_\text{eff}(F) = \Lambda_\text{eff}(100)\,F/100$ (exact in the two-level limit with detunings rescaled $\propto \sqrt{F}$; multilevel corrections shift it by $\lesssim 10\%$ over the plotted range). The single-pass edge $F = 1$ shows the free-space verdict of Eq.~\eqref{eq:freespace_ceiling} --- SNR $= 10$ demands $N_a \approx 1.2\times 10^6$ per grid point --- while the operating point $(F, N_a) = (100, 10^4)$ sits at SNR $\approx 9.3$ at the reference plane, with the conservative $F = 30$ variant shown for context. The safety margins are asymmetric by design: $\Lambda_\text{eff}$ is two orders of magnitude below the coherence boundary $\Lambda = 1$, while the statistics floor $N_a\Lambda_\text{eff} = 100$ sits $16\%$ above the nominal $N_a = 10^4$ at the reference plane --- the protocol is statistics-limited, not coherence-limited.
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=0.85\textwidth]{photon_curtain_fig3_regime.pdf}
+\caption{\textbf{Operating regime in the $(F, N_a)$ plane at fixed scattering budget.} Contours of the per-point which-path significance $\sqrt{N_a\Lambda_\text{eff}(F)}$ (the tag-information heuristic of Table~\ref{tab:parameters}, not the field-detection SNR of \S\ref{sec:resolution_limits}), with $\Lambda_\text{eff}(F) \propto F$ at fixed scattering budget (detunings rescaled $\propto\sqrt{F}$). The plane is anchored at the operating point's own $\Lambda_\text{eff}(F = 100) = 8.65\times 10^{-3}$ at its scattering budget $P_\text{sc} = 0.014$; its $F = 1$ edge coincides to $1\%$ with the single-pass reference block of Table~\ref{tab:parameters} ($\Lambda_1 = 8.6\times 10^{-5}$ at $P_\text{sc} = 0.017$). The $\sqrt{N_a\Lambda_\text{eff}} = 10$ statistics floor and the coherence boundary $\Lambda_\text{eff} = 1$ divide the plane into insufficient-statistics, viable, and strong-measurement regions. The star marks the operating configuration ($F = 100$, $N_a = 10^4$, SNR $\approx 9.3$ at $z_\text{ref}$); the $F = 1$ edge is the free-space single-pass regime of Eq.~\eqref{eq:freespace_ceiling}, where SNR $= 10$ requires $N_a \approx 1.2\times 10^6$; $F = 30$ is shown as a conservative variant. The per-photon distinguishability per arm is $\mathcal{D}_1 = \varphi_1^2\,(d/w_\text{eff})^2\,\exp[-d^2/(2w_\text{eff}^2)]$ (Eq.~\eqref{eq:D1_formula}).}
+\label{fig:regime}
+\end{figure}
+
+\paragraph{Beam preparation and flux budget.} The required beam --- crossing the slit plane at $v_0 = 1.500$ m/s ($\sim 12$ mK kinetic-energy temperature) after the 11.5 cm free fall from the release point (\S\ref{sec:setup}) --- is realized by pulsed release from a magneto-optical trap of $\sim 10^7$ ${}^{87}$Rb atoms with sub-Doppler cooling and Raman velocity selection. Interference across the slit pair requires transverse coherence over $d = 2.5\,\mu$m at the slit plane, i.e.\ a transverse velocity spread $\Delta v_\perp \lesssim \hbar/(Md) \approx 0.29$ mm/s along the slit axis --- a factor $\sim 20$ \emph{below} the single-photon recoil velocity (5.9 mm/s). Transverse laser cooling alone cannot reach this; sub-recoil transverse Raman velocity selection or geometric collimation is required, at a flux cost of order $(0.3\,\text{mm/s}\,/\,\text{few cm/s})^2 \sim 10^{-4}$--$10^{-5}$ of the released cloud. The honest per-cycle flux is therefore $10^2$--$10^3$ slit-coherent atoms from a $10^7$-atom MOT --- the same class realized in the metastable-neon double-slit experiment of Shimizu, Shimizu and Takuma~\cite{Shimizu1992} ($d = 6\,\mu$m, $v \approx 1$--2 m/s), which remains the flux-realism precedent for slow-atom double-slit interferometry. At this flux the $N_a = 10^4$ atoms per grid point accumulate over 10--100 cycles, and the full $N_{x_c}\times N_z = 3020$-point budget of $\approx 3\times 10^7$ atoms corresponds to roughly half a day to ten days of beam time at the $\sim 0.4$--1 Hz cycle rates of the footnote,\footnote{The nominal cycle rate decomposes as: MOT loading from background vapor to $\sim 10^7$ atoms in 0.5--2 s (set by vapor pressure; the lower end requires a 2D-MOT pre-stage); sub-Doppler / polarization-gradient cooling, $\sim 8$--12 ms; longitudinal and transverse Raman velocity selection, $\sim 20$--80 ms; free fall from the release point through the slits to the screen ($0.153 + 0.229$ s), 382 ms (the irreducible piece); time-of-flight fluorescence detection at the screen, $\sim 25$--50 ms; magnetic-field switching and MOT recapture overhead, $\sim 50$--200 ms. The total cycle time is therefore $\sim 1$--$2.7$ s, consistent with cycle rates achieved by representative cold-atom interferometers from Kasevich and Chu's original 1 Hz Rb gravimeter to current 2--3 s repetition rates in long-baseline atom-interferometric gravimeters~\cite{Cronin2009}.} squarely within a normal campaign. The calibration campaign is budgeted separately in §\ref{sec:dipole_lensing}. The apparatus length ($L = 60$ cm) is well within the working envelope of state-of-the-art atom interferometers~\cite{Cronin2009}.
+
+\paragraph{Multi-atom occupancy.} With $N_\text{cyc} = 10^2$--$10^3$ atoms arriving over a $T_\text{win} \approx 10$ ms window at a curtain plane, the mean occupancy of a $\tau_a(z) = 0.55$--$1.11\,\mu$s transit window is $N_\text{cyc}\tau_a/T_\text{win} \approx 0.005$--0.1: deflection records from co-transiting atoms overlap in at most a few percent of events. Atom arrivals at the screen are time-resolved and the deflectometry records are time-tagged, so record--atom assignment is by coincidence within $\tau_a$; residual multi-occupancy windows are identified and discarded at a percent-level cost in flux.
+
+\paragraph{Slit interactions.} At $v_0 = 1.500$ m/s the transit through a slit membrane of thickness $\sim 100$ nm lasts $\sim 70$ ns --- long enough for the atom--surface van der Waals potential ($-C_3/l^3$, with $C_3/h$ of order 1 kHz\,$\mu$m$^3$ for alkali atoms near dielectric surfaces) to imprint phases exceeding $\sim 0.1$ rad within a boundary layer of order 100--200 nm from the walls, with associated near-wall flux loss at the tens-of-percent level for micrometre-scale slits. The phenomenology --- an effective complex slit transmission function narrower than the geometric opening --- is precisely that quantified for rare-gas beams on SiN$_x$ transmission gratings by Grisenti et al.~\cite{Grisenti1999}. Here it renormalizes the effective source width $\sigma_0$ and adds a deterministic near-edge phase; both are absorbed by the in-situ single-slit calibration of §\ref{sec:dipole_lensing}, which measures the slit transmission as realized, and the wavefunction model used for the plug-in density (§\ref{sec:plug_in}) is built on the calibrated effective aperture rather than the geometric one.
+
+% =============================================================================
+\section{Dipole-Force Back-Action: The Central Experimental Challenge}
+\label{sec:dipole_lensing}
+
+A consequence of the corrected accounting is that the cumulative per-arm atomic phase is large, $g_a \approx 3.7\times 10^3$ rad at the reference plane of the operating configuration ($g_a \propto \tau_a(z)$; Table~\ref{tab:couplings_planes}), even while the per-photon phase $\varphi_1$ is tiny. Each arm's phase represents a coherent, position-dependent optical-dipole potential along the curtain plane, $V_\text{dipole}(x_a) = \hbar U_0 \exp[-(x_a-x_c)^2/w_\text{eff}^2]$ with the plane-independent $U_0 = g_a/\tau_a \approx 3.3\times 10^9$ rad/s per arm. The corresponding per-arm dipole force imprints a position-dependent transverse velocity kick; the maximum, attained where the Gaussian gradient peaks, is
+\begin{equation}
+\Delta v_x^\text{max} = \sqrt{\tfrac{2}{e}}\,\frac{\hbar g_a}{Mw_\text{eff}} \approx 1.6\,\text{m/s},
+\label{eq:dipole_kick_max}
+\end{equation}
+at $z_\text{ref}$, falling to $0.8$ m/s at the last plane ($\Delta v_x^\text{max} \propto \tau_a$) --- comparable to the longitudinal velocity itself. The dual-color force balance of §\ref{sec:numerics} is therefore the \emph{baseline architecture}, not a refinement: the two arms' potentials cancel pointwise (matched waists, powers in the balance ratio), and the atom experiences only the fractional imbalance $\eta_\text{bal}$ of a single arm. The conditional-momentum signal to be recovered has characteristic scale $d/t(z_j)$ --- the fringe-scale wiggle, $82\,\mu$m/s at the first curtain plane falling to $11\,\mu$m/s at the last (Table~\ref{tab:kinematics}), superposed on the smooth mm/s-scale ramp visible in Figure~\ref{fig:reconstruction}(c) below --- so even at $\eta_\text{bal} = 10^{-3}$ the raw residual kick ($1.6$ mm/s at $z_\text{ref}$) exceeds the wiggle by one to two orders of magnitude. This is the single most stringent experimental constraint on the proposal.
+
+Two key features make the back-action tractable. First, the dipole potential acts coherently on the atomic wavefunction; it does not by itself decohere the matter wave. The decoherence comes exclusively from the irreversible information transfer to the photon field, parametrized by $\Lambda_\text{eff}$. Second, the dipole back-action is deterministic: it is a known function of the curtain parameters $(P, \Delta, w, x_c, z_j)$ and the atomic transverse position. As such it is in principle calibratable and subtractable, in contrast to genuine measurement back-action. The unperturbed Bohmian field is recovered from the measured field via the deterministic correction
+\begin{equation}
+v_x^\text{free}(x, z_j) = v_x^\text{measured}(x, z_j) - \frac{1}{Mv_z}\int_{z_j-\Delta z/2}^{z_j+\Delta z/2}\partial_x V_\text{dipole}(x, z')\,dz',
+\label{eq:dipole_subtraction}
+\end{equation}
+where $\Delta z$ is the smaller of the Rayleigh length and the atom's transit length ($\sim 2\,\mu$m). This subtraction is exact within the paraxial approximation; the derivation, its validity conditions, and the imprint--sampling ordering are given in Appendix~\ref{app:dipole}.
+
+\paragraph{Two-stage back-action budget.} For Eq.~\eqref{eq:dipole_subtraction} to recover $v_x^\text{free}$ at the $10\%$ level relative to the wiggle amplitude at every plane, the \emph{uncorrected} residual kick must satisfy $\eta_\text{bal}\,\varepsilon_\text{res}\,\Delta v_x^\text{max}(z_j) \lesssim 0.1\,[d/t(z_j)]$ plane by plane. Both sides fall with depth --- the kick as $\tau_a(z)$, the signal as $1/t(z)$ --- and the signal falls faster, so the constraint is tightest at the last curtain plane, where it reads
+\begin{equation}
+\eta_\text{bal}\,\varepsilon_\text{res} \;\lesssim\; 1.4\times 10^{-6}
+\label{eq:calibration_precision}
+\end{equation}
+(the early planes are looser by up to $3.6\times$; Table~\ref{tab:couplings_planes}). Here $\eta_\text{bal}$ is the optical force-balance imperfection between the arms (a servo target) and $\varepsilon_\text{res}$ is the fractional accuracy of the in-situ calibration of the residual; their product is the fraction of the single-arm dipole kick that survives both stages uncorrected in the data, which is what ``relative precision'' of the back-action means throughout. The two stages are separately undemanding --- $\eta_\text{bal} \sim 10^{-3}$ optical balance and $\varepsilon_\text{res} \sim 10^{-3}$ calibration --- where the single-stage equivalent, $10^{-5}$-class fractional knowledge of the full single-arm kick maintained over the whole campaign, would not be. The forward simulation of §\ref{sec:resolution_limits} maps the residual imbalance through the complete estimator: the trajectory-level bias is monotone in the product $\eta_\text{bal}\varepsilon_\text{res}$ --- $0.21\%$ of the fringe at $10^{-7}$, $1.2$--$1.9\%$ at $10^{-6}$ (the two decompositions of $10^{-6}$ agreeing to within a factor $1.7$, so the product dependence is approximate), $8.9\%$ at $10^{-5}$ --- and crosses the $5\%$ level near $4\times 10^{-6}$. The trajectory-level $5\%$ criterion is therefore looser than the field-level budget of Eq.~\eqref{eq:calibration_precision} by a factor $\sim 3$; the two are independently derived, and we adopt the tighter, field-level value as the specification. The optical-balance stage is independently constrained by data integrity: at $\eta_\text{bal} = 10^{-2}$ the raw residual kick physically expels up to $15\%$ of the conditioned ensemble from the $\pm 1.25$ mm analysis window at the earliest plane, so the servo alone must reach $\eta_\text{bal} \lesssim 10^{-3}$ regardless of calibration accuracy.
+
+\paragraph{In-situ atomic calibration.} The strategy is a complementary single-slit measurement: in a dedicated calibration phase, block one slit so the unperturbed transverse Bohmian velocity is identically zero. The atomic transverse deflection observed at the screen as a function of curtain position $(x_c, z_j)$ is then \emph{purely} the integrated residual dipole kick --- the post-balance imbalance field --- with no signal contamination. Parametric fits to the difference-of-Gaussians family of \S\ref{sec:optics_budget} --- the Gaussian derivative augmented by relative-waist and relative-center parameters between the arms --- determine the effective residual parameters $\{\eta_\text{bal}P_\text{eff}(z_j), w_\text{fit}(z_j), \delta w_\text{rel}(z_j), x_c^\text{offset}(z_j), \delta x_\text{rel}(z_j)\}$ at atomic-shot-noise-limited precision; the same fit shape absorbs the ordering ambiguity of the transit-averaged potential, converting a derivation constant into a fitted one (Appendix~\ref{app:dipole}). This approach is closely analogous to the in-situ characterization of optical-cavity trapping potentials demonstrated by Bertoldi et al.~\cite{Bertoldi2010}, in-situ wavefront measurement of Raman beams~\cite{Xu2024}, and lattice light-shift characterization at the $3.5\times 10^{-19}$ fractional level for an optical lattice clock~\cite{Kim2023}. None of these works applied classical beam metrology to reach their stated precisions; all bootstrapped from the atoms themselves. Because the calibration targets $\varepsilon_\text{res}$ on the residual rather than $10^{-5}$-class knowledge of the full kick, the calibration atom budget --- after the global parametric fit across all $N_{xc}\times N_z$ calibration points ($\sim 55\times$ over per-point precision) --- is of order $10^7$--$10^8$ atoms, dominated by systematic-check repetitions rather than statistics, and comparable to rather than $30\times$ the measurement budget. Chopped-curtain operation with synchronous lock-in detection remains as the drift-suppression layer for \emph{both} stages: the balance point $\eta_\text{bal}$ is itself a drift target, and chopping above the drift bandwidth separates the AC signal from slow back-action wander, parallel to the strategy enabling $10^{-18}$--$10^{-19}$ systematic-shift evaluations in optical lattice clocks~\cite{Kim2023}. A reduced-power first-light configuration, with both arms scaled down together by $\sim 30\times$ ($g_a \to 1.2\times 10^2$ rad, $\Lambda_\text{eff} \to 2.9\times 10^{-4}$, $N_a(\text{SNR}{=}10) \to 3.5\times 10^5$ at $z_\text{ref}$), relaxes every back-action scale by the same factor at fixed balance requirements --- the natural commissioning point.
+
+\paragraph{What is reconstructed.} With $g_a \approx 3.7\times 10^3$ rad imprinted per arm by the single active curtain --- cancelled between the arms to the $\eta_\text{bal}$ residual --- the matter wave immediately after its one curtain transit differs from the free wave by the residual imprint alone. The reconstruction protocol measures the conditional momentum field of $\psi$ \emph{as perturbed by that single transit}, not of the unperturbed double-slit wavefunction. The dipole-subtraction of Eq.~\eqref{eq:dipole_subtraction} corrects for the velocity kick imparted by the residual force but does not reconstruct what the wavefunction would have been in the absence of the curtain. We regard this as an intrinsic feature of the protocol: any continuous-monitoring measurement of a quantum trajectory necessarily reads out the system as perturbed by the meter. The interpretation as the conditional momentum field of the unperturbed wavefunction is approximate and improves as the residual imprint $\to 0$.
+
+% =============================================================================
+\section{Environmental and Apparatus Systematics}
+\label{sec:systematics}
+
+The vertical geometry and the multipass optics introduce systematic channels beyond the dipole back-action of \S\ref{sec:dipole_lensing}. Each is negligible by budget, removed by orientation, held by an explicit specification, or absorbed by the in-situ calibration; Table~\ref{tab:optics_budget} collects the optical requirements.
+
+\subsection{Coriolis deflection}
+\label{sec:coriolis}
+For a body falling a distance $L$, the eastward Coriolis velocity is exactly
+\begin{equation}
+\Delta v_E = 2\Omega_\oplus\cos\lambda \int v_z\,dt = 2\Omega_\oplus\cos\lambda\,L,
+\label{eq:coriolis}
+\end{equation}
+independent of the velocity profile, because the integral of $v_z$ over the fall is the drop distance itself. At laboratory latitude $\lambda = 41.3^\circ$ this is $65.7\,\mu$m/s ($87.5\,\mu$m/s worst case) --- comparable to the conditional-momentum wiggle itself ($11$--$82\,\mu$m/s, Table~\ref{tab:kinematics}). The remedy is orientation: with the slit-separation axis $x$ aligned north--south, the deflection lies along $y$, out of the measurement plane; the accumulated out-of-plane displacement at the screen is $6.4\,\mu$m and inconsequential. The in-plane leakage for an axis-alignment error $\theta$ is $\Delta v_E\sin\theta$; at the specification $\theta \leq 10$ mrad it is $\leq 0.66\,\mu$m/s --- $0.8\%$ of the first-plane wiggle and $5.8\%$ of the last-plane wiggle --- and, being deterministic with $2\Omega_\oplus\cos\lambda$ known far better than $\theta$, it is carried as a modeled term in the forward analysis with a budget line at the unsubtracted worst case. The transverse-velocity channel --- the Coriolis force acting on the $\mu$m/s-scale transverse velocities themselves --- contributes $2\Omega_\oplus v_\text{rec}T \approx 0.20\,\mu$m/s at the recoil scale and is negligible, and the pre-slit fall adds only an out-of-plane velocity of $12.6\,\mu$m/s. Active Coriolis compensation is standard practice in precision atom interferometry~\cite{Lan2012}; here orientation plus a deterministic budget line suffices.
+
+\subsection{Magnetic forces}
+\label{sec:magnetic}
+Atoms are prepared in the $\ket{F{=}1, m_F{=}0}$ clock state (\S\ref{sec:numerics}). For this state the linear Zeeman force vanishes and the quadratic-Zeeman channel is negligible: at ambient field $\leq 10$ mG with gradients $\leq 0.1$ mG/cm the accumulated transverse velocity is $6\times 10^{-5}\,\mu$m/s. The operative channel is the Zeeman-impurity population: an atom left in $m_F = \pm 1$ sees an acceleration $\mu_B|g_F|\nabla B/M = 3.2\times 10^{-4}$ m/s$^2$ per mG/cm --- $73.5\,\mu$m/s over the flight at 1 mG/cm, signal-scale. Two specifications control it: pumping purity $f \leq 5\%$ and transverse gradient $\nabla B \leq 0.1$ mG/cm in the shielded flight region, giving an ensemble-mean contamination $0.37\,\mu$m/s ($3.2\%$ of the smallest-plane wiggle), with the impurity subpopulation displaced by only $0.84\,\mu$m at the screen --- deep inside a fringe. A state-selective blow-away pulse after pumping suppresses $f$ further at marginal flux cost if required, and the $f$-term is carried explicitly in the forward model (\S\ref{sec:reconstruction}). The same purity specification covers the hyperfine-balance channel of \S\ref{sec:numerics}: atoms in the wrong ground hyperfine level see the force balance shifted at the $2\times 10^{-3}$ level, an ensemble-effective imbalance $f\times 2\times 10^{-3} \leq 1\times 10^{-4}$, one tenth of the $\eta_\text{bal}$ servo target. Vector light shifts are proportional to $m_F$ and vanish identically for the clock state; their residual acts only on the same $f \leq 5\%$ impurity fraction.
+
+\subsection{Background-gas collisions}
+\label{sec:gas}
+A collision with background gas during the slit-to-screen flight removes the atom from the coherent ensemble or deposits it as incoherent background. At collision rates typical of room-temperature Rb chambers ($\sim 0.1$ s$^{-1}$ at $10^{-9}$ mbar), the exposure $T = 0.229$ s gives a collision probability of $2.3\%$ at $10^{-9}$ mbar and $0.23\%$ at $10^{-10}$ mbar. We specify $p \leq 1\times 10^{-10}$ mbar --- routine for cold-atom apparatus --- holding this channel to $\leq 0.23\%$, about one quarter of $\Lambda_\text{eff}(z_\text{ref})$, carried as a flux-loss and incoherent-background line rather than in the coherence budget proper. Collisions before the slits cost flux only.
+
+\subsection{Screen detection: light-sheet localization and record--atom pairing}
+\label{sec:detection}
+The reconstruction requires screen-position resolution $\lesssim 2\,\mu$m (\S\ref{sec:reconstruction}). At arrival the atom crosses a resonant light sheet of thickness $\ell_s = 20\,\mu$m along $z$ at $v_z(L) = 3.744$ m/s in $\tau_c = 5.3\,\mu$s, scattering $\approx 100$ photons at the saturated rate $\Gamma/2$. With NA $= 0.5$ collection and $0.64$ detection efficiency, $\approx 4$ photons are detected: the centroid precision is $\sigma_\text{PSF}/\sqrt{N} \approx 0.16\,\mu$m ($\sigma_\text{PSF} = 0.33\,\mu$m), the recoil random walk during the crossing blurs $x$ by $\approx 0.11\,\mu$m, and the atom's own transverse motion contributes $\leq 0.03\,\mu$m --- $\approx 0.2\,\mu$m in total, an order of magnitude inside the requirement. The sheet also time-tags the arrival to $\approx 5\,\mu$s, and its thickness enters only the $z$ direction.
+
+The deflectometry record and the screen arrivals must be paired atom by atom. With a pulsed release, an atom's arrival time determines its release height exactly at fixed release velocity, so the transit time at plane $z_j$ is inferred from the arrival time with a residual set only by the longitudinal release-velocity width $\delta u$,
+\begin{equation}
+\delta t_\text{pair}(z_j) = \frac{v_z(L) - v_z(z_j)}{g\,v_z(z_j)}\,\delta u,
+\label{eq:pairing}
+\end{equation}
+largest at the earliest plane ($0.110$ s per m/s of $\delta u$) and falling to $2.2$ ms per m/s at the last. Record bursts whose pairing window contains more than one candidate arrival are vetoed, exactly as multi-occupancy windows are (\S\ref{sec:numerics}); the veto imposes a per-plane throughput ceiling $\approx [2e\,\delta t_\text{pair}]^{-1}$ at the optimum rate. Selecting $\delta u \approx 5$ mm/s by longitudinal Raman selection --- an acceptance cost of only $\approx 1/3$, and independent of the fringe-smear specification of \S\ref{sec:setup}, which is governed by the release-height spread ($g\sigma_z/v_0 = 3.3$ mm/s at $\sigma_z = 0.5$ mm) --- places the earliest-plane ceiling at $2.9\times 10^7$ atoms per day: inside the source-flux window of \S\ref{sec:numerics}, but trimming its optimistic edge by $\times 3$ at the early planes, while planes beyond $z \approx 30$ cm are essentially unconstrained. The consequence for the detection-programme duration is carried in \S\ref{sec:resolution_limits}.
+
+\subsection{Multipass optical budget}
+\label{sec:optics_budget}
+The operating-configuration couplings assume the ideal sum over $F = 100$ re-imaged passes. Real optics modify this in four ways, collected in Table~\ref{tab:optics_budget} with their requirements and the strategies that meet them.
+
+\paragraph{Per-pass loss.} With per-pass loss $L_p$ the pass intensities form the geometric sequence $I_k = I_0(1-L_p)^k$; at the specification $L_p \leq 0.5\%$ the envelope falls $39\%$ by the last pass and the effective pass sum is $F_\text{eff} = [1-(1-L_p)^F]/L_p = 78.8$ --- a $21\%$ common-mode coupling shortfall, recovered by a $27\%$ input-power increase or simply absorbed, since the in-situ record calibration measures the realized $g_a$ directly. The balance-relevant quantity is the arm differential: $d\ln F_\text{eff}/dL_p = -45$, so a static loss difference is trimmed by the amplitude servo, while its drift within one servo period must satisfy $|\delta(\Delta L_p)| \leq 2.2\times 10^{-5}$ for an $\eta_\text{bal} \leq 10^{-3}$ allocation --- comfortably slower than coated-mirror loss drift at $\geq 1$ Hz servo rates.
+
+\paragraph{Chromatic strategy.} The two colors are $27.3$ nm apart; a refractive relay would defocus them by $\delta f/f = \delta n/(n-1) \approx 1.4\times 10^{-3}$ --- $13.5\,\mu$m at $f = 10$ mm against a Rayleigh range of $16\,\mu$m, an unusable $\sim 30\%$ waist mismatch. The multipass cell is therefore all-reflective (the Herriott geometry of \S\ref{sec:numerics} is mirror-based and achromatic by construction), and injection uses reflective off-axis paraboloids or a doublet corrected exactly at the two operating wavelengths (two design wavelengths, two glasses: exact by construction). The waist-matching requirement for a shape-channel contribution $\eta_\text{bal} \approx 2\,\delta w/w \leq 10^{-3}$ is $\delta w/w \leq 5\times 10^{-4}$, i.e.\ chromatic focal coincidence within $0.5\,\mu$m --- met by the all-reflective design and verified in situ by the calibration fit's waist parameters.
+
+\paragraph{Relative pointing.} A centering mismatch $\delta x_c$ between the two colors leaves a residual force $\approx (|f''|_\text{max}/|f'|_\text{max})\,\delta x_c = 2.33\,\delta x_c/w_\text{eff}$ of the single-arm maximum, so the data-integrity requirement $\eta_\text{bal} \leq 10^{-3}$ alone demands $\delta x_c \leq 0.6$ nm --- the single most demanding optical specification in the apparatus, and we flag it as such. Three elements meet it: (i) passively, both colors are delivered through one fiber and traverse a fully common reflective path, so transverse chromatism arises only in transmissive elements, for which a 10-arcsecond wedge specification bounds the differential steer at $0.33$ nm; (ii) a slow differential-centering trim (dispersive wedge pair or acousto-optic deflector) is servoed on the differential deflectometry centroids; and (iii) decisively, a \emph{static} centering offset lies inside the extended calibration family below and is absorbed into $\varepsilon_\text{res}$, converting the sub-nanometre requirement from an absolute alignment into a drift specification between calibration cycles.
+
+\paragraph{Calibration family.} Accordingly, the single-slit calibration fit of \S\ref{sec:dipole_lensing} is extended from the single Gaussian derivative to a difference-of-Gaussians family --- the two arms' profiles with independent relative-waist and relative-center parameters (two additional fit parameters) --- so that waist and centering mismatch lie \emph{inside} the absorbable family rather than outside it. Pass-to-pass overlap error and the standing-wave folding specification of \S\ref{sec:numerics} are carried unchanged; overlap error appears as an effective-waist shift, again inside the fit family. Vector-shift polarization requirements vanish for the clock state (\S\ref{sec:magnetic}).
+
+\begin{table}[t]
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\caption{Multipass optical budget: achieved-versus-required. Requirements are per-channel allocations for the data-integrity target $\eta_\text{bal} \leq 10^{-3}$ (\S\ref{sec:dipole_lensing}); static contributions inside the difference-of-Gaussians calibration family are additionally absorbed into $\varepsilon_\text{res}$, leaving drift between calibration cycles as the operative specification.}
+\label{tab:optics_budget}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.26\textwidth}>{\raggedright\arraybackslash}p{0.28\textwidth}>{\raggedright\arraybackslash}p{0.38\textwidth}}
+\toprule
+\textbf{Channel} & \textbf{Requirement} & \textbf{Met by} \\
+\midrule
+Arm power ratio & stability $\leq 10^{-3}$ & chopped differential-deflectometry servo (shot-noise-limited error signal) \\
+Differential per-pass loss & drift $|\delta(\Delta L_p)| \leq 2.2\times 10^{-5}$ per servo period & static part trimmed by amplitude servo; coating drift slow at $\geq 1$ Hz \\
+Waist matching (chromatic) & $\delta w/w \leq 5\times 10^{-4}$ ($\delta f \leq 0.5\,\mu$m) & all-reflective cell; dual-wavelength-corrected injection; inside DoG fit family \\
+Relative centering (two colors) & $\delta x_c \leq 0.6$ nm (integrity); drift-only after calibration & common fiber + common reflective path; $\leq 10''$ wedge spec ($0.33$ nm); differential trim servo; static part in DoG family \\
+Pass-to-pass overlap & within $w$ at common focus & re-imaging design; residual $\to$ effective-waist shift in fit family \\
+Standing-wave suppression & small-angle folding & geometry (carried from \S\ref{sec:numerics}) \\
+Polarization (vector shift) & none for $m_F = 0$ & clock-state preparation; impurities covered by $f \leq 5\%$ (\S\ref{sec:magnetic}) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% =============================================================================
+\section{Decoherence Analysis}
+\label{sec:decoherence}
+
+The decoherence follows from a partial trace over the light, which we make explicit. Let $\rho_a$ be the atomic density matrix at the curtain plane and $\ket{\alpha}$ the coherent state of one curtain arm, with mean photon number $|\alpha|^2 = N_\gamma^{(1)}$ per transit in the beam mode $\Phi_0$ (Appendix~\ref{app:derivation}, B.1). The dispersive interaction is diagonal in the atomic position: conditionally on the atom at $x$ it acts on the light as a linear-optical unitary $\hat{U}_x$ that maps $\ket{\alpha}$ into a coherent state $\ket{\alpha_x}$ of the same amplitude in a modified mode $\Phi_x$ --- for the effective coupling of \S\ref{sec:weakval}, the Gaussian mode displaced in momentum by the per-photon kick $\delta p(x)$ of Eq.~\eqref{eq:photon_kick}. With $\hat{U} = \int dx\,\ket{x}\bra{x}_a\otimes\hat{U}_x$, the reduced atomic state is
+\begin{align}
+\rho_a' = \mathrm{Tr}_\gamma\!\left[\hat{U}\left(\rho_a\otimes\ket{\alpha}\bra{\alpha}\right)\hat{U}^\dagger\right]
+\;&\Longrightarrow\;
+\rho_a'(x, x') = \rho_a(x, x')\,\braket{\alpha_{x'}}{\alpha_x}, \nonumber\\
+\big|\braket{\alpha_{x'}}{\alpha_x}\big| &= \exp\!\Big\{-N_\gamma^{(1)}\big[1 - \mathrm{Re}\braket{\Phi_{x'}}{\Phi_x}\big]\Big\},
+\label{eq:partial_trace}
+\end{align}
+the coherent-state overlap being exact for any photon number. For two momentum-displaced Gaussian modes of momentum width $\sigma_p$, $\braket{\Phi_{x'}}{\Phi_x} = \exp\{-[\delta p(x) - \delta p(x')]^2/(8\sigma_p^2)\} \equiv e^{-\mathcal{D}(x, x')}$, so every pair of atomic positions loses coherence by the factor $\exp\{-N_\gamma^{(1)}(1 - e^{-\mathcal{D}(x, x')})\}$; the which-path information carried \emph{out} of the beam by Rayleigh scattering is the separate channel $P_\text{sc}$ treated below. For the two slit components, $x = \pm d/2$, we write $\mathcal{D}_1 \equiv \mathcal{D}(d/2, -d/2)$ and $\delta p_{L,R} \equiv \delta p(\mp d/2)$. With the $1/e^2$ convention of \S\ref{sec:coupling} --- intensity $\propto e^{-2(x-x_c)^2/w^2} = e^{-(x-x_c)^2/w_\text{eff}^2}$ --- the photon transverse mode has position spread $\sigma_x = w/2$ and minimum-uncertainty momentum width $\sigma_p = \hbar/w = \hbar/(\sqrt{2}\,w_\text{eff})$; we state the convention explicitly because the width symbol enters every shape factor, and the $(P, I_0, w)$ triple of Table~\ref{tab:parameters} fixes it unambiguously. Evaluating the per-photon kicks of Eq.~\eqref{eq:photon_kick} at the slit positions $x_a = \pm d/2$ with the curtain at $x_c = 0$, the per-photon overlap exponent is
+\begin{equation}
+\mathcal{D}_1 \equiv \frac{(\delta p_L - \delta p_R)^2}{8\sigma_p^2} = \varphi_1^2\left(\frac{d}{w_\text{eff}}\right)^2 \exp\!\left[-\frac{d^2}{2w_\text{eff}^2}\right],
+\label{eq:D1_formula}
+\end{equation}
+with $\varphi_1$ the per-photon phase of the arm accumulated over all $F$ passes of one transit (§\ref{sec:coupling}). We call $\mathcal{D}_1$ the per-photon distinguishability for brevity; it is an overlap exponent, $|\braket{\Phi_L}{\Phi_R}| = e^{-\mathcal{D}_1}$, and the per-photon Englert distinguishability proper is $\sqrt{1 - e^{-2\mathcal{D}_1}} \approx \sqrt{2\mathcal{D}_1}$. $\mathcal{D}_1$ is quoted at $x_c = 0$, where the antisymmetric kick difference is largest; over the $N_{x_c} = 151$-position scan $\mathcal{D}_1(x_c)$ falls off with the Gaussian-derivative envelope, The relevant coherence is not that of separate slit packets --- at the first curtain plane each packet has already spread to $\approx 18\,\mu$m, far beyond $d$ --- but the coherence $\rho_a(x, x')$ between points separated by $|x - x'| = d$, which produces the $h/d$ fringe at the screen and which free flight preserves; $\mathcal{D}(x_c + d/2,\, x_c - d/2)$ is that pair's exponent, largest for the pair centred on the curtain, so the quoted $\mathcal{D}_1$ is the upper value along the scan. By Eq.~\eqref{eq:partial_trace} each arm contributes a coherence exponent $\Lambda_\text{arm} = N_\gamma^{(1)}(1 - e^{-\mathcal{D}_1}) = N_\gamma^{(1)}\mathcal{D}_1\,[1 + O(\mathcal{D}_1)]$, equal to $N_\gamma^{(1)}\mathcal{D}_1$ to a relative accuracy of $10^{-12}$ here, computed with that arm's $\varphi_1$ and $N_\gamma^{(1)}$; the two arms' photon fields are independent reservoirs, so the exponents add, $\Lambda_\text{eff} = \Lambda_\text{m} + \Lambda_\text{c}$. For the operating configuration at the reference plane (Table~\ref{tab:parameters}; all $\Lambda \propto \tau_a(z)$, Table~\ref{tab:couplings_planes}): measuring arm $\mathcal{D}_1 = 4.5\times 10^{-12}$, $\Lambda_\text{m} = 6.3\times 10^{-3}$; compensator arm $\mathcal{D}_1 = 6.3\times 10^{-13}$, $\Lambda_\text{c} = 2.4\times 10^{-3}$; total $\Lambda_\text{eff} = 8.65\times 10^{-3}$ --- far below unity. The visibility and which-way distinguishability are
+\begin{equation}
+V = e^{-\Lambda_\text{eff}}, \qquad D = \sqrt{1 - e^{-2\Lambda_\text{eff}}}, \qquad V^2 + D^2 = 1,
+\end{equation}
+saturating the Englert bound~\cite{Englert1996} exactly, as expected for pure-state dephasing. At our operating point, $V \approx 0.991$ and $D \approx 0.13$ at the reference plane: the protocol sits deep in the gentle-measurement regime, with essentially full fringe contrast preserved per atom and which-way information accumulating only statistically over the ensemble. This contrasts with the strong-complementarity regime probed in the welcher-Weg atom-interferometry experiments of D\"urr, Nonn, and Rempe~\cite{Durr1998}, where per-atom visibility loss was of order unity; the momentum-transfer accounting appropriate to such welcher-Weg couplings is analyzed by Wiseman~\cite{Wiseman1998}. Here the which-way information is extracted coherently via dispersive coupling, preserving the deterministic-back-action structure that makes the calibration scheme of §\ref{sec:dipole_lensing} tractable.
+
+\paragraph{Coherent-state illumination.} For coherent-state laser light the factorization behind Eq.~\eqref{eq:partial_trace} is \emph{exact}: a coherent state decomposes over any orthogonal mode set as a product of coherent states with Poissonian statistics, so the accumulated decoherence exponent is $N_\gamma^{(1)}(1 - e^{-\mathcal{D}_1})$ per arm, with no additional mode-counting correction, once the per-photon phase $\varphi_1$ is correctly identified.
+
+\paragraph{Spontaneous emission.} The total scattering probability per atom transit at the operating point is $P_\text{sc} \approx 0.014$ at the reference plane (measuring arm $0.010$, compensator $0.004$; $P_\text{sc} \propto \tau_a(z)$; both arms held far detuned precisely to fix this budget). An atom that scatters loses slit coherence --- the decoherence channel mapped experimentally from single- to multiple-photon scattering in the MIT interferometer~\cite{Chapman1995, Kokorowski2001} --- but it is \emph{not} cleanly vetoed at the screen: the single-photon recoil velocity $\approx 5.9$~mm/s displaces a scatterer by $5.9\,\text{mm/s}\times[T - t(z_\text{sc})]$, up to 1.17~mm for scattering at the earliest curtain plane. Forward-modelling the recoil-smeared distribution shows that $\geq 99\%$ of scatterers nevertheless land inside the $\pm 1.25$-mm analysis window at every plane, so effectively the full $P_\text{sc}$ contributes a fringe-free incoherent background ($\approx 1.4\%$ at $z_\text{ref}$, falling $\propto \tau_a(z)$) rather than being vetoed; we carry it as such in the forward model. The two channels are physically distinct and not double-counted: $\Lambda_\text{eff}$ is coherent (Rayleigh) scattering into the beam's own mode family, which builds up over the $F$ re-imaged passes as $F^2/\Delta^2$, whereas $P_\text{sc}$ is incoherent scattering into free space, which adds as $F/\Delta^2$; the optical theorem relates the forward amplitude to the total cross-section but does not identify the two. Note the channel hierarchy at the corrected coupling: spontaneous emission is the \emph{larger} of the two decoherence channels ($P_\text{sc} = 0.014$ against $\Lambda_\text{eff} = 0.0087$ at $z_\text{ref}$; the ratio $1.7$ is plane-independent); the multipass design exists precisely to raise the useful dispersive channel to within a factor $\sim 1.7$ of the spontaneous-emission floor, whereas in single-pass free space the dispersive channel is bounded three orders of magnitude below it (§\ref{sec:numerics}).
+
+% =============================================================================
+\section{Forward-Modeled Reconstruction}
+\label{sec:reconstruction}
+
+The reconstruction proceeds in three layers. (1) At each curtain setting $(x_c, z_j)$ the deflectometry record of a single atom transit is the transit-integrated photon momentum $\Delta P_\gamma$; conditional averaging by screen-position bin and normalization by the per-transit coupling time gives the weak-value profile,
+\begin{equation}
+\mathrm{Re}\,\weakvalps{\hat{A}(x_c)}{x_f, z_j} = -\frac{\langle\Delta P_\gamma\rangle_{x_f}}{\tau_a} = -\frac{\langle\delta p_\gamma\rangle_{x_f}}{\tau_1},
+\label{eq:layer1}
+\end{equation}
+the ensemble inversion of Eq.~\eqref{eq:kick_weakval}. Each arm carries per-transit deflectometry noise $\sigma_p\sqrt{N_\gamma^{(1)}}$; inverse-variance combination of the measuring and compensating arms gives a combined per-shot record noise of $6.1$ at the reference plane in the dimensionless units $\hbar U_0/w_\text{eff}$ (the noise scales as $\tau_a^{-1/2}$), i.e.\ a per-shot SNR of order $0.16\,\langle\hat A\rangle_\text{dimless}$, recovered by ensemble averaging. (2) Sweeping $x_c$ at each $z_j$ and applying Eq.~\eqref{eq:vbohm_reconstructed} with the plug-in density. Operationally the numerator is assembled from the binned records through the exact identity
+\begin{equation}
+N(x_c) = \int_{-\infty}^{x_c}\!dx'\left[\frac{1}{w_\text{eff}}\int\!dx_f\,(x_f - x')\,\rho(x_f)\,a_w(x_f; x') \;-\; \rho_w(x')\right],
+\label{eq:cumulative_estimator}
+\end{equation}
+where $a_w(x_f;x_c) \equiv \mathrm{Re}\,\weakvalps{\hat A(x_c)}{x_f}/(\hbar U_0/w_\text{eff})$ is the dimensionless record profile of Eq.~\eqref{eq:layer1}. The empirical screen measure and per-bin record means replace $\rho\,a_w$; the data moment is restricted to the support of the model record kernel, with the outside-window moment and the sub-bin lever-arm term supplied deterministically from the wavefunction model in the same plug-in spirit as §\ref{sec:plug_in}; and the $x_c$ integral is accumulated as the antiderivative of a cubic-spline interpolant of the integrand --- an $O(h^4)$ quadrature at the fixed 151-point design; a mixed low-order rule in its place leaves a plane-independent $\sim 2\,\mu$m/s distortion that reaches the wiggle scale at the last planes. One curtain is inserted per experimental cycle (\S\ref{sec:setup}), so each $(x_c, z_j)$ setting is a statistically independent ensemble of $N_a$ atoms. The curtain positions form an adaptive per-plane grid, $N_{x_c} = 151$ positions spanning the support of $\rho_w$ at each plane ($\Delta x_c = 1.6$--$11.0\,\mu$m from $z = 5$ to $57$ cm). Screen records are binned at $1\,\mu$m over a $\pm 1.25$ mm window: the record profile $\rho\,a_w$ is chirped, with local spatial frequency $(M/\hbar)\,|t^{-1} - T_L^{-1}|\,|x_f - x_c|$ (here $t = T - t(z_j)$ and $T_L = T$; Eq.~\eqref{eq:kinematics_map}), so coarse pixels alias it, and an effective screen-position resolution $\lesssim 2\,\mu$m (fluorescence-imaging class) is an apparatus requirement of the reconstruction. With these elements the noiseless pipeline reproduces the direct evaluation of Eq.~\eqref{eq:vbohm_reconstructed} to a worst-plane maximum deviation of $0.16\%$ (median plane $0.12\%$). (3) Bicubic spline interpolation of the fitted field in $(x, z)$ and fixed-step Runge--Kutta integration of $dx/dz = v_x/v_z$ from $N_\text{traj} = 200$ initial positions sampled from $|\psi(x, z_\text{start})|^2$ at $z_\text{start} = 5$ cm yield the trajectory bundle.
+
+\subsection{Noise structure of the moment contraction}
+\label{sec:reconstruction_results}
+
+We have run a complete forward-modelled simulation of the protocol at the operating configuration with the per-photon couplings of Eq.~\eqref{eq:phi1}, enforcing the momentum-conservation identity $N_\gamma^{(1)}\varphi_1 = g_a$ in each arm. Every $(x_c, z_j)$ setting is simulated as an independent ensemble: screen counts are drawn multinomially from the propagated quantum density --- the $V(z)$ visibility mixture with per-slit incoherent record products, the per-plane recoil-smeared spontaneous-emission background of §\ref{sec:decoherence} ($\geq 99\%$ of it in-window), and the $m_F$-impurity record dilution of §\ref{sec:magnetic} ---, and per-bin record means are Gaussian with the per-shot noise above. The central quantitative finding is that, although the per-atom which-path significance $\sqrt{N_a\Lambda_\text{eff}(z)}$ is $\approx 7$--$9$ across the planes at $N_a = 10^4$ (§\ref{sec:decoherence}), the moment contraction that carries the \emph{velocity} information is far noisier. The exact numerator of Eq.~\eqref{eq:cumulative_estimator} survives as a small stationary-phase residue of the chirped record, while the record noise does not cancel. Equivalently, the protocol is time-of-flight velocimetry blurred by the quantum kernel of the curtain slice: the lever arm $(x_f - x_c)$ spreads over the diffracted slice width $\sigma_G = \hbar t/(2M\sigma_w)$, with $\sigma_w = w_\text{eff}/2$ the density width of the tagged slice --- $\approx 100\,\mu$m at the first plane and $\approx 90\,\mu$m at the third --- while the channelling signal displaces the arrival by only $v_x t \approx 3\,\mu$m ($14\,\mu$m/s over the $0.2$ s fall), amplifying record noise into the velocity estimate by more than thirtyfold. The matched-filter field SNR per plane at $N_a = 10^4$ is $0.42$ at $z = 5$ cm, falling to $0.06$ by $z = 13$ cm and below $0.02$ beyond $z = 20$ cm; a seed-paired scaling test shows the fitted-field noise at $N_a = 10^4$ exceeding the pure record-noise $N_a^{-1/2}$ extrapolation from $N_a = 10^6$ by $\approx 40\%$, the excess arising from multinomial atom sampling at low per-bin counts. Trajectories integrated through the directly-assembled field at $N_a = 10^4$ have final RMS $\approx 13$ mm (30 noise realizations; the bundle is noise-saturated, and the precise value is realization- and platform-sensitive in this regime), against a noiseless-pipeline floor of $1.9\,\mu$m ($0.45\%$ of the fringe): the direct estimator is noise-limited by nearly four orders of magnitude at experimentally typical atom numbers.
+
+The remedy follows from the statistical independence of the per-$x_c$ ensembles. Rather than accumulating the cumulative integral of Eq.~\eqref{eq:cumulative_estimator}, which random-walks the record noise along the sweep, the velocity field is fit directly through the linear relation between the independent moment samples and $v_x$, $\mathcal{M}(x_c) = \rho_w(x_c) + t\,\partial_x\!\left[\rho_w v_x\right](x_c)$, expanded in cubic $B$-splines with knot spacing $\lambda_\text{fringe}(z_j)/4$ ($\approx 13$ degrees of freedom per plane) and solved by generalized least squares with the analytically known heteroscedastic per-point variances. The basis-truncation bias is $\leq 0.4\%$ of the field at the early planes ($1.0\%$ at the last), and the noiseless trajectory floor of this estimator is $3.4\,\mu$m ($0.8\%$ of the fringe; envelope-width ratio $1.03$): statistical noise, not methodology, is the practical limit at every relevant atom number. Figure~\ref{fig:reconstruction} shows the pipeline operating at $N_a = 10^7$ atoms per grid point, where the final trajectory RMS is $184 \pm 93\,\mu$m --- $44\%$ of the $420\,\mu$m fringe spacing, and $1.8$ times the true fan's rms half-width of $104\,\mu$m at the screen, i.e.\ an order-unity distortion of the bundle --- the spread reflecting genuinely heavy-tailed realization statistics (20 realizations: the final RMS ranges from $82$ to $353\,\mu$m, with median $149\,\mu$m against the mean of $184\,\mu$m) --- with the reconstructed bundle over-dispersed relative to the true envelope by a factor $\approx 1.5$.
+
+\paragraph{Reading Figure~\ref{fig:reconstruction}.} Panel (a) is the reference: the trajectories are the integral curves $dx/dz = v_x/v_z(z)$ of the exact guidance field $v_x = (\hbar/M)\,\mathrm{Im}[\partial_x\psi/\psi]$ of the analytic, freely falling two-Gaussian state (the guidance law of de Broglie and Bohm~\cite{deBroglie1927, Bohm1952a, Holland1993}, in the construction used for photons by Kocsis et al.~\cite{Kocsis2011}), integrated with an adaptive Runge--Kutta solver from 200 initial positions placed at the quantiles of $|\psi(x, z_\text{start})|^2$ at $z_\text{start} = 5$ cm; the fan is the far-field picture of this nearly single-lobed pattern (\S\ref{sec:setup}): a smooth spreading bundle in the central lobe, with a handful of trajectories in the side lobes at the edges; the channelling near the nodes is too weak to be visible at this scale. Panel (b) shows the same 200 initial positions (every third trajectory is drawn) integrated through the field of \emph{one} representative noise realization at $N_a = 10^7$ atoms per grid point --- each blue line is a single reconstructed trajectory, dense blue is overlapping lines, there is no error band, and the green dotted verticals mark the 20 curtain planes. The bundle tracks the true fan closely over the first $\approx 20$ cm (RMS deviation $21\,\mu$m at $z = 20$ cm against a fan width of $45\,\mu$m), is already comparable to the fan width by $z \approx 30$ cm, and is then distorted by field errors at the mid-to-late planes, where the moment signal-to-noise ratio is poorest (\S\ref{sec:resolution_limits}): the bundle as a whole is displaced by up to $\approx 300\,\mu$m and about a quarter of the trajectories are carried to $\approx +500\,\mu$m. That is what a $44\%$-of-fringe reconstruction looks like trajectory by trajectory. Panel (c) is the field itself at the first curtain plane: the black curve is the exact formula field, the orange and green bands are the mean $\pm 1\sigma$ of twelve independent GLS reconstructions at $10^6$ and $10^7$ atoms per point. The bands contain the truth across the core of the pattern and narrow as $N_a^{-1/2}$, so the panel establishes two things at once: the estimator is unbiased at the level of its own scatter, and its accuracy is set by statistics rather than by the method --- the band width is to be compared with the $\approx 360\,\mu$m/s ramp, not with the $10$--$14\,\mu$m/s fringe-channelling modulation, which lies inside the noise (\S\ref{sec:resolution_limits}). Panel (d) is a different quantity from (b): it is the root-mean-square deviation of the reconstructed trajectories from the true ones as a function of depth, averaged over 20 realizations (mean $\pm$ standard error), at the two atom numbers, against the noiseless-pipeline floor and the one-third-of-fringe line; it summarizes what (b) shows for one realization and makes the statistical limit quantitative.
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=0.95\textwidth]{photon_curtain_fig4_reconstruction.pdf}
+\caption{\textbf{Forward-modelled reconstruction at the operating configuration through the GLS pipeline.}
+\emph{(a)} True Bohmian trajectories: integral curves of the exact guidance field from 200 initial positions at the quantiles of $|\psi(x, z_\text{start})|^2$, $z_\text{start} = 5$ cm. \emph{(b)} The same 200 initial positions (every third drawn) integrated through the field reconstructed from \emph{one} representative noise realization at $N_a = 10^7$ atoms per grid point; each line is one trajectory and no error band is shown; green dotted verticals mark the 20 curtain planes. \emph{(c)} Velocity field at the $z = 5.0$ cm plane: exact formula field (black) and GLS reconstructions at $N_a = 10^6$ and $10^7$ (mean $\pm 1\sigma$ over 12 noise realizations). \emph{(d)} Trajectory RMS versus propagation distance at $N_a = 10^6$ and $10^7$ (mean $\pm$ SE over 20 realizations), with the noiseless-pipeline floor (dashed). Final RMS at $N_a = 10^7$ is $184 \pm 93\,\mu$m (mean $\pm$ SD over 20 realizations; the SD is quoted here to convey the realization-to-realization spread, whereas the bands in (d) are standard errors of the mean), $44\%$ of the $420\,\mu$m fringe spacing and $1.8$ times the true fan's rms half-width ($104\,\mu$m).}
+\label{fig:reconstruction}
+\end{figure}
+
+\subsection{The detection programme}
+\label{sec:resolution_limits}
+
+The message of this section is simple: the same apparatus and estimator as in Figure~\ref{fig:reconstruction} can \emph{detect} the conditional momentum field within a normal campaign, but cannot \emph{map} it quantitatively at present-day fluxes; Figure~\ref{fig:reconstruction_asymptotic}, which shares the configuration and pipeline of Figure~\ref{fig:reconstruction} and differs only in sweeping the atom number, quantifies where the boundary lies. The corrected noise analysis organizes the experiment around what is statistically reachable. \emph{The nominal campaign} ($N_a = 10^4$ per point, $3\times 10^7$ atoms total) delivers the observables of \S\ref{sec:bohmian} and \S\ref{sec:decoherence} --- per-point weak-value records at which-path significance $\sqrt{N_a\Lambda_\text{eff}} \approx 7$--$9$ and the interference-visibility and decoherence measurements. The velocity field as a whole is constrained only at the $0.47\sigma$ level (matched filter over all 3020 grid points), and that information is almost entirely front-loaded: the $z = 5.0$, $7.7$ and $10.5$ cm planes alone carry $98\%$ of the pooled significance, with per-plane five-sigma detection thresholds of $1.43\times 10^6$, $8.15\times 10^6$ and $2.80\times 10^7$ atoms per point.
+
+\emph{The detection programme.} The central experimental deliverable is five-sigma detection of the conditional momentum field at the $z = 5$ cm plane: $1.43\times 10^6$ atoms at each of the 151 curtain positions, $2.2\times 10^8$ atoms in total, corresponding to $7.5$--$67$ days across the effective source-flux window ($3.2\times 10^6$--$2.9\times 10^7$ atoms/day; the base window of \S\ref{sec:numerics} with the record--atom pairing ceiling of \S\ref{sec:detection} folded in). The $\approx 9\times$ width of that window dominates the duration uncertainty, making an in-situ flux determination the controlling design measurement (Figure~\ref{fig:reconstruction_asymptotic}b).
+
+\emph{What five-sigma detection establishes.} It is important to say what physical content the detection milestone carries. At every curtain plane the apparatus is in the far field of the slits (Fresnel parameter $\hbar t/2M\sigma_0^2 \approx 31$ at the first plane), where the guidance field is the ballistic ramp $v_x = x/t$ up to the channelling term: the exact field differs from $x/t$ by at most $\approx 20\,\mu$m/s ($6\,\mu$m/s rms over the core) at the first plane and by less than $1\,\mu$m/s beyond $z = 30$ cm, against ramp values of up to $\approx 0.7$ mm/s at the edge of the core. The matched filter therefore detects, to a good approximation, the ramp, whose slope $1/t$ is fixed by kinematics; a five-sigma detection is a $\approx 20\%$ measurement of that slope. What the milestone demonstrates is weak-value velocimetry of a massive particle end to end: the post-selected first moment of Eq.~\eqref{eq:vbohm_reconstructed}, with the coupling calibration, the post-selection and the $10^{-6}$-level back-action subtraction validated together, yields the object Wiseman's theorem identifies at the value quantum mechanics (and, for the ramp, classical kinematics) predicts, and calibrates the fall-time map $t(z)$ in situ as a by-product. It does not by itself test the distinctively quantum content of the field, the fringe channelling of $10$--$14\,\mu$m/s localized near the interference nodes; that is the mapping objective quantified below. Quantitative field mapping beyond detection is deliberately not claimed: at the corrected couplings a $15\%$ map of the $z = 5$ cm field alone requires $\approx 4\times 10^9$ atoms ($\gtrsim 130$ days even at the effective flux ceiling), with the $7.7$ and $10.5$ cm planes costing a further $5\times$ and $16\times$; we identify field mapping as the objective for future flux or coupling improvements. One structure is explicitly out of reach at field level: the fringe-channelling oscillation of $v_x$. Its amplitude is small ($10$--$14\,\mu$m/s at the early planes, against a smooth ramp of characteristic scale $\approx 360\,\mu$m/s) and it is localized around the interference nodes, exactly where $\rho_w$ --- and with it the number of conditioning atoms --- vanishes: the weak measurement is intrinsically least informative where the field's most distinctive quantum structure lives. Five-sigma detection of the oscillatory component would require $\gtrsim 2\times 10^9$ atoms per point even at the most favourable plane. The channelling seen in the photonic experiment~\cite{Kocsis2011} is the cumulative imprint of these small modulations on trajectories --- in the present setting, an observable beyond even the mapping objective.
+
+\emph{Beyond detection.} For completeness we characterize the estimator past the detection tier. Figure~\ref{fig:reconstruction_asymptotic}(a) collects the GLS trajectory RMS across atom number (20 realizations; the distribution is heavy-tailed, and means carry correspondingly broad spreads): $1.25 \pm 0.84$ mm at $N_a = 10^4$, $0.64 \pm 0.24$ mm at $10^5$, $0.51 \pm 0.17$ mm at $10^6$, and $184 \pm 93\,\mu$m --- $44\%$ of the fringe --- at $10^7$ per grid point (envelope-width ratios improving from $7.3$ to $1.5$), improving as $N_a^{-0.3}$ overall (local exponents $-0.29$, $-0.10$ and $-0.44$ per decade) --- more slowly than the $N_a^{-1/2}$ reference drawn in Figure~\ref{fig:reconstruction_asymptotic}(a), because of the sub-linear trajectory response described below --- and still far above the $3.4\,\mu$m methodological floor. At every atom number shown the bundle is statistics-limited, not method-limited: even at $10^7$ atoms per point the RMS exceeds the noiseless floor by more than fifty times, so the residual deviation is record noise through the moment contraction, not a geometric or algorithmic limit. Even $10^7$ atoms per grid point ($3\times 10^{10}$ in total) leaves the bundle short of the one-third-of-fringe mark. Two potential shortcuts were tested and quantified. Reallocating the atom budget across planes, with per-plane error coefficients measured by single-plane noise injection through the full pipeline, improves the final RMS by only $5$--$8\%$ at fixed total atom number in the additive model; a seed-paired end-to-end comparison gives uniform-to-optimal RMS ratios of $1.51 \pm 0.31$ ($N_a = 10^6$) and $1.11 \pm 0.19$ ($10^7$), consistent with the additive prediction within its (large) uncertainty --- the per-plane error contributions are broadly distributed across the mid-to-late planes, where the moment SNR is poorest, and the trajectory response to localized field errors is sub-linear, so uniform allocation is near-optimal. And the dipole-residual systematics of \S\ref{sec:dipole_lensing} remain subdominant throughout: at the two-stage budget $\eta_\text{bal}\,\varepsilon_\text{res} = 10^{-6}$ the residual biases the final trajectories by $\leq 1.9\%$ of the fringe through this pipeline.
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=0.98\textwidth]{photon_curtain_fig5_program.pdf}
+\caption{\textbf{Estimator characterization and the detection programme} (same configuration and pipeline as Figure~\ref{fig:reconstruction}; only the atom number per grid point is varied). \emph{(a)} Final trajectory RMS versus atoms per grid point for the GLS pipeline (mean $\pm$ SE, 20 realizations) and the direct moment pipeline at $N_a = 10^4$ (square; mean $\pm$ SE, 30 realizations); dash-dotted line: one-third of the fringe spacing; dashed line: the noiseless-pipeline floor; dotted guide: an $N_a^{-1/2}$ reference through the $10^4$ point, not a fit (the data improve as $N_a^{-0.3}$ overall). \emph{(b)} Relative field error at the three early planes versus $N_a$ per curtain position (12 realizations), with the $15\%$ reference of \S\ref{sec:resolution_limits} (dashed); dotted verticals mark the per-plane five-sigma detection thresholds.}
+\label{fig:reconstruction_asymptotic}
+\end{figure}
+
+\paragraph{Residual node-region pathology.} Equation~\eqref{eq:vbohm_reconstructed} computes $v_x = \widehat{N}/(t\,\widehat\rho_w)$, where the estimated density $\widehat\rho_w$ approaches zero in regions of small wavefunction support. Shot-noise fluctuations on $\widehat\rho_w$ produce a heavy-tailed distribution of $\widehat{N}/\widehat\rho_w$ whose mean is offset from the true value by an $N_a$-independent bias. The plug-in-density refinement (§\ref{sec:plug_in}), which replaces the noisy denominator with the analytical $\rho_w$, eliminates the most direct manifestation of this pathology; residual heavy-tailed contributions enter through the numerator in node regions but are subdominant to deflectometry record noise at the operating configuration, as established by the variance audit above. The per-plane GLS fit is the plane-level implementation of regression against the known noise covariance; a full Gaussian-process treatment coupling planes through the smoothness of $v_x(x, z)$ is its natural refinement, with the front-loaded information structure quantified here as prior input.
+
+\paragraph{Fringe-relative figure of merit.} The operationally meaningful resolution is $\sigma_\text{traj}/\lambda_\text{fringe}$, because $\lambda_\text{fringe} = hT/(Md)$ (Eq.~\eqref{eq:fringe_accel}) sets the natural ruler at which Bohmian and Born predictions become distinguishable; the apparatus geometry ($T = 0.229$ s, $d = 2.5\,\mu$m) makes that ruler $420\,\mu$m, and all resolution statements above are quoted against it.
+
+% =============================================================================
+\section{Discussion and Conclusion}
+\label{sec:discussion}
+
+We have proposed a weak-measurement protocol that reconstructs the conditional momentum field of atomic matter waves using a transverse photon curtain in the dispersive coupling regime, extending the Kocsis--Steinberg program from photons to massive non-relativistic particles. By Wiseman's theorem~\cite{Wiseman2007}, the field reconstructed by Eq.~\eqref{eq:vbohm_reconstructed} is the de Broglie--Bohm guidance velocity, the Madelung hydrodynamic velocity, and the probability current divided by $|\psi|^2$. We adopt the operational position: the protocol measures one specific velocity field that several distinct interpretations identify as physically meaningful, and we make no ontological claim about underlying particle trajectories. The contribution is methodological --- making this field directly measurable for atomic matter waves --- not interpretive.
+
+The reconstruction formula has been verified against the exact Bohmian field at $1.0\%$ mean ($2.5\%$ maximum) error and against the full free-fall apparatus geometry at the $1.6\%$ level, and the complete estimator has been forward-modelled at the operating configuration with the corrected per-photon couplings: the detection programme of §\ref{sec:resolution_limits} delivers five-sigma detection of the conditional momentum field of a massive particle at $2.2\times 10^8$ atoms --- days to weeks at demonstrated fluxes --- while quantitative field mapping is identified, not claimed, as the next objective.
+
+Set against the six contributions announced in \S\ref{sec:intro}, the paper has shown the following. (i) The photon meter reads the gradient of the atom's dispersive phase shift, i.e.\ a definite function of the atomic transverse position, and the per-photon phase that controls both the weak-measurement condition and the decoherence is fixed by momentum conservation independently of laser power (\S\ref{sec:coupling}, Appendix~\ref{app:derivation}). (ii) The post-selected deflection profile converts to the conditional momentum field by an exact free-flight identity, with the only residual term written and bounded explicitly and the formula verified numerically on a 24-point grid and in the full free-fall geometry (\S\ref{sec:bohmian}, Appendix~\ref{app:derivation}). (iii) The decoherence, computed by an explicit partial trace over the light, saturates the Englert bound with per-atom visibility close to unity (\S\ref{sec:decoherence}). (iv) Detuning purchases a deterministic, calibratable back-action rather than information per scattering event, which is why the free-space multipass, force-balanced design is required (\S\ref{sec:numerics}). (v) That back-action is quantified and its two-stage calibration budget confirmed by forward simulation, with an in-situ single-slit calibration scheme (\S\ref{sec:dipole_lensing}, Table~\ref{tab:optics_budget}). (vi) The complete estimator, forward-modelled with the corrected couplings, locates the statistical bottleneck in the moment contraction and establishes five-sigma detection at $2.2\times 10^8$ atoms as the feasible deliverable --- at present flux a detection of the far-field ramp that validates the weak-value velocimetry end to end --- with the mapping of the quantum channelling deferred (\S\ref{sec:reconstruction}). Photons are special: massless, lacking a non-relativistic limit, with subtle position-operator issues~\cite{Foo2022}. Atoms remove these complications and provide the non-relativistic regime where Bohmian theory was originally formulated, internal-state entanglement for testing nonlocal trajectory steering with full experimental control, mass-tunability across orders of magnitude (Li, Rb, Cs, Yb), and a clear path toward mesoscopic and macroscopic regimes.
+
+\paragraph{Limitations.} We acknowledge several. The protocol does not distinguish between Bohmian mechanics and rival empirically-equivalent interpretations~\cite{FankhauserDurr2021, Sokolovski2016}; the reconstructed trajectories are statistical ensemble averages, not individual paths; reconstruction accuracy at experimentally typical $N_a$ is limited by deflectometry record noise through the moment contraction analyzed in §\ref{sec:reconstruction_results} --- even $10^7$ atoms per grid point leaves the trajectory bundle at $\approx 44\%$ of the fringe spacing ($1.8$ true fan widths) with the generalized-least-squares estimator, and the fringe-channelling component of the velocity field is node-localized and out of reach at field level; the fringe content of the pattern is set by $d/\sigma_0$ (here $4.2$, one third of a fringe per envelope width, \S\ref{sec:setup}), and a wider slit separation or narrower slits would raise the channelling content of the field at the cost of a proportionally finer fringe --- a design lever not explored here; the two-arm force balance is computed with the full D1$+$D2 scalar polarizability but assumes optical pumping to a single ground hyperfine level, the multilevel balance condition under realistic pumping and polarization remaining an open design item (\S\ref{sec:numerics}); and the reconstructed field is the conditional momentum field of the experiment-as-conducted, including curtain back-action, agreeing with the unperturbed Bohmian field only to the extent that Eq.~\eqref{eq:dipole_subtraction} captures the back-action and improving as $g_a \to 0$.
+
+The dominant remaining experimental challenge is the curtain's deterministic dipole-force back-action, with cumulative per-arm phase $g_a \approx 3.7\times 10^3$ rad at the operating configuration. The dual-color force balance is the baseline architecture, and the residual obeys a two-stage budget: optical balance to $\eta_\text{bal}$, followed by in-situ single-slit calibration of the residual to fractional accuracy $\varepsilon_\text{res}$, with $\eta_\text{bal}\,\varepsilon_\text{res} \leq 1.4\times 10^{-6}$ --- a bound confirmed by the forward simulation of §\ref{sec:resolution_limits}, analogous in method to demonstrated trap-potential mapping~\cite{Bertoldi2010, Xu2024}, at a calibration atom budget of order $10^7$--$10^8$~\cite{Kim2023}. Chopped lock-in detection remains as the drift-suppression layer. The structural picture is therefore: the quantum-coherence requirements of the proposal are met by current cold-atom capabilities; the reconstruction formula is verified numerically against the exact (closed-form) Bohmian field; the back-action budget is quantified and simulation-confirmed; and the measurement programme is deliberately modest: conditional-momentum-field detection is feasible at present-day fluxes within weeks, while quantitative mapping and trajectory-bundle reconstruction are identified as objectives for improved flux and coupling. The companion paper~\cite{PaperII} extends the proposal to internal-state-entangled atoms with a QND probe, providing experimental access to the macroscopic-pointer regime of the Mahler--Tastevin-Lalo\"e surrealism debate.
+
+\section*{Acknowledgments}
+The authors acknowledge the use of Anthropic's Claude AI assistant for editorial and computational support during manuscript preparation. All scientific content and conclusions are the authors' responsibility.
+
+\section*{Funding}
+This research received no external funding.
+
+\section*{Data and Code Availability}
+The Python source code used to generate Figures~\ref{fig:dispersive}--\ref{fig:reconstruction_asymptotic} and to perform the numerical reconstruction simulation is available as supplementary material.
+
+% =============================================================================
+\appendix
+\section{Derivation of the dipole-subtraction formula and the imprint--sampling ordering}
+\label{app:dipole}
+
+During a single curtain transit the atomic centre-of-mass evolves under
+\begin{equation}
+\hat H(t) = \frac{\hat p^2}{2M} + s(t)\left[\,V_\text{dipole}(\hat x) + \hat H_\text{meas}(\hat x)\,\right],
+\qquad \int_0^{\tau_a}\! s(t)\,dt = \tau_a,
+\label{eq:appA_hamiltonian}
+\end{equation}
+where $s(t) \geq 0$ is the longitudinal intensity profile of the beam, $V_\text{dipole}(x) = \hbar U_0^\text{net}\, e^{-(x - x_c)^2/w_\text{eff}^2}$ is the transverse profile of the \emph{net} dipole potential of the two balanced arms (the quantity subtracted in Eq.~\eqref{eq:dipole_subtraction}; the unsubscripted $V$ is reserved for the fringe visibility) ($U_0^\text{net} = \eta_\text{bal}\,U_0$), and $\hat H_\text{meas} = \hat A(\hat x)\otimes\delta\hat x_\gamma$ is the measurement coupling in the AAV form of Eq.~\eqref{eq:AAV_form}, with $\hat A$ the operator of Eq.~\eqref{eq:coupling_operator} (the meter coordinate $\delta\hat x_\gamma$ is coupled and the meter momentum $\hat p_\gamma$ is read out, \S\ref{sec:weakval}). Both $V_\text{dipole}$ and $\hat A$ are diagonal in $\hat x$ and commute with one another; every ordering effect therefore enters solely through the kinetic term.
+
+\paragraph{Impulse limit and Eq.~\eqref{eq:dipole_subtraction}.} To leading order in the two dimensionless parameters below, the transit unitary factorizes into the free flight times a position-diagonal imprint, $\hat U_\text{transit} \simeq e^{-i\varphi(\hat x)}\,e^{-i\theta(\hat x)\,\delta\hat x_\gamma/\hbar}$, where $\theta(\hat x) = \int s(t)\,\hat A(\hat x)\,dt$ is the transit-integrated measurement imprint (its action shifts the meter momentum by $-\theta(\hat x)$, Appendix~\ref{app:derivation}, B.2) and $\varphi(x) = \hbar^{-1}\!\int s(t)\,V_\text{dipole}(x)\,dt = g_a^\text{net}\, e^{-(x-x_c)^2/w_\text{eff}^2}$. The imprinted velocity field is $(\hbar/M)\,\partial_x\varphi = -(Mv_z)^{-1}\!\int \partial_x V_\text{dipole}\,dz'$, which is the integrand of Eq.~\eqref{eq:dipole_subtraction}; setting the profile integral to $\tau_a$ recovers $g_a = U_0\tau_a$ per arm and the maximum-kick formula, Eq.~\eqref{eq:dipole_kick_max}. The validity conditions are (i) $|V_\text{dipole}|/(Mv_z^2/2) \ll 1$ and (ii) intra-transit displacement $\Delta v_x\,\tau_a \ll w_\text{eff}$. Both are worst at the earliest curtain plane and relax as $v_z^{-2}(z)$ along the fall. A \emph{single unbalanced arm violates both there}: $\hbar U_0/(Mv_z^2/2) = 1.5$ at $z_\text{ref}$ --- the arm is a potential barrier comparable to the beam energy --- and $\Delta v_x^\text{max}\tau_a = 1.8\,\mu$m $= 0.91\,w = 1.28\,w_\text{eff}$ at $z_\text{ref}$, falling to $0.22\,w$ by the last plane. The balanced configuration restores both with wide margins even at the worst plane, $1.5\times 10^{-3}$ and $1.3\times 10^{-3}$ ($w_\text{eff}$-relative) at $\eta_\text{bal} = 10^{-3}$: the dual-color force balance is not merely a back-action mitigation but the validity condition of the impulse treatment itself. The residual field's impulse expansion parameter is thus $\eta_\text{bal}\,\Delta v_x^\text{max}\tau_a/w_\text{eff} \lesssim 1.3\times 10^{-3}$ at every plane, and the single-arm worst case is never physically realized in operation: the calibration phase of \S\ref{sec:dipole_lensing} blocks a \emph{slit}, not an arm, so the two arms remain force-balanced throughout every stage of the protocol.
+
+\paragraph{The ordering constant $\beta$.} Because the dipole imprint and the weak-value sampling accumulate under the \emph{same} profile $s(t)$, the first-order cross term in the conditional pointer shift carries the time-ordered double integral
+\begin{equation}
+\int_0^{\tau_a}\! dt\, s(t)\int_0^{t}\! dt'\, s(t') \;=\; \tfrac{1}{2}\left(\int_0^{\tau_a}\! s\,dt\right)^{\!2},
+\label{eq:appA_half}
+\end{equation}
+an identity that holds for \emph{any} profile. The record therefore samples the state carrying exactly half of the dipole imprint: the reconstructed field at the curtain plane obeys $v_x^\text{measured} = v_x^\text{free} + \beta\,\Delta v_x^\text{dipole}$ with $\beta = 1/2$ at leading order --- the mid-transit heuristic made exact and profile-independent --- while profile-dependent corrections enter only at the second-order scale $\Delta v_x\tau_a/w \sim 10^{-3}$ of the residual.
+
+\paragraph{Absorption by the in-situ calibration.} The single-slit calibration of §\ref{sec:dipole_lensing} measures precisely the $\beta$-inclusive observable: with one slit blocked, $v_x^\text{free} \equiv 0$ and the screen deflection versus $(x_c, z_j)$ is $\beta\,\Delta v_x^\text{dipole}$ itself. Its $x_c$-shape --- the Gaussian derivative --- is $\beta$-independent; the fitted amplitude is exactly the quantity Eq.~\eqref{eq:dipole_subtraction} must subtract, so $\beta$ never requires independent determination. The ordering ambiguity is absorbed by design, and the forward simulation of §\ref{sec:reconstruction} implements the full $\beta$-inclusive physics by applying the residual phase at the plane inside the downstream propagator $U(L, z_j)$.
+
+% =============================================================================
+\section{Derivation of the pointer shift and of the reconstruction formula}
+\label{app:derivation}
+
+This appendix supplies the algebra behind \S\ref{sec:coupling}--\S\ref{sec:bohmian}: the first-order pointer response of a curtain photon under post-selection (Eq.~\eqref{eq:kick_weakval}), the two free-flight identities (Eqs.~\eqref{eq:Heisenberg_0}--\eqref{eq:Heisenberg_x}), the evaluation of the post-selection averages (Eqs.~\eqref{eq:denominator}--\eqref{eq:vbohm_reconstructed}), the explicit form and bound of the residual term $\mathcal{A}$, the narrow-curtain limit, and the tie to the numerical verification. Every identity below is checked symbolically or numerically by the script \texttt{verify\_appB.py} in the supplementary code (B.7).
+
+\paragraph{B.1 Meter state and per-photon coupling.} The transverse degree of freedom of a curtain photon is described by the beam-mode wavefunction $\Phi_0(x_\gamma)$, centred at $x_c$, whose modulus squared is the curtain intensity profile, $|\Phi_0(x_\gamma)|^2 = |\Phi_0(x_c)|^2\,\tilde{f}(x_\gamma; x_c)$ with $\tilde{f}$ the profile of Eq.~\eqref{eq:A_is_dxc_f}; its position spread is $\sigma_x = w/2 = w_\text{eff}/\sqrt{2}$ and its momentum spread $\sigma_p = \hbar/w$ (\S\ref{sec:decoherence}). The atom couples to the local light intensity at its own position: per photon, the dispersive interaction is the contact coupling
+\begin{equation}
+\hat{H}_1 = \hbar\kappa\,\delta(\hat{x}_\gamma - \hat{x}_a), \qquad \kappa\,|\Phi_0(x_c)|^2\,\tau_1 \equiv \varphi_1,
+\label{eq:B_contact}
+\end{equation}
+acting for the per-photon interaction time $\tau_1 = \tau_a/N_\gamma^{(1)}$ of Eq.~\eqref{eq:kick_weakval}. Averaged over the meter state it is the light shift $\hbar\kappa|\Phi_0(\hat{x}_a)|^2 = \hbar(\varphi_1/\tau_1)\,\tilde{f}(\hat{x}_a; x_c)$, so one photon imprints on the atom the dispersive phase $\varphi_1\tilde{f}(\hat{x}_a; x_c)$ and, by reciprocity, acquires the same phase: this is the optical phase $\varphi_\gamma(x_\gamma; x_a)$ of \S\ref{sec:coupling}, in which $x_\gamma$ labels the position of the photon's mode. Two remarks fix the logic of what follows. First, the Gaussian shape of $\varphi_\gamma$ is the shape of the \emph{meter state}, not of an interaction kernel: the photon is delocalized over the beam profile and the atom samples the intensity where it sits. Second, the AAV form $\hat{A}(\hat{x}_a)\otimes\delta\hat{x}_\gamma$ of Eq.~\eqref{eq:AAV_form} is the \emph{effective} bilinear coupling that reproduces the first-order meter response of Eq.~\eqref{eq:B_contact}, as shown next; it is not a Taylor expansion of a Gaussian kernel in the photon coordinate, which would be uncontrolled because the meter spread $\sigma_x$ is comparable to the curtain width.
+
+\paragraph{B.2 First-order pointer response with post-selection.} Let $\ket{\psi_j} = \hat{U}(z_j, 0)\ket{\psi_0}$ be the atomic state at the curtain plane and $\hat{U} \equiv \hat{U}(L, z_j)$ the free flight to the screen. To first order in the coupling, $e^{-i\hat{H}_1\tau_1/\hbar} \simeq 1 - i\kappa\tau_1\,\delta(\hat{x}_\gamma - \hat{x}_a)$, and the joint state post-selected on atomic arrival at $x_f$ is, up to normalization,
+\begin{align}
+\ket{\Phi_f} &= \bra{x_f}\hat{U}\,e^{-i\hat{H}_1\tau_1/\hbar}\ket{\psi_j}\ket{\Phi_0}
+= \psi(x_f, L)\,\big[\,1 - i\kappa\tau_1\,W(\hat{x}_\gamma)\,\big]\ket{\Phi_0} + O(\kappa^2\tau_1^2), \nonumber\\
+W(x) &\equiv \frac{\bra{x_f}\hat{U}\ket{x}\,\psi(x, z_j)}{\psi(x_f, L)},
+\label{eq:B_meter_state}
+\end{align}
+where $\delta(\hat{x}_\gamma - \hat{x}_a) = \int dx\,\ket{x}\bra{x}_a\,\delta(\hat{x}_\gamma - x)$ was used. The function $W(x)$ is the weak value of the atomic position projector $\ket{x}\bra{x}$, and for any function $O$ of the atomic position $\int dx\,O(x)\,W(x) = \weakvalps{O(\hat{x}_a)}{x_f, z_j}$. Post-selection thus imprints on the meter wavefunction a complex, position-dependent phase proportional to $W$. Its effect on the meter momentum follows from $\hat{p}_\gamma = -i\hbar\partial_{x_\gamma}$ and one integration by parts:
+\begin{equation}
+\langle\hat{p}_\gamma\rangle_{x_f, z_j} = \frac{\bra{\Phi_f}\hat{p}_\gamma\ket{\Phi_f}}{\braket{\Phi_f}{\Phi_f}}
+= \hbar\kappa\tau_1\!\int\! dx\;\partial_x|\Phi_0(x)|^2\;\mathrm{Re}\,W(x) + O(\varphi_1^2)
+= -\,\tau_1\,\mathrm{Re}\,\weakvalps{\hat{A}(x_c)}{x_f, z_j},
+\label{eq:B_pointer}
+\end{equation}
+with $\hat{A}(x_c) = \hbar U_0\,\partial_{x_c}\tilde{f}(\hat{x}_a; x_c)$ and $U_0 = \varphi_1/\tau_1$; the last equality uses $\partial_x|\Phi_0(x)|^2 = |\Phi_0(x_c)|^2\,\partial_x\tilde{f}(x; x_c) = -|\Phi_0(x_c)|^2\,\partial_{x_c}\tilde{f}(x; x_c)$ and the projector identity. This is Eq.~\eqref{eq:kick_weakval}, sign included. It also shows why the meter \emph{momentum} is the readout: the coupling is diagonal in the meter position, so the conditional state acquires a position-dependent phase whose gradient is a momentum shift; the imaginary part of the weak value shifts the meter position instead, $\langle\delta\hat{x}_\gamma\rangle = 2\tau_1\sigma_x^2\,\mathrm{Im}\weakval{\hat{A}}/\hbar$, and does not enter the deflection record. The effective bilinear Hamiltonian $\hat{H}_\text{AAV} = \hat{A}(\hat{x}_a)\otimes\delta\hat{x}_\gamma$ gives the same first-order response: under it $d\hat{p}_\gamma/dt = (i/\hbar)[\hat{H}_\text{AAV}, \hat{p}_\gamma] = -\hat{A}$, and for the Gaussian meter $\langle\hat{p}_\gamma\rangle_{x_f} = -\tau_1\,\mathrm{Re}\weakval{\hat{A}}$ holds to all orders once $\hat{A}$ is replaced by its weak value. Averaging Eq.~\eqref{eq:B_pointer} over the arrival distribution $|\psi(x_f, L)|^2$ turns $\mathrm{Re}\,W(x)$ into $|\psi(x, z_j)|^2$ and recovers the unconditioned momentum-conservation statement of Eqs.~\eqref{eq:photon_kick}--\eqref{eq:momentum_identity}. Three conditions underlie the first-order treatment: (i) $\varphi_1\,|\langle\hat{A}\rangle_\text{dimless}| \ll 1$, which fails only within a relative measure $\sim\varphi_1$ of the interference nodes, where the weak value diverges --- a set of negligible weight that the plug-in estimator (\S\ref{sec:plug_in}) handles with the model density; (ii) the transit is impulsive on the atom's transverse motion, $v_x\tau_a \ll w_\text{eff}$, satisfied by more than three orders of magnitude at the reference plane; (iii) the $N_\gamma^{(1)}$ photons of one transit act independently as meters (\S\ref{sec:decoherence}), so their conditional shifts add to the transit-integrated record of Eq.~\eqref{eq:layer1}; the accumulated dipole imprint of the transit, $\eta_\text{bal}\,g_a$, is not small, but it is position-diagonal and enters only through the imprint--sampling ordering of Appendix~\ref{app:dipole}, which the force balance renders negligible.
+
+\paragraph{B.3 Free-flight kernel and the two moment identities.} Because gravity separates, transverse propagation from the curtain plane to the screen over the fall time $t = T - t(z_j)$ is free:
+\begin{equation}
+\psi(x_f, L) = \int dx\,K(x_f - x; t)\,\psi(x, z_j), \qquad
+K(\xi; t) = \sqrt{\frac{M}{2\pi i\hbar t}}\;\exp\!\left(\frac{iM\xi^2}{2\hbar t}\right),
+\label{eq:B_kernel}
+\end{equation}
+written $K(x_f - x; L - z_j)$ in the main text with the plane understood. Unitarity, $\int dx_f\,K^*(x_f - x'; t)\,K(x_f - x; t) = \delta(x - x')$, applied to the complex conjugate of Eq.~\eqref{eq:B_kernel}, gives the zeroth-moment identity, Eq.~\eqref{eq:Heisenberg_0}. The first-moment identity follows from the kernel's phase alone, $\partial_x K(x_f - x; t) = -(iM/\hbar t)(x_f - x)\,K$, i.e.
+\begin{equation}
+(x_f - x)\,K(x_f - x; t) = \frac{i\hbar t}{M}\,\partial_x K(x_f - x; t),
+\label{eq:B_kernel_identity}
+\end{equation}
+so that
+\begin{equation*}
+\int dx_f\,x_f\,\psi^*(x_f, L)\,K = x\!\int dx_f\,\psi^* K + \frac{i\hbar t}{M}\,\partial_x\!\int dx_f\,\psi^* K = x\,\psi^*(x, z_j) + \frac{i\hbar t}{M}\,\partial_x\psi^*(x, z_j),
+\end{equation*}
+which is Eq.~\eqref{eq:Heisenberg_x}. Equation~\eqref{eq:B_kernel_identity} is the position-representation form of the Heisenberg-picture statement $\hat{U}^\dagger\hat{x}\hat{U} = \hat{x} + \hat{p}\,t/M$; both identities are exact for free flight and hold for any $t$.
+
+\paragraph{B.4 The post-selection averages.} Insert $G(x_c, x_f, z_j) = \int dx\,K(x_f - x; t)\,\tilde{f}(x; x_c)\,\psi(x, z_j)$ (Eq.~\eqref{eq:G_def}) and interchange the integrals. The denominator uses Eq.~\eqref{eq:Heisenberg_0}: $\int dx_f\,\psi^*(x_f, L)\,G = \int dx\,\tilde{f}(x; x_c)\,|\psi(x, z_j)|^2 = \rho_w$, Eq.~\eqref{eq:denominator}. The numerator uses Eq.~\eqref{eq:Heisenberg_x},
+\begin{equation*}
+\int dx_f\,(x_f - x_c)\,\psi^*(x_f, L)\,G = \int dx\,\tilde{f}(x; x_c)\,\psi(x, z_j)\left[(x - x_c)\,\psi^*(x, z_j) + \frac{i\hbar t}{M}\,\partial_x\psi^*(x, z_j)\right];
+\end{equation*}
+with $\psi = \sqrt{\rho}\,e^{iS/\hbar}$, $\mathrm{Re}[\,i\hbar\,\psi\,\partial_x\psi^*/M] = (\hbar/M)\,\mathrm{Im}[\psi^*\partial_x\psi] = \rho\,\partial_x S/M \equiv J$, the probability current, so
+\begin{align}
+\mathrm{Re}\!\int dx_f\,(x_f - x_c)\,\psi^*(x_f, L)\,G &= t\,J_w(x_c, z_j) + \mathcal{A}(x_c, z_j), \nonumber\\
+\mathcal{A}(x_c, z_j) &\equiv \int dx\,(x - x_c)\,\tilde{f}(x; x_c)\,\rho(x, z_j),
+\label{eq:B_numerator}
+\end{align}
+which is Eq.~\eqref{eq:numerator} with $\mathcal{A}$ written exactly. Its meaning is transparent: $(x_f - x_c) = (x_f - x) + (x - x_c)$ splits the screen displacement of a tagged atom into the free-flight displacement $v_x t$ and the initial offset from the curtain centre; $\mathcal{A}$ is the curtain-weighted mean initial offset, and $\mathcal{A}/(t\rho_w)$ is that offset per unit flight time --- the only term in Eq.~\eqref{eq:vbohm_reconstructed} that is not of the form current over density.
+
+\paragraph{B.5 The residual term: explicit form and bound.} Expanding $\rho$ about $x_c$ and using $\int ds\,s^2 e^{-s^2/w_\text{eff}^2} = \tfrac{1}{2}\sqrt{\pi}\,w_\text{eff}^3$ and $\int ds\,s^4 e^{-s^2/w_\text{eff}^2} = \tfrac{3}{4}\sqrt{\pi}\,w_\text{eff}^5$,
+\begin{equation}
+\mathcal{A} = \tfrac{\sqrt{\pi}}{2}\,w_\text{eff}^3\,\partial_x\rho + \tfrac{\sqrt{\pi}}{8}\,w_\text{eff}^5\,\partial_x^3\rho + O(w_\text{eff}^7), \qquad
+\rho_w = \sqrt{\pi}\,w_\text{eff}\,\rho + \tfrac{\sqrt{\pi}}{4}\,w_\text{eff}^3\,\partial_x^2\rho + O(w_\text{eff}^5),
+\label{eq:B_moments}
+\end{equation}
+all derivatives at $x_c$, so the residual velocity is
+\begin{equation}
+\delta v_{\mathcal{A}} \equiv \frac{\mathcal{A}}{t\,\rho_w} = \frac{w_\text{eff}^2}{2t}\,\partial_x\ln\rho(x_c, z_j) + O(w_\text{eff}^4),
+\label{eq:B_residual}
+\end{equation}
+valid where $\rho$ is smooth on the scale $w_\text{eff}$. For the free-spreading envelope of width $\sigma(z_j)$, $\partial_x\ln\rho \simeq -x/\sigma^2$ while $v_x \simeq x/t$, giving $\delta v_{\mathcal{A}}/v_x \simeq w_\text{eff}^2/2\sigma^2$ --- the $O(w_\text{eff}^2/\sigma^2)$ statement of \S\ref{sec:reconstruction_formula}, decaying with $z_j$ as the envelope spreads. Near interference nodes the expansion is not uniform, but the exact term remains bounded: by the Cauchy--Schwarz inequality $|\mathcal{A}| \leq \sqrt{\rho_w\,m_2}$ with $m_2 = \int dx\,(x - x_c)^2\,\tilde{f}\,\rho$, hence
+\begin{equation}
+|\delta v_{\mathcal{A}}| \;\leq\; \frac{1}{t}\sqrt{\frac{m_2}{\rho_w}} = \frac{1}{t}\,\big\langle (x - x_c)^2 \big\rangle_\text{tag}^{1/2},
+\label{eq:B_bound}
+\end{equation}
+the root-mean-square offset of the tagged sub-ensemble from the curtain centre divided by the flight time --- of order $w_\text{eff}/t \approx 7\,\mu$m/s at the first curtain plane of the apparatus, comparable to the fringe-channelling amplitude and two orders of magnitude below the smooth field (\S\ref{sec:resolution_limits}), and smaller at every later plane. The other $O(w_\text{eff}^2)$ contribution to Eq.~\eqref{eq:vbohm_reconstructed} is the finite-blur difference $J_w/\rho_w - J/\rho = \tfrac{1}{4}w_\text{eff}^2\,[\partial_x^2 J - v_x\,\partial_x^2\rho]/\rho + O(w_\text{eff}^4)$, from Eq.~\eqref{eq:B_moments} and its analogue for $J_w$; the two contributions are exactly what the numerical verification measures (B.7).
+
+\paragraph{B.6 Narrow-curtain limit and hydrodynamic reading.} As $w_\text{eff} \to 0$, $\tilde{f} \to \sqrt{\pi}\,w_\text{eff}\,\delta(x - x_c)$, so $J_w \to \sqrt{\pi}\,w_\text{eff}\,J$, $\rho_w \to \sqrt{\pi}\,w_\text{eff}\,\rho$ and $\mathcal{A} = O(w_\text{eff}^3)$ vanishes faster: Eq.~\eqref{eq:vbohm_reconstructed} tends to $J(x_c, z_j)/\rho(x_c, z_j) = \partial_x S/M$, the Madelung velocity field, which satisfies the continuity equation $\partial_t\rho + \partial_x(\rho\,v_x) = 0$ as a consequence of the Schr\"odinger equation and coincides with the de Broglie--Bohm guidance velocity. The reconstruction therefore measures a hydrodynamic velocity field of the quantum state, blurred by the curtain profile; no assumption about particle trajectories enters anywhere in B.1--B.6.
+
+\paragraph{B.7 Numerical verification of the chain.} The script \texttt{verify\_appB.py} checks each identity above symbolically --- the bilinear coefficient of the effective coupling, $\hbar U_0\,\partial_{x_c}\tilde{f}$, and its zeroth-order dipole term, the commutator $d\hat{p}_\gamma/dt = -\hat{A}$, the Gaussian-meter pointer shift with its sign and the position shift from $\mathrm{Im}\weakval{\hat{A}}$, the kernel identity~\eqref{eq:B_kernel_identity}, the Madelung step, the moment expansions~\eqref{eq:B_moments} and the finite-blur term, and the $w_\text{eff} \to 0$ limit --- and numerically on the exact two-Gaussian state of \S\ref{sec:num_verif}: the two moment identities hold to $10^{-11}$ relative, and Eq.~\eqref{eq:B_pointer} is reproduced by an exact propagation of the joint atom--meter state at the $10^{-4}$ level for the effective bilinear coupling and, for the contact coupling of Eq.~\eqref{eq:B_contact} regularized to a width of $0.1\,\sigma_x$, to better than $1\%$, the remainder falling with the regularization width rather than with $\varphi_1$ (the contact coupling is verified by this exact joint-state propagation, not symbolically). The script also decomposes the error of Eq.~\eqref{eq:vbohm_reconstructed} on the 24-point verification grid exactly into the two $O(w_\text{eff}^2)$ terms: at the worst point ($z_j = 0.05$ m, $x_c = -3\,\mu$m) the $-2.52\%$ error is the sum of a $-2.10\%$ finite-blur term and a $-0.42\%$ offset term, the latter reproduced by the leading-order formula~\eqref{eq:B_residual} to better than $3\%$ of itself; the grid statistics ($1.04\%$ mean, $2.52\%$ maximum) are thereby accounted for term by term, both terms decaying with $z_j$ as Eq.~\eqref{eq:B_residual} predicts, and the gravity-map check ($1.6\%$ maximum, \S\ref{sec:num_verif}) is the same formula evaluated in the actual free-fall kinematics.
+
+% =============================================================================
+\section{Notation}
+\label{app:notation}
+
+Table~\ref{tab:notation} collects the principal symbols that appear in more than one section of the paper. Every symbol is defined at its first use in the text; the table is a reference aid, not a substitute for those definitions. Conventions that resolve potential collisions are stated in the meaning column. Universal constants ($\hbar$, $M$, $g$) are omitted.
+
+\noindent\begin{minipage}{\textwidth}
+\scriptsize
+\captionsetup{hypcap=false}
+\captionof{table}{Symbol table: symbol, meaning, and where the symbol is introduced.}
+\label{tab:notation}
+\begin{tabular}{@{}l >{\raggedright\arraybackslash}p{10.0cm} l@{}}
+\toprule
+\textbf{Symbol} & \textbf{Meaning} & \textbf{Introduced} \\
+\midrule
+\multicolumn{3}{@{}l}{\emph{Geometry and kinematics}}\\
+$x_a$, $x$ & atom's transverse position at the active curtain plane ($x$ unsubscripted inside integrals) & \S\ref{sec:setup} \\
+$x_\gamma$ & transverse position of the curtain photon's mode (the beam axis) & \S\ref{sec:setup}, App.~\ref{app:derivation} \\
+$x_c$ & curtain centre: the scanned control parameter & \S\ref{sec:setup} \\
+$x_f$ & atom's detected screen position at $z = L$: the post-selection variable & \S\ref{sec:setup} \\
+$z_j$ & depth of the $j$-th curtain plane & \S\ref{sec:setup} \\
+$d$, $\sigma_0$ & slit separation; initial Gaussian width of each slit component & \S\ref{sec:setup} \\
+$L$, $T$ & slit-to-screen distance; total fall time & Eq.~\eqref{eq:kinematics_map} \\
+$t(z)$, $t$ & fall time from the slits to depth $z$; $t \equiv T - t(z_j)$, the remaining fall time from the active plane & Eq.~\eqref{eq:kinematics_map} \\
+$v_0$, $v_z(z)$, $\tau_a$ & longitudinal speed at the slits; at depth $z$ (free fall); atom transit time through one pass, $w/v_z(z)$ & \S\ref{sec:setup} \\
+$w$ & $1/e^2$ intensity radius of the curtain beam; enters $\varphi_1$ (Eq.~\eqref{eq:phi1}) and the meter widths $\sigma_x = w/2$, $\sigma_p = \hbar/w$ & \S\ref{sec:coupling} \\
+$w_\text{eff}$ & $w/\sqrt{2}$, the $1/e$ intensity radius; \emph{all} shape factors ($\tilde{f}$, $G$, $\mathcal{A}$, $\mathcal{D}_1$) & \S\ref{sec:coupling} \\
+\multicolumn{3}{@{}l}{\emph{Phases and couplings}}\\
+$g_a$ & dispersive phase accumulated by the atom over one curtain transit & \S\ref{sec:coupling} \\
+$g_\text{slice}$ & dispersive phase imprinted during one photon transit time & Eq.~\eqref{eq:g_slice} \\
+$\varphi_1$ & phase exchanged between one atom and one photon, $g_a/N_\gamma^{(1)}$ & Eq.~\eqref{eq:phi1} \\
+$\varphi_\gamma(x_\gamma; x_a)$ & the same phase resolved in the atom--beam separation & \S\ref{sec:coupling} \\
+$N_\gamma^{(1)}$ & curtain photons interacting with one atom per transit (all $F$ passes) & Eq.~\eqref{eq:phi1} \\
+$\tau_1$ & per-photon interaction time, $\varphi_1/U_0 = \tau_a/N_\gamma^{(1)}$ & Eq.~\eqref{eq:kick_weakval} \\
+$F$ & number of re-imaged curtain passes per arm & \S\ref{sec:coupling} \\
+$\Delta$, $\Gamma$ & laser detuning; atomic linewidth (the antisymmetric moment of Eq.~\eqref{eq:numerator} is $\mathcal{A}$, never $\Delta$) & \S\ref{sec:setup} \\
+$U_0$ & peak light-shift rate, $g_a/\tau_a$ & Eq.~\eqref{eq:coupling_operator} \\
+$\lambda_L$ & curtain wavelength (776.2 and 803.5 nm for the two arms) & \S\ref{sec:coupling} \\
+$\delta p_\gamma$, $\hat{p}_\gamma$ & per-photon transverse momentum kick; meter (photon) momentum operator & Eq.~\eqref{eq:photon_kick} \\
+$\Phi_0$ & photon transverse mode function (the meter state), $|\Phi_0|^2 \propto \tilde{f}$ & App.~\ref{app:derivation} \\
+\multicolumn{3}{@{}l}{\emph{Statistics and decoherence}}\\
+$N_a$ & atoms per curtain position (grid point) & \S\ref{sec:weakval} \\
+$\Lambda_\text{eff}$, $\Lambda_1$ & per-atom coherence exponent, both arms; single-pass reference value & \S\ref{sec:weakval}, \S\ref{sec:numerics} \\
+$V$ & fringe visibility, $V = e^{-\Lambda_\text{eff}}$ (unsubscripted $V$ is never a potential) & \S\ref{sec:decoherence} \\
+$D$ & which-path distinguishability, $V^2 + D^2 \leq 1$ (the estimator denominator is $\rho_w$) & \S\ref{sec:decoherence} \\
+$\mathcal{D}_1$, $\mathcal{D}(x, x')$ & per-photon overlap exponent, $|\langle\Phi_L|\Phi_R\rangle| = e^{-\mathcal{D}_1}$; its value for a general pair of positions & Eqs.~\eqref{eq:partial_trace}--\eqref{eq:D1_formula} \\
+$P_\text{sc}$ & scattering (spontaneous-emission) probability per atom transit & \S\ref{sec:setup} \\
+$\sigma_p$, $\sigma_x$ & photon momentum and position spreads, $\hbar/w$ and $w/2$ & \S\ref{sec:weakval}, \S\ref{sec:decoherence} \\
+\multicolumn{3}{@{}l}{\emph{Estimator objects}}\\
+$\psi$, $\rho$, $J$ & atomic wavefunction; density $|\psi|^2$; probability current $(\hbar/M)\,\mathrm{Im}[\psi^*\partial_x\psi]$ & \S\ref{sec:bohmian} \\
+$\tilde{f}(x; x_c)$ & curtain profile $e^{-(x - x_c)^2/w_\text{eff}^2}$ & Eq.~\eqref{eq:A_is_dxc_f} \\
+$\hat{A}(x_c)$, $\weakval{\hat{A}}$ & atomic operator read by the meter, $\hbar U_0\,\partial_{x_c}\tilde{f}$; its post-selected weak value & Eqs.~\eqref{eq:coupling_operator}, \eqref{eq:kick_weakval} \\
+$G(x_c, x_f, z_j)$ & amplitude of the curtain-tagged wave component at the screen & Eq.~\eqref{eq:G_def} \\
+$K(x_f - x; t)$ & free-flight propagator & Eqs.~\eqref{eq:G_def}, \eqref{eq:B_kernel} \\
+$\rho_w$, $J_w$ & curtain-blurred density and current & Eqs.~\eqref{eq:denominator}--\eqref{eq:numerator} \\
+$\mathcal{A}(x_c, z_j)$ & antisymmetric curtain moment of the density (the residual term) & Eqs.~\eqref{eq:numerator}, \eqref{eq:B_numerator} \\
+$v_x(x_c, z_j)$ & reconstructed conditional momentum (velocity) field & Eq.~\eqref{eq:vbohm_reconstructed} \\
+$\widehat{N}$, $\widehat\rho_w$ & data estimates of the numerator and of $\rho_w$ (hats denote estimates formed from data) & \S\ref{sec:plug_in} \\
+\multicolumn{3}{@{}l}{\emph{Systematics budgets}}\\
+$\eta_\text{bal}$, $\varepsilon_\text{res}$ & optical force-balance imperfection between the arms; fractional accuracy of the in-situ calibration of the residual & Eq.~\eqref{eq:calibration_precision} \\
+$V_\text{dipole}$ & net dipole potential of the two arms; subscripted to keep $V$ for the visibility & Eq.~\eqref{eq:dipole_subtraction}, App.~\ref{app:dipole} \\
+\bottomrule
+\end{tabular}
+\end{minipage}
+
+% =============================================================================
+\begin{thebibliography}{99}
+
+\bibitem{AAV1988}
+Aharonov Y, Albert D Z and Vaidman L 1988 How the result of a measurement of a component of the spin of a spin-1/2 particle can turn out to be 100 \textit{Phys. Rev. Lett.} \textbf{60} 1351
+
+\bibitem{Aljunid2009}
+Aljunid S A, Tey M K, Chng B, Liew T, Maslennikov G, Scarani V and Kurtsiefer C 2009 Phase shift of a weak coherent beam induced by a single atom \textit{Phys. Rev. Lett.} \textbf{103} 153601
+
+\bibitem{Bertoldi2010}
+Bertoldi A, Bernon S, Vanderbruggen T, Landragin A and Bouyer P 2010 In situ characterization of an optical cavity using atomic light shift \textit{Opt. Lett.} \textbf{35} 3769--3771
+
+\bibitem{Bohm1952a}
+Bohm D 1952 A suggested interpretation of the quantum theory in terms of ``hidden'' variables.~I \textit{Phys. Rev.} \textbf{85} 166--179
+
+\bibitem{Chapman1995}
+Chapman M S, Hammond T D, Lenef A, Schmiedmayer J, Rubenstein R A, Smith E and Pritchard D E 1995 Photon scattering from atoms in an atom interferometer: coherence lost and regained \textit{Phys. Rev. Lett.} \textbf{75} 3783--3787
+
+\bibitem{Cronin2009}
+Cronin A D, Schmiedmayer J and Pritchard D E 2009 Optics and interferometry with atoms and molecules \textit{Rev. Mod. Phys.} \textbf{81} 1051--1129
+
+\bibitem{deBroglie1927}
+de Broglie L 1927 La m\'ecanique ondulatoire et la structure atomique de la mati\`ere et du rayonnement \textit{J. Phys. Radium} \textbf{8} 225--241
+
+\bibitem{Denkmayr2017}
+Denkmayr T, Geppert H, Lemmel H, Waegell M, Dressel J, Hasegawa Y and Sponar S 2017 Experimental demonstration of direct path state characterization by strongly measuring weak values in a matter-wave interferometer \textit{Phys. Rev. Lett.} \textbf{118} 010402
+
+\bibitem{Durr1998}
+D\"urr S, Nonn T and Rempe G 1998 Origin of quantum-mechanical complementarity probed by a ``which-way'' experiment in an atom interferometer \textit{Nature} \textbf{395} 33--37
+
+\bibitem{Englert1996}
+Englert B-G 1996 Fringe visibility and which-way information: an inequality \textit{Phys. Rev. Lett.} \textbf{77} 2154
+
+\bibitem{PaperII}
+Fabianiak J and Deligiannis T 2026 A QND-pointer test of the surrealism phase diagram with internal-state-entangled atomic matter waves \textit{in preparation}
+
+\bibitem{FankhauserDurr2021}
+Fankhauser J and D\"urr P M 2021 How (not) to understand weak measurements of velocities \textit{Stud. Hist. Philos. Sci.} \textbf{85} 16--29
+
+\bibitem{Freimund2001}
+Freimund D L, Aflatooni K and Batelaan H 2001 Observation of the Kapitza--Dirac effect \textit{Nature} \textbf{413} 142--143
+
+\bibitem{Foo2022}
+Foo J, Asmodelle E, Lund A P and Ralph T C 2022 Relativistic Bohmian trajectories of photons via weak measurements \textit{Nat. Commun.} \textbf{13} 4002
+
+\bibitem{Grimm2000}
+Grimm R, Weidem\"uller M and Ovchinnikov Y B 2000 Optical dipole traps for neutral atoms \textit{Adv. At. Mol. Opt. Phys.} \textbf{42} 95
+
+\bibitem{Grisenti1999}
+Grisenti R E, Sch\"ollkopf W, Toennies J P, Hegerfeldt G C and K\"ohler T 1999 Determination of atom-surface van der Waals potentials from transmission-grating diffraction intensities \textit{Phys. Rev. Lett.} \textbf{83} 1755--1758
+
+\bibitem{Herriott1964}
+Herriott D, Kogelnik H and Kompfner R 1964 Off-axis paths in spherical mirror interferometers \textit{Appl. Opt.} \textbf{3} 523--526
+
+\bibitem{Holland1993}
+Holland P R 1993 \textit{The Quantum Theory of Motion} (Cambridge: Cambridge University Press)
+
+\bibitem{Kim2023}
+Kim K, Aeppli A, Bothwell T and Ye J 2023 Evaluation of lattice light shift at low $10^{-19}$ uncertainty for a shallow lattice Sr optical clock \textit{Phys. Rev. Lett.} \textbf{130} 113203
+
+\bibitem{Kocsis2011}
+Kocsis S, Braverman B, Ravets S, Stevens M J, Mirin R P, Shalm L K and Steinberg A M 2011 Observing the average trajectories of single photons in a two-slit interferometer \textit{Science} \textbf{332} 1170--1173
+
+\bibitem{Kokorowski2001}
+Kokorowski D A, Cronin A D, Roberts T D and Pritchard D E 2001 From single- to multiple-photon decoherence in an atom interferometer \textit{Phys. Rev. Lett.} \textbf{86} 2191
+
+\bibitem{Lan2012}
+Lan S-Y, Kuan P-C, Estey B, Haslinger P and M\"uller H 2012 Influence of the Coriolis force in atom interferometry \textit{Phys. Rev. Lett.} \textbf{108} 090402
+
+\bibitem{Lemmel2022}
+Lemmel H, Geerits N, Danner A, Hofmann H F and Sponar S 2022 Quantifying the presence of a neutron in the paths of an interferometer \textit{Phys. Rev. Res.} \textbf{4} 023075
+
+\bibitem{Madelung1927}
+Madelung E 1927 Quantentheorie in hydrodynamischer Form \textit{Z. Phys.} \textbf{40} 322--326
+
+\bibitem{Mahler2016}
+Mahler D H, Rozema L, Fisher K, Vermeyden L, Resch K J, Wiseman H M and Steinberg A 2016 Experimental nonlocal and surreal Bohmian trajectories \textit{Sci. Adv.} \textbf{2} e1501466
+
+\bibitem{Ramos2020}
+Ramos R, Spierings D, Racicot I and Steinberg A M 2020 Measurement of the time spent by a tunnelling atom within the barrier region \textit{Nature} \textbf{583} 529--532
+
+\bibitem{Sheng2013}
+Sheng D, Li S, Dural N and Romalis M V 2013 Subfemtotesla scalar atomic magnetometry using multipass cells \textit{Phys. Rev. Lett.} \textbf{110} 160802
+
+\bibitem{Shimizu1992}
+Shimizu F, Shimizu K and Takuma H 1992 Double-slit interference with ultracold metastable neon atoms \textit{Phys. Rev.} A \textbf{46} R17--R20
+
+\bibitem{Sokolovski2016}
+Sokolovski D 2016 Weak measurements measure probability amplitudes (and very little else) \textit{Phys. Lett.} A \textbf{380} 1593--1599
+
+\bibitem{Spierings2021}
+Spierings D C and Steinberg A M 2021 Observation of the decrease of Larmor tunneling times with lower incident energy \textit{Phys. Rev. Lett.} \textbf{127} 133001
+
+\bibitem{Sponar2015}
+Sponar S, Denkmayr T, Geppert H, Lemmel H, Matzkin A, Tollaksen J and Hasegawa Y 2015 Weak values obtained in matter-wave interferometry \textit{Phys. Rev.} A \textbf{92} 062121
+
+\bibitem{Steck}
+Steck D A 2024 Rubidium 87 D Line Data, revision 2.3.3, available at \texttt{steck.us/alkalidata}
+
+\bibitem{Wiseman1998}
+Wiseman H M 1998 Bohmian analysis of momentum transfer in welcher Weg measurements \textit{Phys. Rev.} A \textbf{58} 1740--1756
+
+\bibitem{Wiseman2007}
+Wiseman H M 2007 Grounding Bohmian mechanics in weak values and Bayesianism \textit{New J. Phys.} \textbf{9} 165
+
+\bibitem{Xiao2017}
+Xiao Y, Kedem Y, Xu J-S, Li C-F and Guo G-C 2017 Experimental nonlocal steering of Bohmian trajectories \textit{Opt. Express} \textbf{25} 14463--14472
+
+\bibitem{Xu2024}
+Xu W-J, Liu J, Luo Q, Hu Z-K and Zhou M-K 2024 In situ measurement of the wavefront phase shift in an atom interferometer \textit{Phys. Rev. Applied} \textbf{22} 054014
+
+\end{thebibliography}
+
+\end{document}

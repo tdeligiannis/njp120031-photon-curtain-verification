@@ -1,0 +1,14 @@
+{
+  "title": "Supplementary code and verification harness for: Weak-measurement reconstruction of the conditional momentum field for atomic matter waves (NJP-120031)",
+  "upload_type": "software",
+  "description": "Complete Python source that generates Figures 2-5 and every simulation- or formula-derived number of the manuscript, the verification harness (verify_p7_master.py, 178 checks) that re-derives each quoted number and checks it against the manuscript text, the small result files needed to reproduce the figures, and the official Fig-4 data anchor. See README.md and LOCAL_RUN_GUIDE.md.",
+  "creators": [
+    {"name": "Fabianiak, Jessica", "affiliation": "University of Nebraska at Omaha"},
+    {"name": "Deligiannis, Theodore", "affiliation": "University of Nebraska at Omaha"}
+  ],
+  "license": "MIT",
+  "keywords": ["weak measurement", "Bohmian mechanics", "matter waves", "atom interferometry", "reproducibility"],
+  "related_identifiers": [
+    {"relation": "isSupplementTo", "identifier": "NJP-120031 (New Journal of Physics, under review)", "scheme": "other"}
+  ]
+}

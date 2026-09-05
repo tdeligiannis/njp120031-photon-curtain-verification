@@ -1,0 +1,87 @@
+#!/usr/bin/env python3
+"""verify_p8_8.py -- NJP-120031 P8-8: stale-pattern sweep + do-not-regress invariants (revision prompt Sec. 7)
++ bibliography/citation cross-checks. Independent of (and in addition to) the master's own sweeps.
+Prints PASS/FAIL lines; exit 1 on any failure. Wired into verify_p7_master.py section D."""
+import re, sys, os
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
+T = open('work/main.tex').read()
+doc = T[T.find(r'\begin{document}'):]
+body = doc[:doc.find(r'\begin{thebibliography}')]
+npass = nfail = 0
+def check(name, ok, detail=''):
+    global npass, nfail
+    npass += ok; nfail += (not ok)
+    print(f"{'PASS' if ok else 'FAIL'} {name:84s} {detail}")
+def absent(name, pat, flags=0):
+    hits = re.findall(pat, body, flags); check(f"stale: {name}", len(hits) == 0, f"hits={len(hits)}" if hits else "")
+def present(name, pat, cnt=None, flags=0):
+    n = len(re.findall(pat, body, flags)); check(f"invariant: {name}", (n == cnt) if cnt is not None else n > 0, f"matches={n}" + (f" (want {cnt})" if cnt is not None else ""))
+
+print("--- A. stale patterns retired during P8 (and earlier campaigns) ---")
+absent("referee-quoted v6 abstract phrase 'per-photon weak coupling'", r'per-photon weak coupling')
+absent("'self-consistent operating point'", r'self-consistent operating point')
+absent("old obstruction shorthand as a bare claim ('short-wavelength probes destroy interference' outside quotation marks)", r"(?<!``)short-wavelength probes destroy interference(?!'')")
+absent("'Heisenberg-microscope obstruction:' colon form (v6 abstract)", r'Heisenberg-microscope obstruction:')
+absent("paragraph heading 'Photon transverse momentum kick'", r'Photon transverse momentum kick')
+absent("'fine bands' (review M2)", r'fine bands')
+absent("'trending roughly as N_a^{-1/2}' (review M3)", r'trending roughly as')
+absent("'before the packets merge' (review M4)", r'before the packets merge')
+absent("App-A coupling to P_gamma (review m2)", r'\\hat P_\\gamma')
+absent("undefined 'sigma_w' without definition (review m3ii): the defining clause must be present", r'sigma_G = \\hbar t/\(2M\\sigma_w\) \\approx')
+absent("'Linearizing the dispersive' (replaced by the first-order statement)", r'Linearizing the dispersive')
+absent("configuration letters in prose", r'Configuration[~ -][A-F]\b')
+absent("'Config.-D' abbreviation", r'Config\.-D')
+absent("chi_{L,R} conditional-state notation", r'\\chi_')
+absent("'verified analytically' / 'analytically verified'", r'verified analytically|analytically verified')
+absent("Delta(x_c,z_j) moment (renamed script-A)", r'\\Delta\(x_c')
+absent("hatted-D denominator", r'\\widehat\{D\}')
+absent("bare-V potential in App A", r'V\(\\hat x\)')
+absent("hard-coded section numbers (§n)", r'\(§[0-9]')
+absent("script-D used for Englert's D", r'\\mathcal\{D\}\^2')
+absent("TODO/XXX/FIXME markers", r'\bTODO\b|\bXXX\b|\bFIXME\b|\\todo')
+absent("'sub-mW' Fig-1 relic", r'sub-mW')
+absent("'staged programme' / 'staged-programme' (v7 Fig-5 relic; hyphen-tolerant after review m5)", r'staged[ -]programme')
+absent("historic fringe 735 um", r'\b735\b')
+absent("tiers table", r'tab:tiers|\\begin\{table\}[^\n]*tiers')
+absent("'v_z \\sim 1 m/s' relic", r'v_z \\sim 1 m/s')
+absent("double blank inside a sentence ('  ' between words)", r'[a-z]  [a-z]')
+
+print("--- B. do-not-regress invariants (revision prompt Sec. 7) ---")
+present("detection-first: 2.2e8 atoms", r'2\.2\\times 10\^8')
+present("detection-first: 7.5--67 d campaign window", r'7\.5\$--\$67|7\.5--67')
+present("mapping deliberately not claimed ('not claimed')", r'not claimed')
+present("corrected couplings: Lambda_eff = 8.65e-3", r'8\.65\\times 10\^\{-3\}')
+present("corrected couplings: g_a ~ 3.7e3 rad", r'3\.7\\times 10\^3')
+present("phi taxonomy: g_slice, varphi_1, g_a all present", r'g_\\text\{slice\}')
+present("phi taxonomy: varphi_1 = g_a/N_gamma", r'g_a/N_\\gamma\^\{\(1\)\}')
+present("vertical gravity kinematics: fringe 420 um", r'420\\,\\mu\$m|420 \$\\mu\$m|420\\,\\mu\\text')
+present("vertical gravity kinematics: T = 0.229 s / 0.2288 s", r'0\.229|0\.2288')
+present("vertical gravity kinematics: v0 1.50 -> 3.74 m/s", r'3\.744|3\.74')
+present("honest verification statistics: 1.0% mean / 2.5% max (24-point grid)", r'1\.0\\%\$ mean')
+present("honest verification statistics: 1.04% / 2.52% in Table 2", r'1\.04|2\.52')
+present("gravity gate 1.6%", r'1\.6\\%')
+present("official-run numbers pinned: 184 +- 93 um", r'184 \\pm 93')
+present("official-run numbers pinned: 1.25 +- 0.84 mm", r'1\.25 \\pm 0\.84')
+present("shipped-run numbers pinned: m16 1.51 +- 0.31 (exact string; harness fix 2026-08-25)", r'1\.51 \\pm 0\.31', 1)
+present("shipped-run numbers pinned: direct pipeline ~13 mm (exact string)", r'\\approx 13\$ mm', 1)
+absent("superseded direct-pipeline quote '~14 mm'", r'\\approx 14\$ mm')
+absent("superseded m16 quote '1.50 +- 0.31'", r'1\.50 \\pm 0\.31')
+present("Appendix B present once", r'\\label\{app:derivation\}', 1)
+present("Appendix C present once", r'\\label\{app:notation\}', 1)
+present("explicit partial trace present", r'\\mathrm\{Tr\}_\\gamma')
+
+print("--- C. bibliography and citations ---")
+bib = doc[doc.find(r'\begin{thebibliography}'):]
+keys = re.findall(r'\\bibitem\{([^}]*)\}', bib)
+cited = set()
+for m in re.finditer(r'\\cite\{([^}]*)\}', body):
+    cited.update(k.strip() for k in m.group(1).split(','))
+check("36 bibitems (all references web-verified in the v8 campaign)", len(keys) == 36, f"bibitems={len(keys)}")
+uncited = [k for k in keys if k not in cited]; unknown = [k for k in cited if k not in keys]
+check("every bibitem is cited in the body", len(uncited) == 0, f"uncited: {uncited}" if uncited else "")
+check("every \\cite key resolves to a bibitem", len(unknown) == 0, f"unknown: {unknown}" if unknown else "")
+labels = re.findall(r'\\label\{([^}]*)\}', doc); refs = set(re.findall(r'\\(?:ref|eqref)\{([^}]*)\}', doc))
+check("no duplicate labels", len(labels) == len(set(labels)), f"dups: {[l for l in set(labels) if labels.count(l) > 1]}")
+check("every \\ref/\\eqref target exists", all(r in labels for r in refs), f"missing: {[r for r in refs if r not in labels]}")
+print(f"P8-8 VERIFICATION: {npass} checks passed, {nfail} failed")
+sys.exit(0 if nfail == 0 else 1)

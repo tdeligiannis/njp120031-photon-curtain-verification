@@ -1,0 +1,220 @@
+
+====================================================================================================
+A. v8 KINEMATICS / GEOMETRY (closed forms vs quoted)
+====================================================================================================
+PASS fringe hT/(Md) (um)                                              calc=      420.26  quoted=420.3
+PASS total time T (s)                                                 calc=     0.22883  quoted=0.229
+PASS v_z(L) (m/s)                                                     calc=      3.7441  quoted=3.744
+PASS release fall v0^2/2g (cm)                                        calc=      11.472  quoted=11.5
+PASS kinetic temperature at v0 (mK)                                   calc=      11.759  quoted=12
+PASS coherence velocity hbar/(Md) (mm/s)                              calc=      0.2923  quoted=0.29
+PASS recoil velocity (mm/s)                                           calc=      5.8845  quoted=5.9
+PASS   tab:kin z=5.00: v_z                                            calc=      1.7974  quoted=1.797
+PASS   tab:kin z=5.00: tau_a (us)                                     calc=      1.1127  quoted=1.113
+PASS   tab:kin z=5.00: t(z) (s)                                       calc=    0.030327  quoted=0.0303
+PASS   tab:kin z=5.00: d/t wiggle (um/s)                              calc=      82.435  quoted=82.4
+PASS   tab:kin z=7.74: v_z                                            calc=      1.9412  quoted=1.941
+PASS   tab:kin z=7.74: tau_a (us)                                     calc=      1.0303  quoted=1.03
+PASS   tab:kin z=7.74: t(z) (s)                                       calc=    0.044985  quoted=0.045
+PASS   tab:kin z=7.74: d/t wiggle (um/s)                              calc=      55.574  quoted=55.6
+PASS   tab:kin z=10.47: v_z                                           calc=      2.0745  quoted=2.075
+PASS   tab:kin z=10.47: tau_a (us)                                    calc=     0.96409  quoted=0.964
+PASS   tab:kin z=10.47: t(z) (s)                                      calc=    0.058582  quoted=0.0586
+PASS   tab:kin z=10.47: d/t wiggle (um/s)                             calc=      42.675  quoted=42.7
+PASS   tab:kin z=29.63: v_z                                           calc=      2.8393  quoted=2.839
+PASS   tab:kin z=29.63: tau_a (us)                                    calc=     0.70441  quoted=0.704
+PASS   tab:kin z=29.63: t(z) (s)                                      calc=     0.13657  quoted=0.1366
+PASS   tab:kin z=29.63: d/t wiggle (um/s)                             calc=      18.306  quoted=18.3
+PASS   tab:kin z=57.00: v_z                                           calc=      3.6646  quoted=3.665
+PASS   tab:kin z=57.00: tau_a (us)                                    calc=     0.54576  quoted=0.546
+PASS   tab:kin z=57.00: t(z) (s)                                      calc=     0.22073  quoted=0.2207
+PASS   tab:kin z=57.00: d/t wiggle (um/s)                             calc=      11.326  quoted=11.3
+
+====================================================================================================
+B. TABLE-2 COUPLINGS / STATISTICS (config anchors vs quoted)
+====================================================================================================
+PASS g_a measuring (rad)                                              calc=        3673  quoted=3673
+PASS g_a compensator (rad)                                            calc=       -3679  quoted=-3679
+PASS Lambda_eff(z_ref)                                                calc=     0.00865  quoted=0.00865
+PASS V(z_ref)                                                         calc=     0.99139  quoted=0.991
+PASS V^2 + D^2 with D=0.131                                           calc=           1  quoted=1
+PASS P_sc(z_ref)                                                      calc=      0.0144  quoted=0.0144
+PASS SIG(z_ref) record noise                                          calc=      6.1462  quoted=6.146
+PASS P8-8: per-shot SNR = 1/SIG(z_ref) quoted as 'of order 0.16' (Sec 10; response R1.20) calc=      0.1627  quoted=0.16
+PASS tag significance sqrt(Na*Lam) @1e4                               calc=      9.3005  quoted=9.3
+PASS Na*(S_tag=10)                                                    calc=       11561  quoted=11600
+PASS S_tag range low (last plane)                                     calc=      6.5135  quoted=7
+PASS Table-2 detection: Na/position (5sig, z_ref)                     calc=  1.4308e+06  quoted=1.4e+06
+PASS Table-2 detection: total (151 pos)                               calc=  2.1605e+08  quoted=2.2e+08
+PASS Table-2 sigma_traj @1e7 (mm) [OFFICIAL fig4]                     calc=      0.1838  quoted=0.18
+PASS   same, %% of fringe                                             calc=       43.73  quoted=44
+PASS two-level phi_1^2/p_sc,1 (Fig 2a; det.-independent)              calc=   0.0077177  quoted=0.007718
+PASS free-space Lambda_1 [Table 3 ref block, P_sc = 0.017] (LIVE, harness fix 2026-08-25) calc=  8.5941e-05  quoted=8.6e-05
+PASS free-space Na(S_tag=10)                                          calc=  1.1636e+06  quoted=1.2e+06
+
+====================================================================================================
+C. FIRST-LIGHT (power/30)
+====================================================================================================
+PASS first-light g_a                                                  calc=      122.43  quoted=120
+PASS first-light Lambda_eff                                           calc=  0.00028833  quoted=0.00029
+PASS first-light Na(S_tag=10)                                         calc=  3.4682e+05  quoted=3.5e+05
+
+====================================================================================================
+D. LEGACY VERIFY SCRIPTS (G1-G3 sets, run as subprocesses)
+====================================================================================================
+PASS verify_kinematics.py                                             sub-checks: 26 PASS / 0 FAIL
+PASS verify_p2_couplings.py                                           sub-checks: 69 PASS / 0 FAIL
+PASS verify_p3_systematics.py                                         sub-checks: 48 PASS / 0 FAIL
+PASS verify_appB.py                                                   sub-checks: 35 PASS / 0 FAIL
+PASS verify_glossary.py                                               sub-checks: 4 PASS / 0 FAIL
+PASS verify_p8_8.py                                                   sub-checks: 54 PASS / 0 FAIL
+PASS verify_p8_8b.py                                                  sub-checks: 24 PASS / 0 FAIL
+
+====================================================================================================
+E. PRODUCTION / P4 NUMBER SET (summary + official log)
+====================================================================================================
+PASS Gate 1a mean (%)                                                 calc=      1.0356  quoted=1.04
+PASS Gate 1a max (%)                                                  calc=      2.5187  quoted=2.52
+PASS Gate 1b gravity max (%)                                          calc=      1.6352  quoted=1.64
+PASS Gate 1 identity worst (%)                                        calc=     0.16181  quoted=0.16
+PASS Gate 1 identity median (%)                                       calc=     0.11708  quoted=0.12
+PASS clean-pipeline floor (um)                                        calc=      1.9098  quoted=1.9
+PASS clean floor (% fringe)                                           calc=     0.45443  quoted=0.45
+PASS direct pipeline @1e4 (mm) [chaotic cell; shipped run of record 12.78; prose '~13'] (LIVE, harness fix 2026-08-25) calc=       12.78  band=[10,17]
+PASS direct pipeline @1e4 rounds to the quoted ~13 mm                 calc=          13  quoted=13
+PASS SNR ladder z=5cm                                                 calc=     0.41801  quoted=0.42
+PASS SNR ladder z=13cm                                                calc=    0.058551  quoted=0.06
+PASS global pooled SNR                                                calc=     0.47081  quoted=0.47
+PASS front-load: planes 0-2 share (%)                                 calc=      98.328  quoted=98
+PASS 5sig threshold plane 0                                           calc=  1.4308e+06  quoted=1.4e+06
+PASS 5sig threshold plane 1                                           calc=  8.1543e+06  quoted=8.2e+06
+PASS 5sig threshold plane 2                                           calc=  2.8021e+07  quoted=2.8e+07
+PASS detection duration low (d)                                       calc=      7.5217  quoted=7.5
+PASS detection duration high (d)                                      calc=      67.516  quoted=67
+PASS flux window width (x)                                            calc=      8.9761  quoted=9
+PASS dipole 1e-7 cell (% fringe)                                      calc=     0.21376  quoted=0.214
+PASS dipole 1e-6 cell A                                               calc=      1.9454  quoted=1.945
+PASS dipole 1e-6 cell B                                               calc=      1.1641  quoted=1.164
+PASS dipole 1e-5 cell                                                 calc=      8.9395  quoted=8.939
+PASS 5%%-crossing product                                             calc=   4.159e-06  quoted=4e-06
+PASS cell ratio (factor 1.7)                                          calc=      1.6711  quoted=1.7
+PASS 15%% map total atoms (plane 0)                                   calc=  3.8231e+09  quoted=4e+09
+PASS 15%% map days at ceiling                                         calc=       133.1  quoted=130
+PASS plane-1/plane-0 cost (x5)                                        calc=      5.0423  quoted=5
+PASS plane-2/plane-0 cost (x16)                                       calc=      16.343  quoted=16
+PASS osc amp high (um/s)                                              calc=      14.403  quoted=14
+PASS osc amp low (um/s)                                               calc=      10.005  quoted=10
+PASS field scale (~360 um/s)                                          calc=      362.44  quoted=360
+PASS osc 5sig threshold (>=2e9)                                       calc=   2.475e+09  quoted=2e+09
+PASS fig4 1e4 (mm)                                                    calc=      1.2528  quoted=1.25
+PASS fig4 1e4 sd (mm)                                                 calc=     0.83892  quoted=0.84
+PASS fig4 1e5 (mm)                                                    calc=       0.637  quoted=0.64
+PASS fig4 1e6 (mm)                                                    calc=     0.50775  quoted=0.51
+PASS fig4 1e7 (um)                                                    calc=       183.8  quoted=184
+PASS fig4 1e7 sd (um)                                                 calc=      93.319  quoted=93
+PASS fig4 1e7 %% fringe                                               calc=      0.4373  quoted=0.44
+PASS fig4 env @1e4                                                    calc=       7.304  quoted=7.3
+PASS fig4 env @1e7                                                    calc=      1.4788  quoted=1.5
+PASS GLS noiseless floor (um)                                         calc=      3.3741  quoted=3.4
+PASS GLS floor (%% fringe)                                            calc=     0.80287  quoted=0.8
+PASS GLS floor env                                                    calc=      1.0265  quoted=1.03
+PASS m16 @1e6 [shipped run of record 1.508; quoted 1.51+-0.31] (LIVE, harness fix 2026-08-25) calc=      1.5082  band=[1.45,1.55]
+PASS m16 @1e6 rounds to the quoted 1.51 (se 0.31)                     calc=        1.51  quoted=1.51
+PASS m16 @1e6 se rounds to the quoted 0.31                            calc=        0.31  quoted=0.31
+PASS m16 @1e7                                                         calc=       1.113  quoted=1.11
+PASS alloc additive gain @1e6 (G = 1.076 -> 7.6%) (LIVE, harness fix 2026-08-25) calc=       7.591  quoted=7.6
+PASS additive-model gains at 1e6 and 1e7 inside the quoted 5-8%       calc=      5.2155  band=[5,8]
+PASS   (upper)                                                        calc=       7.591  band=[5,8]
+PASS SE in-window fraction min (>=99%%) [from the shipped summary; recomputed from the maps by collect_v8_summary.py] calc=      99.095  quoted=99.1
+
+====================================================================================================
+F. FIGURE-2/3 DERIVED ANCHORS
+====================================================================================================
+PASS fig2 ratio phi1^2/psc1                                           calc=   0.0077177  quoted=0.0077
+PASS fig2 ideal bound sig_res/2w^2                                    calc=    0.036311  quoted=0.036
+PASS fig3 star SNR                                                    calc=      9.3005  quoted=9.3
+PASS fig3 single-pass Na                                              calc=  1.1636e+06  quoted=1.2e+06
+
+====================================================================================================
+G. RECORDED-NOT-QUOTED (removed claims, best-effort rederivations)
+====================================================================================================
+REC  per-arm input power N_g*hbar*om/(F*tau_a) (measuring): 0.32 mW  [caption claim removed; record only]
+REC  stationary-phase residue |mom-rho_w|/gross (plane-0 core median): 6.03%  [0.2% claim removed]
+
+====================================================================================================
+H. ADVERSARIAL-FINDINGS CLOSURE (F1-F12 grep evidence in main.tex)
+====================================================================================================
+PASS F1 gravity: fringe 420 present                                   matches=5
+PASS F1 gravity: '735' only as historic/none                          matches=0 (want 0)
+PASS F1 gravity: v_z ~ 1 m/s relic absent                             matches=0
+PASS F2 Coriolis section present                                      matches=6
+PASS F3 convention: w_eff defined                                     matches=71
+PASS F4 sign convention note present                                  matches=45
+PASS F6 Ramos cited                                                   matches=2
+PASS F6 Chapman cited                                                 matches=2
+PASS F6 Aljunid cited                                                 matches=2
+PASS F7 Madelung corrected title                                      matches=1
+PASS F7 chimeric Madelung title absent                                matches=0
+PASS F8 462uW appears only as the single-pass reference identifier (ref-block, Fig-2 caption, Table-3 caption) [amended P8-7 per ratified A3] matches=3 (want 3)
+PASS F9 pm0.5-mm window absent                                        matches=0
+PASS F10 tier cost relic absent                                       matches=0
+PASS F11 crossing at 4e-6                                             matches=1
+PASS F12 Eq17 bound 0.036 present                                     matches=2
+PASS F12 0.073 absent                                                 matches=0
+
+====================================================================================================
+I. STRUCTURAL
+====================================================================================================
+PASS all cite keys have bibitems                                      missing=[]
+PASS no orphan bibitems                                               orphans=[]
+PASS sweep: no tab:tiers refs                                         matches=0
+PASS sweep: no Tier nomenclature                                      matches=0
+PASS sweep: no stale budget                                           matches=0
+PASS sweep: no stale g_a                                              matches=0
+PASS sweep: no stale V                                                matches=0
+PASS sweep: no 28-point claims                                        matches=0
+PASS sweep: no staged-programme phrase                                matches=0
+PASS sweep: P8-2: no Delta(x_c,z_j) moment (renamed script-A)         matches=0
+PASS sweep: P8-2: no hatted-D denominator (renamed rho_w-hat)         matches=0
+PASS sweep: P8-2: no N/(t.D) denominator form                         matches=0
+PASS sweep: P8-2: no bare-V potential in App-A (renamed V_dipole)     matches=0
+PASS sweep: P8-2: no hard-coded section numbers                       matches=0
+PASS P8-2: script-A moment present in Eq. numerator                   matches=5
+PASS P8-3: recoil ratio d/lambda_D2 quoted as 3.2 h/d (Sec 1)         calc=      3.2041  quoted=3.2
+PASS P8-3: '3.2\,h/d' present in Sec 1                                matches=1
+PASS P8-3: old paragraph heading gone                                 matches=0
+PASS P8-5: explicit partial trace Tr_gamma present in Sec 9           matches=1
+PASS P8-5: eq:partial_trace labelled once                             matches=1
+PASS P8-5: no chi_{L,R} conditional-state notation left               matches=0
+PASS P8-5: no script-D Englert distinguishability in Sec 1 (plain D reserved for Englert) matches=0
+PASS P8-5: 'overlap exponent' clarification present                   matches=4
+PASS P8-6: 1e7 final-RMS range min (um), quoted 82                    calc=      82.413  quoted=82.4
+PASS P8-6: 1e7 final-RMS range max (um), quoted 353                   calc=      352.97  quoted=353
+PASS P8-6: 1e7 final-RMS median (um), quoted 149                      calc=      149.07  quoted=149.1
+PASS P8-6: 1e7 mean RMS / noiseless floor > 50 ('more than fifty times') calc=      54.472  quoted=54.5
+PASS P8-6: representative 1e7 realization RMS at z = 20 cm (um), quoted 21 calc=      21.022  quoted=21
+PASS P8-6: true fan width (std) at z = 20 cm (um), quoted 45          calc=      45.349  quoted=45.3
+PASS P8-6: representative realization: max mean displacement of the bundle (um), quoted 'up to ~300' calc=       289.1  quoted=288.2
+PASS P8-6: fraction of trajectories ending beyond +300 um, quoted 'about a quarter' calc=        0.27  quoted=0.27
+PASS P8-6: representative realization: max excursion (um), quoted '~ +500' calc=      529.99  quoted=530
+PASS P8-6: representative realization = r0 with final RMS close to the 20-realization mean (um) calc=      187.24  quoted=187.2
+PASS P8-6: Fig-1 caption carries the dispersive/elastic clause        matches=2
+PASS P8-6: Fig-5 caption states same configuration as Fig-4           matches=1
+PASS P8-6: 'Reading Figure' commentary paragraph present              matches=1
+PASS P8-7: no configuration letters in prose (R1-7)                   matches=0
+PASS P8-7: the one surviving letter: 'design-study point E' exactly once matches=1 (want 1)
+PASS P8-7: no 'Config.-D' abbreviation                                matches=0
+PASS P8-7: A1 wording present (contributions + Sec 11)                matches=2 (want 2)
+PASS P8-7: no 'analytically verified' / 'verified analytically'       matches=0
+PASS P8-7: Discussion mirror of contributions present                 matches=1
+PASS P8-7g: Appendix C label present once                             matches=1 (want 1)
+PASS P8-8/F2: Eq. (2) displays the fringe as 420 um                   matches=1
+PASS P8-8/F2: no '420.3' anywhere in the manuscript (uniform 3-s.f. rounding) matches=0
+PASS P8-8/F1: Fig 1 uses a float page                                 matches=1 (want 1)
+PASS P8-7: abstract word count <= 300 (IOP/NJP rule; counted with each math token as one word) calc=           1  quoted=1
+      abstract word count = 299
+PASS P8-7: abstract contains no \ref/\eqref/\cite (IOP/NJP rule)      calc=           1  quoted=1
+PASS P8-7: abstract free of internal notation (Lambda_eff, eta_bal, varphi_1, Gamma/Delta) matches=0
+
+====================================================================================================
+MASTER VERIFICATION: 178 PASS / 0 FAIL

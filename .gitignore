@@ -1,0 +1,16 @@
+# regenerated intermediates (large; produced by the chain)
+simcode_v8/sim/stage2_maps.pkl
+simcode_v8/sim/stage2_maps_partial.pkl
+simcode_v8/sim/stage3_maps_*.pkl
+simcode_v8/sim/stage4_design.pkl
+# regenerated figure outputs (the published figures live in the manuscript bundle)
+simcode_v8/photon_curtain_fig*.pdf
+simcode_v8/photon_curtain_fig*.png
+simcode_v8/fig*_check.png
+# LaTeX build products of the verification copy
+work/*.aux
+work/*.log
+work/*.out
+work/*.pdf
+__pycache__/
+*.pyc

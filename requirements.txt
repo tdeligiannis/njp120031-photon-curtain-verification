@@ -1,0 +1,6 @@
+# Reference environment of the shipped results (newer versions reproduce the pinned numbers; see README Sec. 2)
+numpy>=2.0
+scipy>=1.14
+matplotlib>=3.8
+sympy>=1.12
+mpmath>=1.3
