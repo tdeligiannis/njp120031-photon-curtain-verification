@@ -2,12 +2,12 @@
 **Repository:** supplementary code and verification harness for NJP-120031 (Fabianiak & Deligiannis, New Journal of Physics).
 **Status:** version 1.0.0 = the code verified against the resubmitted manuscript. **License:** MIT (LICENSE). **Cite:** CITATION.cff; archived DOI via Zenodo (see the manuscript's Data availability statement).
 **Quick start:** `pip install -r requirements.txt`, then Sec. 3 below; the full reproduction is `bash run_chain_and_verify.sh` (Sec. 4).
-**Note on `work/main.tex`:** a verification copy of the manuscript, included because the harness checks the text; it is the resubmitted version, identical to the journal submission at the tagged release.
+**Note on `work/main.tex`:** a verification copy of the manuscript, included because the harness checks the text (do not delete it: `verify_p7_master.py`, `verify_glossary.py` and `verify_p8_8.py` sweep it); at the tagged release it is byte-identical to the journal submission.
 
-# NJP-120031 — Supplementary code and data (revised manuscript, August 2026)
+# NJP-120031 — Supplementary code and data (revised manuscript, September 2026)
 
 Fabianiak & Deligiannis, "Weak-measurement reconstruction of the conditional momentum field for atomic
-matter waves: a dispersive photon-curtain protocol extending Kocsis–Steinberg", New Journal of Physics.
+matter waves: a dispersive photon-curtain protocol following Kocsis–Steinberg", New Journal of Physics.
 
 This folder contains the complete Python source that generates Figures 2–5 and **every simulation- or
 formula-derived number quoted in the manuscript**, together with the verification harness that re-derives
@@ -25,13 +25,13 @@ two from the shipped result files `sim/stage2_results.pkl` and `sim/stage5_injec
 
     supplementary_code/
     ├── README.md                      this file
-    ├── verify_p7_master.py            MASTER VERIFICATION (178 checks): every quoted number and every
+    ├── verify_p7_master.py            MASTER VERIFICATION (179 checks): every quoted number and every
     │                                  structural invariant of main.tex; runs the scripts below as subprocesses
     ├── verify_appB.py                 Appendix B: every identity checked symbolically (sympy) and numerically
     ├── verify_glossary.py             Appendix C symbol table vs the manuscript body
     ├── verify_p8_8.py                 stale-pattern sweep, do-not-regress invariants, bibliography cross-checks
     ├── verify_p8_8b.py                pins for the numbers introduced in the final revision pass
-    ├── verification_log_master.txt    the master's output for the shipped manuscript (178 PASS / 0 FAIL)
+    ├── verification_log_master.txt    the master's output for the shipped manuscript (179 PASS / 0 FAIL)
     ├── run_chain_and_verify.sh        full reproduction: simulation chain -> anchor re-installed -> master
     ├── official_fig4_data.pkl         the official Fig-4 data set (anchor; see Provenance)
     ├── work/main.tex                  verification copy of the manuscript (identical to ../main.tex at packaging)
@@ -66,7 +66,7 @@ dependencies; no compiled extensions. Run everything from the directory indicate
     python3 verify_glossary.py          # 4 checks    (~1 s)
     python3 verify_p8_8.py              # 51 checks   (~1 s)
     python3 verify_p8_8b.py             # 24 checks   (~1 min)
-    python3 verify_p7_master.py         # the full master, 178 checks (~10 min; the shipped files suffice)
+    python3 verify_p7_master.py         # the full master, 179 checks (~10 min; the shipped files suffice)
     cd simcode_v8
     python3 make_fig2.py                # Fig. 2  (closed forms; no data files)
     python3 make_fig3.py                # Fig. 3  (closed forms; no data files)
@@ -88,7 +88,7 @@ official chain script `simcode_v8/run_all_v8.sh` — 20 curtain-plane record map
 realizations, five dipole-residual mask maps, the GLS design and runs, the allocation study, the field
 maps, the Fig-4 trajectory data and the summary; ~8 min on a workstation, 20-40 min on a laptop; ~700 MB
 of intermediates — (iii) re-installs the official Fig-4 anchor (see Provenance) and re-collects the
-summary, and (iv) runs the master verification, which must report `178 PASS / 0 FAIL`.
+summary, and (iv) runs the master verification, which must report `179 PASS / 0 FAIL`.
 
 Gates inside the chain abort loudly if violated: v8_config self-checks; the Sec.-5.4 24-point grid
 (mean 1.04 %, max 2.52 %); the free-fall gravity-map identity (max 1.64 %); the cumulative-vs-direct
@@ -103,7 +103,7 @@ Worked example (packaging test, 2026-08-25, on a machine different from the offi
 from this folder reproduced every deterministic gate exactly (Stage 1a 1.04/2.52 %; 1b 1.64 %; identity
 0.16 %; GLS gate; SNR 0.42/0.47; m16 1.113 at 10^7), the regenerated Fig-4 data gave 1237 um at 10^4 and
 183.9 um at 10^7 against the anchor's 1252.8 and 183.8 um (the chaotic-regime spread), and the master
-verification returned 178 PASS / 0 FAIL after the anchor was re-installed.
+verification returned 179 PASS / 0 FAIL after the anchor was re-installed.
 
 Note on long runs: if your shell kills background jobs on exit, run the wrapper in a foreground terminal or
 run the stages of `run_all_v8.sh` one by one; every stage checkpoints its own pickle.

@@ -64,6 +64,6 @@ check("A2 the 12 highest-frequency recurring symbols of the body appear in the t
 secs = re.split(r'\\section\{', body)
 cov_missing = [k for k, p in PATTERNS.items() if k not in WHITELIST and sum(bool(re.search(p, s)) for s in secs) >= 2 and TABLE_TOKEN[k] not in tab]
 check("A3 inclusion rule: every documented symbol used in >= 2 body sections is in the table", len(cov_missing) == 0, f"missing: {cov_missing}" if cov_missing else "")
-check("A4 the Sec-2 notation paragraph points to Appendix C", r'Appendix~\ref{app:notation}' in body)
+check("A4 the Sec-2 notation paragraph points to Appendix C", re.search(r'[Aa]ppendix~\\ref\{app:notation\}', body) is not None)
 print(f"GLOSSARY VERIFICATION: {npass} checks passed, {nfail} failed")
 sys.exit(0 if nfail == 0 else 1)

@@ -62,7 +62,10 @@ present("honest verification statistics: 1.04% / 2.52% in Table 2", r'1\.04|2\.5
 present("gravity gate 1.6%", r'1\.6\\%')
 present("official-run numbers pinned: 184 +- 93 um", r'184 \\pm 93')
 present("official-run numbers pinned: 1.25 +- 0.84 mm", r'1\.25 \\pm 0\.84')
-present("shipped-run numbers pinned: m16 1.51 +- 0.31 (exact string; harness fix 2026-08-25)", r'1\.51 \\pm 0\.31', 1)
+present("shipped-run numbers pinned: m16 1.51 +- 0.31 (exact string; Sec 10.2 and, in the resubmission layout, App D.5)", r'1\.51 \\pm 0\.31')
+if 'seed pairs' in body:
+    present("App D.5: the seed-paired comparison quotes the run's 12 seed pairs (NPAIR = 12 in stage5_alloc.py)", r'12 seed pairs', 1)
+    absent("App D.5: no '20 seed pairs' (the sweep's 20 realizations are not the stage-5 pair count)", r'20 seed pairs')
 present("shipped-run numbers pinned: direct pipeline ~13 mm (exact string)", r'\\approx 13\$ mm', 1)
 absent("superseded direct-pipeline quote '~14 mm'", r'\\approx 14\$ mm')
 absent("superseded m16 quote '1.50 +- 0.31'", r'1\.50 \\pm 0\.31')
@@ -76,7 +79,7 @@ keys = re.findall(r'\\bibitem\{([^}]*)\}', bib)
 cited = set()
 for m in re.finditer(r'\\cite\{([^}]*)\}', body):
     cited.update(k.strip() for k in m.group(1).split(','))
-check("36 bibitems (all references web-verified in the v8 campaign)", len(keys) == 36, f"bibitems={len(keys)}")
+check("35 bibitems (36 minus the companion-paper entry removed at resubmission; all web-verified)", len(keys) == 35, f"bibitems={len(keys)}")
 uncited = [k for k in keys if k not in cited]; unknown = [k for k in cited if k not in keys]
 check("every bibitem is cited in the body", len(uncited) == 0, f"uncited: {uncited}" if uncited else "")
 check("every \\cite key resolves to a bibitem", len(unknown) == 0, f"unknown: {unknown}" if unknown else "")

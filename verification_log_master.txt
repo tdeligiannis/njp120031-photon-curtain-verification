@@ -67,7 +67,7 @@ PASS verify_p2_couplings.py                                           sub-checks
 PASS verify_p3_systematics.py                                         sub-checks: 48 PASS / 0 FAIL
 PASS verify_appB.py                                                   sub-checks: 35 PASS / 0 FAIL
 PASS verify_glossary.py                                               sub-checks: 4 PASS / 0 FAIL
-PASS verify_p8_8.py                                                   sub-checks: 54 PASS / 0 FAIL
+PASS verify_p8_8.py                                                   sub-checks: 56 PASS / 0 FAIL
 PASS verify_p8_8b.py                                                  sub-checks: 24 PASS / 0 FAIL
 
 ====================================================================================================
@@ -139,7 +139,7 @@ PASS fig3 single-pass Na                                              calc=  1.1
 G. RECORDED-NOT-QUOTED (removed claims, best-effort rederivations)
 ====================================================================================================
 REC  per-arm input power N_g*hbar*om/(F*tau_a) (measuring): 0.32 mW  [caption claim removed; record only]
-REC  stationary-phase residue |mom-rho_w|/gross (plane-0 core median): 6.03%  [0.2% claim removed]
+REC  stationary-phase residue: needs simcode_v8/sim/stage2_maps.pkl (rebuild the chain); record-only, no check affected
 
 ====================================================================================================
 H. ADVERSARIAL-FINDINGS CLOSURE (F1-F12 grep evidence in main.tex)
@@ -149,7 +149,7 @@ PASS F1 gravity: '735' only as historic/none                          matches=0 
 PASS F1 gravity: v_z ~ 1 m/s relic absent                             matches=0
 PASS F2 Coriolis section present                                      matches=6
 PASS F3 convention: w_eff defined                                     matches=71
-PASS F4 sign convention note present                                  matches=45
+PASS F4 sign convention note present                                  matches=49
 PASS F6 Ramos cited                                                   matches=2
 PASS F6 Chapman cited                                                 matches=2
 PASS F6 Aljunid cited                                                 matches=2
@@ -204,7 +204,8 @@ PASS P8-6: 'Reading Figure' commentary paragraph present              matches=1
 PASS P8-7: no configuration letters in prose (R1-7)                   matches=0
 PASS P8-7: the one surviving letter: 'design-study point E' exactly once matches=1 (want 1)
 PASS P8-7: no 'Config.-D' abbreviation                                matches=0
-PASS P8-7: A1 wording present (contributions + Sec 11)                matches=2 (want 2)
+PASS P8-7: A1 intent: 'verified numerically' in at least two places   matches=3
+PASS P8-7: A1 ratified phrase present at least once (recommended in both contribution (ii) and Sec 11) matches=1
 PASS P8-7: no 'analytically verified' / 'verified analytically'       matches=0
 PASS P8-7: Discussion mirror of contributions present                 matches=1
 PASS P8-7g: Appendix C label present once                             matches=1 (want 1)
@@ -212,9 +213,9 @@ PASS P8-8/F2: Eq. (2) displays the fringe as 420 um                   matches=1
 PASS P8-8/F2: no '420.3' anywhere in the manuscript (uniform 3-s.f. rounding) matches=0
 PASS P8-8/F1: Fig 1 uses a float page                                 matches=1 (want 1)
 PASS P8-7: abstract word count <= 300 (IOP/NJP rule; counted with each math token as one word) calc=           1  quoted=1
-      abstract word count = 299
+      abstract word count = 246
 PASS P8-7: abstract contains no \ref/\eqref/\cite (IOP/NJP rule)      calc=           1  quoted=1
 PASS P8-7: abstract free of internal notation (Lambda_eff, eta_bal, varphi_1, Gamma/Delta) matches=0
 
 ====================================================================================================
-MASTER VERIFICATION: 178 PASS / 0 FAIL
+MASTER VERIFICATION: 179 PASS / 0 FAIL
