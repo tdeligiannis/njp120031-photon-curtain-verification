@@ -5,11 +5,13 @@
   "creators": [
     {
       "name": "Fabianiak, Jessica",
-      "affiliation": "University of Nebraska at Omaha"
+      "affiliation": "University of Nebraska at Omaha",
+      "orcid": "0009-0004-3872-0422"
     },
     {
       "name": "Deligiannis, Theodore",
-      "affiliation": "University of Nebraska at Omaha"
+      "affiliation": "University of Nebraska at Omaha",
+      "orcid": "0009-0009-9964-6664"
     }
   ],
   "license": "MIT",
@@ -27,5 +29,6 @@
       "scheme": "doi",
       "resource_type": "publication-preprint"
     }
-  ]
+  ],
+  "version": "1.0.0"
 }

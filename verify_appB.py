@@ -6,6 +6,13 @@ state, and the decomposition of the Sec.-5.4 verification-grid errors into the t
 Appendix B derives. Run from the campaign root (needs simcode_v8/sim on the path). Prints PASS/FAIL lines;
 exit status 1 on any FAIL. Wired into verify_p7_master.py section D.
 """
+# dependency guard (added at release): fail loudly, never silently, when a required package is missing
+try:
+    import numpy, scipy, sympy, mpmath  # noqa: F401
+except ImportError as _e:
+    import sys as _sys
+    print(f"FATAL: verify_appB.py needs numpy, scipy, sympy and mpmath (pip install -r requirements.txt); missing: {_e.name}")
+    _sys.exit(2)
 import sys, os, numpy as np
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), 'simcode_v8', 'sim'))
 import sympy as sp

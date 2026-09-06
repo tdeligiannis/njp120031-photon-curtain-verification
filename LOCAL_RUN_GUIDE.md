@@ -48,8 +48,8 @@ Working directory matters. Two rules cover everything:
 ```bash
 cd supplementary_code
 python3 verify_glossary.py          # Appendix C table vs body           -> "4 checks passed, 0 failed"
-python3 verify_p8_8.py              # stale phrases / invariants / bib   -> "51 checks passed, 0 failed"
-python3 verify_p8_8b.py             # numbers of the final revision pass -> "24 checks passed, 0 failed" (~1 min)
+python3 verify_p8_8.py              # stale phrases / invariants / bib   -> "66 checks passed, 0 failed"
+python3 verify_p8_8b.py             # numbers of the final revision pass -> "35 checks passed, 0 failed" (~1 min)
 python3 verify_p7_master.py         # the full master on the shipped files -> "178 PASS / 0 FAIL" (~10 min)
 cd simcode_v8
 python3 verify_p4_numbers.py        # the Secs. 10-11 number set from the shipped result files

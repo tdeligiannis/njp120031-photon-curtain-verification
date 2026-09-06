@@ -6,11 +6,13 @@ authors:
   - family-names: Fabianiak
     given-names: Jessica
     affiliation: University of Nebraska at Omaha
+    orcid: "https://orcid.org/0009-0004-3872-0422"
   - family-names: Deligiannis
     given-names: Theodore
     affiliation: University of Nebraska at Omaha
+    orcid: "https://orcid.org/0009-0009-9964-6664"
 version: 1.0.0
-date-released: 2026-09-05
+date-released: 2026-09-06
 license: MIT
 repository-code: "https://github.com/tdeligiannis/njp120031-photon-curtain-verification"
 keywords:

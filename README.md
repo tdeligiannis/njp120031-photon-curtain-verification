@@ -1,8 +1,8 @@
 <!-- Repository header (GitHub); the package README follows unchanged. -->
 **Repository:** supplementary code and verification harness for NJP-120031 (Fabianiak & Deligiannis, New Journal of Physics).
-**Status:** version 1.0.0 = the code verified against the resubmitted manuscript. **License:** MIT (LICENSE). **Cite:** CITATION.cff; archived DOI via Zenodo (see the manuscript's Data availability statement).
+**Status:** version 1.0.0 = the code and verification harness accompanying the revised NJP-120031 manuscript. **License:** MIT (LICENSE). **Cite:** CITATION.cff; archived DOI via Zenodo (see the manuscript's Data availability statement).
 **Quick start:** `pip install -r requirements.txt`, then Sec. 3 below; the full reproduction is `bash run_chain_and_verify.sh` (Sec. 4).
-**Note on `work/main.tex`:** a verification copy of the manuscript, included because the harness checks the text (do not delete it: `verify_p7_master.py`, `verify_glossary.py` and `verify_p8_8.py` sweep it); at the tagged release it is byte-identical to the journal submission.
+**Note on `work/main.tex`:** a verification copy of the manuscript, included because the harness checks the text (do not delete it: `verify_p7_master.py`, `verify_glossary.py` and `verify_p8_8.py` sweep it). At release v1.0.0 it is the manuscript submitted to NJP except for one string: the Data availability statement still carries the placeholder for the DOI of this very record, which does not exist until the release is archived; release v1.0.1 carries the DOI-bearing copy and is otherwise identical.
 
 # NJP-120031 — Supplementary code and data (revised manuscript, September 2026)
 
@@ -56,7 +56,8 @@ two from the shipped result files `sim/stage2_results.pkl` and `sim/stage5_injec
 
 ## 2. Environment
 
-Python >= 3.10 with numpy, scipy, matplotlib, sympy and mpmath. Reference environment of the shipped
+Python >= 3.10 with numpy, scipy, matplotlib, sympy and mpmath (`pip install -r requirements.txt`; a base conda
+environment typically lacks sympy and mpmath, and `verify_appB.py` exits with an explicit message if they are missing). Reference environment of the shipped
 results: Python 3.12.3, numpy 2.4.4, scipy 1.17.1, matplotlib 3.10.8, sympy 1.14, mpmath 1.3. No other
 dependencies; no compiled extensions. Run everything from the directory indicated below.
 
@@ -151,5 +152,5 @@ on its own from this directory (they locate their inputs relative to their own l
 - **v7 input.** `simcode/sim/stage4_results.pkl` is a result file of the pre-correction chain, read by one
   block of `verify_p2_couplings.py` that closes a review finding against the earlier numbers. It is not used
   by any figure or by any current manuscript number.
-- **Manuscript copy.** `work/main.tex` is the manuscript as verified; it is byte-identical to the Overleaf
-  root `main.tex` of this bundle at packaging time (the md5 is printed by `run_chain_and_verify.sh`).
+- **Manuscript copy.** `work/main.tex` is the manuscript as verified by the log above (md5 printed by
+  `run_chain_and_verify.sh`); see the note at the top of this file on the Data availability DOI.

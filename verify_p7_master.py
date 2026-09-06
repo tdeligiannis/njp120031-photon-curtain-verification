@@ -92,7 +92,13 @@ for scr in ['verify_kinematics.py', 'verify_p2_couplings.py', 'verify_p3_systema
     NPF = 'PASS' if global_ok else 'FAIL'
     print(f"{NPF:4s} {scr:64s} sub-checks: {p} PASS / {f} FAIL")
     if not global_ok:
-        NF += 1; print(r.stdout[-600:])
+        NF += 1
+        if p == 0 and f == 0:   # the script ran no checks at all: report it as a crash, with the reason
+            last = (r.stderr.strip().split('\n') or [''])[-1] if r.stderr.strip() else (r.stdout.strip().split('\n') or [''])[-1]
+            print(f"      CRASH (exit {r.returncode}): {scr} ran no checks -- {last[:200]}")
+            print("      (missing dependency? see requirements.txt: numpy, scipy, matplotlib, sympy, mpmath)")
+        else:
+            print(r.stdout[-600:])
     else:
         NP += 1
 
